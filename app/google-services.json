@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "148013411450",
+    "project_id": "broaf-72e4c",
+    "storage_bucket": "broaf-72e4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148013411450:android:7bf84b368aa18959fd5fc3",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYhc549duRZJr8wHWjyg7775Dz72j2v6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
