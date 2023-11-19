@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--밑에 내용은 다 수정하시면 됨. 근데 메인화면으로 연결될 버튼은 하나 남겨주세용-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,11 +18,11 @@
         android:textColor="@color/brown"/>
 
     <Button
+        android:id="@+id/btn_loginActi_to_mainActi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="메인 화면으로"
-        android:background="@color/orange"
         />
 
 </LinearLayout>
