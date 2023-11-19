@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.broaf"
-    >
-
-    <!--인터넷 권한임. 지도 불러올 때 필요.-->
+    package="com.example.broaf">
+    <!-- 인터넷 권한임. 지도 불러올 때 필요. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,7 +16,7 @@
         android:theme="@style/Theme.Broaf"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +24,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--카카오 native app key 추가-->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- 카카오 native app key 추가 -->
         <meta-data
             android:name="com.kakao.vectormap.APP_KEY"
-            android:value="d9bbdb5b3184a4b3466a916346b9d2ae"/>
-        <!--여기까지:: 카카오 native app key-->
-
+            android:value="d9bbdb5b3184a4b3466a916346b9d2ae" />
     </application>
 
 </manifest>
