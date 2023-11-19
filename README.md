@@ -29,9 +29,9 @@ com.example.broaf 폴더 안에 있는 Activity/Fragment.java 파일이랑 layou
         :홈frag의 mapview에서 label 클릭시 add, 검색 결과에서 누르면 add, 
         내 게시글 모아보기에서 누르면 add, 신고함에서 누르면 add(신고글버전.xml로 호출) 등등..
 
-    (2) 내 게시글 모아보기 frag
+    그 외 내게시글 모아보기 등등
 
-    기타 등등
+
 
 
 이렇게 하는거 맞는건가
