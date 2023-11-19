@@ -4,6 +4,7 @@
 
 
 //오전 1:42 2023-11-20 지원
+
 com.example.broaf 폴더 안에 있는 Activity/Fragment.java 파일이랑 layout 안에 있는 activity_/fragment_.xml은 자유롭게 수정하시면 됩니다
 지우거나 이름 바꾸셔도 ㄱㅊ
 근데 나중에 하단바 만들고 나선 NoticeFragment.java랑 MyinfoFragment.java는 삭제 혹은 이름 변경을 가급적 삼가주세요
