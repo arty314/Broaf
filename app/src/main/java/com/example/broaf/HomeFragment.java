@@ -8,12 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-//git config --global core.autocrlf true
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+//지도 띄어질 fragment입니당
 public class HomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
