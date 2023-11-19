@@ -3,7 +3,7 @@
 
 
 
-//오전 1:42 2023-11-20 지원
+//오전 1:42 2023-11-20 SEjiji
 
 com.example.broaf 폴더 안에 있는 Activity/Fragment.java 파일이랑 layout 안에 있는 activity_/fragment_.xml은 자유롭게 수정하시면 됩니다
 지우거나 이름 바꾸셔도 ㄱㅊ
