@@ -9,7 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-//지도 띄어질 fragment입니당
+//홈 frag 구현 방향
+//1. 검색창이 켜져있다 => 검색 창은 edittext.
+//      edittext에서 엔터를 입력하거나, imagebutton인 검색 버튼을 누르면 search frag로 입력된 문자열 전달
+//
+//2. 지도가 켜져있다 => mapview
+//      gps로 현재 위치 받아와서 표시
+//      firebase에서 열람 가능 기간 내의 인근 게시글 목록 따옴 (후보 게시글 목록: 일단 엄청 적은 양의 data만 불러옴)
+//      login acti에서 받아온 계정 정보와 후보 게시글의 id 정보를 이용하여 게시글 필터링 수행
+//      후보 게시글 목록 중에 열람 가능한 게시글만 visible
+//                  //Idea: 어케 잘 캐싱하면 게시글 재로드 속도 향상?
+//      열람 가능 여부 테스트 하고 나면 어케저게 잘 게시글 label 별로 icon 변경 및 badge 달아주기
+//                  //Idea: 이 또한 어케 잘 캐싱하면 게시글 재로드 속도 향상? 친구 프사, 미리보기 등
+
+
 public class HomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
