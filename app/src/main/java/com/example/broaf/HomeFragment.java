@@ -50,7 +50,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //포스트 뷰어 add (아직 미구현)
-//                Fragment newPostViewerFragment = new ;
+                Fragment newPostViewerFragment = new PostViewerFragment();
+                FragmentManager fragmentManager =getFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         //여기까지 포스트 뷰어 add

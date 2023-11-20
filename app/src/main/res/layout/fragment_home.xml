@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
-
     <!-- 게시글 검색창. -->
     <LinearLayout
         android:id="@+id/search_bar_main"
@@ -83,5 +82,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     여기까지카카오맵-->
+
+    <!-- post viewer가 올라올 프레임 -->
+
+    <!--게시글 뷰어 창:근데 조금 문제있어서 밑에 내려둠-->
+    <FrameLayout
+        android:id="@+id/frame_layout_post_viewer"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="150dp"
+        />
 
 </FrameLayout>
