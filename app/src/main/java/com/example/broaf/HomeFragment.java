@@ -1,12 +1,20 @@
 package com.example.broaf;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 
 //홈 frag 구현 방향
@@ -22,53 +30,61 @@ import android.view.ViewGroup;
 //      열람 가능 여부 테스트 하고 나면 어케저게 잘 게시글 label 별로 icon 변경 및 badge 달아주기
 //                  //Idea: 이 또한 어케 잘 캐싱하면 게시글 재로드 속도 향상? 친구 프사, 미리보기 등
 
-
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    ImageButton btn_search;
+    //EditText input_text_search;   //검색 내용(edittext)을 끌어오기 위해서.
+    //String search_str; //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
+    Button viewpost_map_other;
+    Button editpost_normal;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
+        //표시할 xml layout 선택
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //viewpost 버튼을 누르면 postviewer frag를 add
+        viewpost_map_other=(Button) view.findViewById(R.id.viewpost_map_other);
+        viewpost_map_other.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //포스트 뷰어 add (아직 미구현)
+//                Fragment newPostViewerFragment = new ;
+            }
+        });
+        //여기까지 포스트 뷰어 add
+
+        //editpost 누르면 포스트 에디터 acti로 이동
+        editpost_normal=(Button) view.findViewById(R.id.editpost_normal);
+        editpost_normal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //포스트 에디터 acti로 이동
+                Intent intent=new Intent(getActivity(),PostEditerActivity.class);
+                startActivity(intent);
+            }
+        });
+        //여기까지 포스트 에디터 acti로 이동
+
+
+        //검색버튼 누르면 input_text_search 내용을 SearchFragment로 넘겨주고 SearFrag로 고고
+        btn_search=(ImageButton) view.findViewById(R.id.btn_search);
+        btn_search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //검색 내용 끌어오기 (문제 있어서 숨김
+//                search_str =input_text_search.getText().toString();
+//                search_bundle.putString("search_str",search_str);
+                SearchFragment searchFragment = new SearchFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_layout, searchFragment);
+                fragmentTransaction.commit();
+            }
+        });
+        //여기까지 검색버튼
+        return view;
+        }
+
 }

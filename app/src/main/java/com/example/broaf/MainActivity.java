@@ -1,18 +1,19 @@
 package com.example.broaf;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.broaf.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,39 @@ public class MainActivity extends AppCompatActivity {
         //중앙 버튼은 <홈 frag 단독 case>를 제외한 case에선 '지도로 돌아가기 버튼'임 (즉, top frag /= 홈 frag)
         //지도로 돌아가기 버튼을 누르면, 현재 켜져 있던 모든 fragment stack를 빼낸 뒤 홈 fragment를 호출
 
+        //여기부터 '지도로 돌아가기 버튼'
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        replaceFragment(new HomeFragment());
+        binding.bottomNavigationView.setBackground(null);
+
+        binding.bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
+
+        binding.naviToHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){replaceFragment(new HomeFragment());}
+            //여기까지 '지도로 돌아가기 버튼'
+        });
 
 
+    }
+
+    //flagment 전환 메소드
+    public void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
+    }
+
+
+    //선택한 메뉴 아이템에 따라 replaceFragment(선택 flagment) 호출
+    private boolean onNavigationItemSelected(MenuItem item) {
+        if (item.getItemId()== R.id.notice)
+            replaceFragment(new NoticeFragment());
+        else if (item.getItemId()== R.id.myinfo)
+            replaceFragment(new MyinfoFragment());
+        return true;
     }
 }

@@ -6,10 +6,13 @@
         android:icon="@drawable/noti_new"
         android:title="알림" />
 
+
     <item
         android:id="@+id/empty"
         android:title=""
         android:enabled="false"/>
+
+
     <item
         android:id="@+id/myinfo"
         android:icon="@drawable/myinfo"
