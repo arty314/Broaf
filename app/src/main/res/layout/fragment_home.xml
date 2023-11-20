@@ -85,7 +85,7 @@
 
     <!-- post viewer가 올라올 프레임 -->
 
-    <!--게시글 뷰어 창:근데 조금 문제있어서 밑에 내려둠-->
+    <!--게시글 뷰어 창:근데 조금 문제있어서(검색창이 뷰어 위에 뜸..) 밑에 내려둠-->
     <FrameLayout
         android:id="@+id/frame_layout_post_viewer"
         android:layout_width="match_parent"

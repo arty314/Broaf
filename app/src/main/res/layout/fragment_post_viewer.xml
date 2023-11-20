@@ -15,7 +15,7 @@
         android:textSize="30dp"
         android:text="임시 포스트 뷰어"/>
     <Button
-        android:id="@+id/close_viewer"
+        android:id="@+id/btn_close_viewer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="뷰어 닫기"
