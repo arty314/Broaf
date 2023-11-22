@@ -19,9 +19,6 @@
             android:name=".PostEditerActivity"
             android:exported="false" />
         <activity
-            android:name=".NoticeActivity"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
