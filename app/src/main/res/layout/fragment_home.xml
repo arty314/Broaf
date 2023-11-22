@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomeFragment">
+
+
+    <!--카카오맵 화면 (전 멤버의 키해시 얻을때까지 안 띄움-->
+    <com.kakao.vectormap.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--여기까지카카오맵-->
+
+
+    <!-- 게시글 검색창. -->
+    <LinearLayout
+        android:id="@+id/search_bar_main"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_margin="40dp"
+        android:layout_gravity="center|top"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@drawable/search_btn_background"
+        android:elevation="4dp"
+        >
+        <EditText
+            android:id="@+id/input_text_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:hint="게시글 검색"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            />
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/transparent"
+            />
+    </LinearLayout>
+    <!--여기까지 게시글 검색창-->
+
+    <!--임시 버튼 리스트-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:gravity="center"
+            android:layout_marginBottom="100dp"
+            android:textSize="30sp"
+            android:textColor="@color/brown"/>
+
+        <Button
+            android:id="@+id/viewpost_map_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="임시 게시글 열람 버튼\n(게시글 뷰어 frag 생성)"
+            />
+        <Button
+            android:id="@+id/editpost_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="임시 게시글 작성 버튼\n(게시글 에디터 acti [normal]로 이동)"
+            />
+
+        <!--필요하시면 밑에 임시 버튼 더 다셔도 돼요-->
+
+    </LinearLayout>
+    <!--여기까지 임시 버튼들-->
+
+
+    <!-- post viewer가 올라올 프레임 -->
+
+    <!--게시글 뷰어 창:근데 조금 문제있어서(검색창이 뷰어 위에 뜸..) 밑에 내려둠-->
+    <FrameLayout
+        android:id="@+id/frame_layout_post_viewer"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="150dp"
+        />
+
+
+</FrameLayout>
