@@ -1,3 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Broaf</string>
+	<!-- _______ strings -->
+
+	<string name="app_name">Page 1</string>
+	<string name="ek_img_content">ExportKit Image</string>
+	<string name="______string"></string>
+	<string name="____string">     </string>
+	<string name="id_string">     ID</string>
+	<string name="email_string">     Email</string>
+	<string name="______ek1_string">     </string>
+	<string name="__________string">      </string>
+	<string name="_______string"> </string>
+	<string name="_______ek1_string"> </string>
+	<string name="____ek1_string"></string>
+
+	// register.xml
+	<string name="some_id">
+	\u00ED\u009A\u008C\u00EC\u009B\u0090\u00EA\u00B0\u0080\u00EC\u009E\u0085
+	</string>
 </resources>
