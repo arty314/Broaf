@@ -16,6 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.kakao.vectormap.KakaoMap;
+import com.kakao.vectormap.KakaoMapReadyCallback;
+import com.kakao.vectormap.MapLifeCycleCallback;
+import com.kakao.vectormap.MapView;
+
 
 //홈 frag 구현 방향
 //1. 검색창이 켜져있다 => 검색 창은 edittext.
@@ -89,6 +94,29 @@ public class HomeFragment extends Fragment {
             }
         });
         //여기까지 검색버튼
+
+
+        //여기부터 카카오맵
+        MapView mapView = view.findViewById(R.id.map_view);
+        mapView.start(new MapLifeCycleCallback() {
+            @Override
+            public void onMapDestroy() {
+                // 지도 API 가 정상적으로 종료될 때 호출됨
+            }
+
+            @Override
+            public void onMapError(Exception error) {
+                // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
+            }
+        }, new KakaoMapReadyCallback() {
+            @Override
+            public void onMapReady(KakaoMap kakaoMap) {
+                // 인증 후 API 가 정상적으로 실행될 때 호출됨
+            }
+        });
+        /**여기까지 카카오맵**/
+
+
         return view;
         }
 

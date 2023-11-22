@@ -6,6 +6,15 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
+
+    <!--카카오맵 화면 (전 멤버의 키해시 얻을때까지 안 띄움-->
+    <com.kakao.vectormap.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--여기까지카카오맵-->
+
+
     <!-- 게시글 검색창. -->
     <LinearLayout
         android:id="@+id/search_bar_main"
@@ -76,12 +85,6 @@
     </LinearLayout>
     <!--여기까지 임시 버튼들-->
 
-    <!--카카오맵 화면 (전 멤버의 키해시 얻을때까지 안 띄움
-    <com.kakao.vectormap.MapView
-        android:id="@+id/map_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    여기까지카카오맵-->
 
     <!-- post viewer가 올라올 프레임 -->
 
@@ -92,5 +95,6 @@
         android:layout_height="500dp"
         android:layout_marginTop="150dp"
         />
+
 
 </FrameLayout>
