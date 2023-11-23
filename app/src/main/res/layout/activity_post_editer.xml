@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="메인 화면으로"
+        android:text="메인 화면으로\n(근데 버그있음: home에서 알림/내정보 frag를 누른 후 다시 home으로 돌아와서 포스트에디터에 들어왔을 경우 이 버튼이나 뒤로가기가 안먹힘.)"
         />
 
 </LinearLayout>
