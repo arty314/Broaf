@@ -22,7 +22,6 @@
         android:layout_height="60dp"
         android:layout_margin="40dp"
         android:layout_gravity="center|top"
-        android:orientation="horizontal"
         android:padding="10dp"
         android:background="@drawable/search_btn_background"
         android:elevation="4dp"
@@ -31,8 +30,8 @@
             android:id="@+id/input_text_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="10dp"
             android:hint="게시글 검색"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -85,16 +84,11 @@
     </LinearLayout>
     <!--여기까지 임시 버튼들-->
 
-
     <!-- post viewer가 올라올 프레임 -->
-
-    <!--게시글 뷰어 창:근데 조금 문제있어서(검색창이 뷰어 위에 뜸..) 밑에 내려둠-->
     <FrameLayout
         android:id="@+id/frame_layout_post_viewer"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="150dp"
-        />
-
+        android:layout_height="match_parent"/>
+    <!--게시글 뷰어 창:근데 조금 문제있어서 조정 필요(검색창이 뷰어 위에 뜸..)-->
 
 </FrameLayout>

@@ -2,6 +2,8 @@ package com.example.broaf;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -59,6 +61,23 @@ public class MyinfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_myinfo, container, false);
+        View view = inflater.inflate(R.layout.fragment_myinfo, container, false);
+        getActivity().setTitle("내 정보");     //상단 액션바에 표기할 텍스트 내용 정하는 코드
+
+
+        return view;
     }
+
+
+    //액션바 가시성
+    @Override
+    public void onResume() {
+        super.onResume();
+        ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
+            //ab.hide();      //상단바 숨기기
+            ab.show();    //상단바 보이기
+        }
+    }
+    //액션바 가시성 조절 끝
 }

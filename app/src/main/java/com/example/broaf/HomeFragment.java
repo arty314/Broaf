@@ -49,38 +49,10 @@ public class HomeFragment extends Fragment {
         //표시할 xml layout 선택
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //viewpost 버튼을 누르면 postviewer frag를 add
-        viewpost_map_other=(Button) view.findViewById(R.id.viewpost_map_other);
-        viewpost_map_other.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //포스트 뷰어 add (아직 미구현)
-                Fragment newPostViewerFragment = new PostViewerFragment();
-                FragmentManager fragmentManager =getFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-        //여기까지 포스트 뷰어 add
-
-        //editpost 누르면 포스트 에디터 acti로 이동
-        editpost_normal=(Button) view.findViewById(R.id.editpost_normal);
-        editpost_normal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //포스트 에디터 acti로 이동
-                Intent intent=new Intent(getActivity(),PostEditerActivity.class);
-                startActivity(intent);
-            }
-        });
-        //여기까지 포스트 에디터 acti로 이동
-
 
         //검색버튼 누르면 input_text_search 내용을 SearchFragment로 넘겨주고 SearFrag로 고고
-        btn_search=(ImageButton) view.findViewById(R.id.btn_search);
-        btn_search.setOnClickListener(new View.OnClickListener(){
+        btn_search = (ImageButton) view.findViewById(R.id.btn_search);
+        btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //검색 내용 끌어오기 (문제 있어서 숨김
@@ -94,6 +66,35 @@ public class HomeFragment extends Fragment {
             }
         });
         //여기까지 검색버튼
+
+
+        //viewpost 버튼을 누르면 postviewer frag를 add
+        viewpost_map_other = (Button) view.findViewById(R.id.viewpost_map_other);
+        viewpost_map_other.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //포스트 뷰어 add (아직 미구현)
+                Fragment newPostViewerFragment = new PostViewerFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+        //여기까지 포스트 뷰어 add
+
+        //editpost 누르면 포스트 에디터 acti로 이동
+        editpost_normal = (Button) view.findViewById(R.id.editpost_normal);
+        editpost_normal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //포스트 에디터 acti로 이동
+                Intent intent = new Intent(getActivity(), PostEditerActivity.class);
+                startActivity(intent);
+            }
+        });
+        //여기까지 포스트 에디터 acti로 이동
 
 
         //여기부터 카카오맵
@@ -118,6 +119,18 @@ public class HomeFragment extends Fragment {
 
 
         return view;
+    }
+
+    //액션바 가시성
+    @Override
+    public void onResume() {
+        super.onResume();
+        ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
+            ab.hide();      //상단바 숨기기
+            //ab.show();    //상단바 보이기
         }
+    }
+    //액션바 가시성 조절 끝
 
 }

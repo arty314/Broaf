@@ -2,6 +2,8 @@ package com.example.broaf;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -34,4 +36,17 @@ public class PostViewerFragment extends Fragment {
 
         return view;
     }
+
+
+    //액션바 가시성
+    @Override
+    public void onResume() {
+        super.onResume();
+        ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
+            ab.hide();      //상단바 숨기기
+            //ab.show();    //상단바 보이기
+        }
+    }
+    //액션바 가시성 조절 끝
 }

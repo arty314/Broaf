@@ -3,22 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/oat"
-    tools:context=".PostViewerFragment">
+    android:background="#80000000"
+    tools:context=".PostViewerFragment"
+    android:clickable="true"
+    >
+    <!--이쪽은 뒷배경 흐리게 만들기용.... 그리고 이 상태에선 home-frag를 터치할 수 없게 해야되는데 어쩐지 조종이 가능함;-->
+
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/frame_layout_post_viewer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="30dp"
-        android:text="임시 포스트 뷰어"/>
-    <Button
-        android:id="@+id/btn_close_viewer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="뷰어 닫기\n(근데 안닫힘)"
-        />
+        android:minHeight="400dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/post_viewer_background"
+        android:elevation="10dp"
+        >
+        <!--post_viewer_background.xml는 포스트 뷰어의 테두리를 둥글게 하기 위한것. 컬러나 radius 값 조절해서 쓰면 됨.-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="임시 포스트 뷰어"/>
+        <Button
+            android:id="@+id/btn_close_viewer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:text="뷰어 닫기\n(근데 안닫힘)"
+            />
+
+    </FrameLayout>
 
 </FrameLayout>
