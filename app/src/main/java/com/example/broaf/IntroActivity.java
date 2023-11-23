@@ -24,7 +24,7 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceStart) {
         super.onCreate(savedInstanceStart);
-        setContentView(R.layout.first);
+        setContentView(R.layout.activity_intro);
 
 
         ///**
