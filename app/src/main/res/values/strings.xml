@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	// register.xml
-	<string name="some_id">
+    // register.xml
+    <string name="some_id">
 	</string>
 
     <string name="app_name">Broaf</string>

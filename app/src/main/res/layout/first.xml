@@ -21,6 +21,7 @@
             android:layout_width="175dp"
             android:layout_height="175dp"
             android:layout_centerHorizontal="true"
+
             android:layout_centerVertical="true"
             android:background="@drawable/broaf_logo">
         </View>
