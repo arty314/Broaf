@@ -1,8 +1,13 @@
 package com.example.broaf;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,11 +16,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceStart) {
         super.onCreate(savedInstanceStart);
         setContentView(R.layout.first);
+
+
+        ///**
+        //키 해시 얻기
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("키해시는 :", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        //*키해시얻기:여기까지
+
 
         // 로그인 버튼을 눌렀을 때
         Button btnLogin = findViewById(R.id.btnLogin);
@@ -54,4 +80,6 @@ public class FirstActivity extends AppCompatActivity {
             String uid = user.getUid();
         }
     }
+
+
 }

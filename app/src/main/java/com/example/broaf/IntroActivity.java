@@ -33,6 +33,12 @@ public class IntroActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
+
+        //액션바 가시성 조절 (activity버전)
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide(); //보이게 하려면 show
+        }
+        //여기까지 액션바 가시성 조절
+    }
 }
