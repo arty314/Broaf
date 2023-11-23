@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/white"
+    tools:context=".Intro"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
