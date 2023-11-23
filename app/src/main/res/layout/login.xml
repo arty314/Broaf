@@ -26,13 +26,13 @@
 
 
         <EditText
-            android:id="@+id/getloginid"
+            android:id="@+id/getloginemail"
             android:layout_width="275dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="295dp"
-            android:hint="아이디"
+            android:hint="이메일"
             android:gravity="center_vertical"
             android:background="@drawable/regitextback"/>
 

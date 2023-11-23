@@ -36,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         editNickname = findViewById(R.id.editNickname);
-        editID = findViewById(R.id.editID);
         editemail = findViewById(R.id.editemail);
         editPW = findViewById(R.id.editPW);
         editPWcheck = findViewById(R.id.editPWcheck);
@@ -48,37 +47,42 @@ public class RegisterActivity extends AppCompatActivity {
                 // register
                 String email = editemail.getText().toString();
                 String Nickname = editNickname.getText().toString();
-                String ID = editID.getText().toString();
                 String PW = editPW.getText().toString();
                 String PWcheck = editPWcheck.getText().toString();
 
                 if((email != null) && !email.isEmpty()
                 && (Nickname != null) && !Nickname.isEmpty()
-                && (ID != null) && !ID.isEmpty()
                 && (PW != null) && !PW.isEmpty()
                 && (PWcheck != null) && !PWcheck.isEmpty()) {
-                    mFirebaseAuth.createUserWithEmailAndPassword(ID, PW)
-                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // 회원가입 성공 시의 동작
-                                        Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(RegisterActivity.this, FirstActivity.class));
-                                        finish();
-                                    } else {
-                                        // 회원가입 실패 시의 동작
-                                        Toast.makeText(RegisterActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+                    // 다 입력 되었다면
+                    if (PW == PWcheck) {
+                        // PW와 PWcheck가 일치하는지 확인하고
+                        mFirebaseAuth.createUserWithEmailAndPassword(email, PW)
+                                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // 회원가입 성공 시의 동작
+                                            Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(RegisterActivity.this, FirstActivity.class));
+                                            finish();
+                                        } else {
+                                            // 회원가입 실패 시의 동작
+                                            Toast.makeText(RegisterActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
 
-                                        editemail.setText(email);
-                                        editNickname.setText(Nickname);
-                                        editID.setText(ID);
-                                        editPW.setText("");
-                                        editPWcheck.setText("");
+                                            editemail.setText(email);
+                                            editNickname.setText(Nickname);
+                                            editPW.setText("");
+                                            editPWcheck.setText("");
+                                        }
                                     }
-                                }
-                            });
+                                });
+                    } else {
+                        // 비밀번호가 일치하지 않으면
+                        Toast.makeText(RegisterActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
+                    // 입력이 다 되어있지 않은 경우
                     Toast.makeText(RegisterActivity.this, "모든 정보를 입력해주세요", Toast.LENGTH_LONG).show();
                 }
             }
