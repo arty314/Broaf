@@ -6,8 +6,8 @@
 
     <RelativeLayout
         android:id="@+id/LoginBack"
-        android:layout_width="411dp"
-        android:layout_height="731dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipToOutline="true"
         android:background="#FFFFFF"
         tools:ignore="MissingConstraints">
@@ -28,10 +28,10 @@
         <EditText
             android:id="@+id/getloginemail"
             android:layout_width="275dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="295dp"
+            android:layout_marginTop="280dp"
             android:hint="이메일"
             android:gravity="center_vertical"
             android:background="@drawable/regitextback"/>
@@ -40,10 +40,10 @@
         <EditText
             android:id="@+id/getloginpw"
             android:layout_width="275dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="365dp"
+            android:layout_marginTop="350dp"
             android:hint="비밀번호"
             android:background="@drawable/regitextback"/>
 

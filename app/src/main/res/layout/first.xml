@@ -8,6 +8,7 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <ImageView
         android:id="@+id/loginlogo"
         android:layout_height="200dp"
@@ -23,8 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/loginlogo">
+        android:layout_gravity="center_horizontal">
+
 
         <!-- 로그인 TextView -->
         <Button
