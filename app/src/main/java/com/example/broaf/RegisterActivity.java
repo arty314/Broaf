@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             // 회원가입 성공 시의 동작
                                             Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(RegisterActivity.this, FirstActivity.class));
+                                            startActivity(new Intent(RegisterActivity.this, IntroActivity.class));
                                             finish();
                                         } else {
                                             // 회원가입 실패 시의 동작

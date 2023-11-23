@@ -3,7 +3,7 @@
 
     <font android:fontStyle="italic"
         android:fontWeight="900"
-        android:font="@font/interBlack"/>
+        android:font="@font/interblack"/>
 
 
 </font-family>
