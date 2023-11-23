@@ -22,7 +22,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="563dp"
             android:text="로그인"
-            android:background="@drawable/rectangle_3"/>
+            android:background="@drawable/search_btn_background"
+            />
 
         <!-- 회원가입 TextView -->
         <Button
