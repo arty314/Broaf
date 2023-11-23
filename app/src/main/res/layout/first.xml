@@ -15,7 +15,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-90dp">
 
-        // logo img
+        <!-- logo img -->
         <View
             android:id="@+id/loginlogo"
             android:layout_width="175dp"

@@ -55,8 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
                 && (PW != null) && !PW.isEmpty()
                 && (PWcheck != null) && !PWcheck.isEmpty()) {
                     // 다 입력 되었다면
-                    if (PW == PWcheck) {
-                        // PW와 PWcheck가 일치하는지 확인하고
                         mFirebaseAuth.createUserWithEmailAndPassword(email, PW)
                                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -77,10 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                    } else {
-                        // 비밀번호가 일치하지 않으면
-                        Toast.makeText(RegisterActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    }
                 } else {
                     // 입력이 다 되어있지 않은 경우
                     Toast.makeText(RegisterActivity.this, "모든 정보를 입력해주세요", Toast.LENGTH_LONG).show();
