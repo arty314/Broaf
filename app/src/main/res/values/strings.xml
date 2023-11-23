@@ -1,4 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+	// register.xml
+	<string name="some_id">
+	</string>
+
     <string name="app_name">Broaf</string>
     <string name="app_version">0.0.1</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -18,6 +24,5 @@
     <string name="admin_func">관리자 기능</string>
     <string name="admin_reported_posts">신고함</string>
     <string name="admin_banned_users">정지 이용자 관리</string>
-
 
 </resources>
