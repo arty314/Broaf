@@ -31,9 +31,9 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
 
+//        //홈으로부터 검색 결과 받아오기
 //        search_uid=getArguments().getInt("uid");
 //        search_uid_view.setText("search_uid");    //이 부분에서 에러남
-//        //홈으로부터 검색 결과 받아오기
 //        searchKeyword_textview = view.findViewById(R.id.searchKeyword_textview);
 //        if(getArguments()!=null){
 //            searchKeyword=getArguments().getString("searchKeyword_input");

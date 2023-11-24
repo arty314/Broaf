@@ -59,5 +59,14 @@
         android:background="@drawable/rectangle_3"
         android:elevation="1dp" />
 
+    <Button
+        android:id="@+id/btnAutoInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자동 input(임시)"
+        android:textSize="18sp"
+        android:background="@drawable/rectangle_3"
+        android:elevation="1dp" />
+
 
 </LinearLayout>
