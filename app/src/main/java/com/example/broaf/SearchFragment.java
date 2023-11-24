@@ -43,21 +43,21 @@ public class SearchFragment extends Fragment {
 //        }
         //여기까지 홈으로부터 검색 결과 받아오기
 
-//        //메인화면으로 돌아가기 버튼
-//        btn_back_search_to_home=(ImageButton) view.findViewById(R.id.btn_back_search_to_home);
-//        btn_back_search_to_home.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                btn_back_search_to_home.setOnClickListener((view)->{
-//                    FragmentManager fragmentManager = getFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    HomeFragment homeFragment=new HomeFragment();
-//                    fragmentTransaction.replace(R.id.frame_layout,homeFragment);
-//                    fragmentTransaction.commit();
-//                });
-//            }
-//        });
-//        //여기까지 메인화면으로 돌아가기 버튼
+        //메인화면으로 돌아가기 버튼
+        btn_back_search_to_home=(ImageButton) view.findViewById(R.id.btn_back_search_to_home);
+        btn_back_search_to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_back_search_to_home.setOnClickListener((view)->{
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    HomeFragment homeFragment=new HomeFragment();
+                    fragmentTransaction.replace(R.id.frame_layout,homeFragment);
+                    fragmentTransaction.commit();
+                });
+            }
+        });
+        //여기까지 메인화면으로 돌아가기 버튼
 
         return view;
     }
