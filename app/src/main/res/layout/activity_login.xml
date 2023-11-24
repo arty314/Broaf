@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".LoginActivity"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     >
 
 
@@ -52,8 +52,7 @@
     <Button
         android:id="@+id/btnlogin"
         android:layout_width="120dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="152dp"
+        android:layout_height="wrap_content"
         android:text="확인"
         android:textSize="18sp"
         android:background="@drawable/rectangle_3"
@@ -65,6 +64,7 @@
         android:layout_height="wrap_content"
         android:text="자동 input(임시)"
         android:textSize="18sp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/rectangle_3"
         android:elevation="1dp" />
 
