@@ -5,12 +5,53 @@
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
+    <!--임시 뒤로가기 버튼-->
+    <ImageButton
+        android:id="@+id/btn_back_search_to_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="?attr/actionModeCloseDrawable"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:padding="20dp"
+        />
+
+    <!--임시 검색어 확인 뷰-->
     <TextView
+        android:id="@+id/searchKeyword_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="search"
         android:gravity="center"
         android:textSize="30sp"
         android:textColor="@color/brown"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="uid는 "
+            android:gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textColor="@color/brown"
+            />
+        <TextView
+            android:id="@+id/search_uid_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00000"
+            android:gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textColor="@color/orange"
+            />
+
+
+    </LinearLayout>
 
 </FrameLayout>
