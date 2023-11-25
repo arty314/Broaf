@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,11 +37,9 @@ import com.kakao.vectormap.MapView;
 
 public class HomeFragment extends Fragment {
 
-    int tempUID = 10001;
-
     ImageButton btn_search;
-    EditText searchKeyword_input;   //검색 내용(edittext)을 끌어오기 위해서.
-    //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
+    //EditText input_text_search;   //검색 내용(edittext)을 끌어오기 위해서.
+    //String search_str; //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
     Button editpost_normal;
 
@@ -52,24 +48,20 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         //표시할 xml layout 선택
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-//        search_bundle.clear();  //번들 내 기존 검색 내용 초기화
 
-        //검색버튼 누르면 input_text_search 내용을 search_bundle에 넣고 SearFrag로 고고
+
+        //검색버튼 누르면 input_text_search 내용을 SearchFragment로 넘겨주고 SearFrag로 고고
         btn_search = (ImageButton) view.findViewById(R.id.btn_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //검색 내용 끌어오기 (문제 있어서 숨김
-//                Bundle search_bundle =new Bundle();
-//                search_bundle.putString("searchKeyword_input",searchKeyword_input.getText().toString());
-//                search_bundle.putInt("uid",tempUID);
-//                searchFragment.setArguments(search_bundle);
-
+//                search_str =input_text_search.getText().toString();
+//                search_bundle.putString("search_str",search_str);
                 SearchFragment searchFragment = new SearchFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, searchFragment);
-                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

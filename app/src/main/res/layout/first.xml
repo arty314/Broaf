@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/first"
+        android:layout_width="411dp"
+        android:layout_height="731dp"
+        android:clipToOutline="true"
+        android:background="#FFFFFF"
+        tools:ignore="MissingConstraints">
+
+        <!-- 로그인 TextView -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="563dp"
+            android:text="로그인"
+            android:background="@drawable/rectangle_3"/>
+
+        <!-- 회원가입 TextView -->
+        <Button
+            android:id="@+id/btnRegist"
+            android:layout_width="275dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="621dp"
+            android:text="회원가입"
+            android:background="@drawable/rectangle_3"/>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

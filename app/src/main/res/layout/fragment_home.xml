@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/oat"
     tools:context=".HomeFragment">
 
 
@@ -15,6 +14,7 @@
         android:layout_height="match_parent" />
     <!--여기까지카카오맵-->
 
+
     <!-- 게시글 검색창. -->
     <LinearLayout
         android:id="@+id/search_bar_main"
@@ -23,7 +23,6 @@
         android:layout_margin="40dp"
         android:layout_gravity="center|top"
         android:padding="10dp"
-        android:paddingBottom="20dp"
         android:background="@drawable/search_btn_background"
         android:elevation="4dp"
         >
@@ -36,9 +35,6 @@
             android:hint="게시글 검색"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-
-            android:inputType="text"
-            android:maxLines="1"
             />
         <ImageButton
             android:id="@+id/btn_search"
@@ -92,9 +88,7 @@
     <FrameLayout
         android:id="@+id/frame_layout_post_viewer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="5dp"
-        />
+        android:layout_height="match_parent"/>
     <!--게시글 뷰어 창:근데 조금 문제있어서 조정 필요(검색창이 뷰어 위에 뜸..)-->
 
 </FrameLayout>

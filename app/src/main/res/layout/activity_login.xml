@@ -1,72 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--밑에 내용은 다 수정하시면 됨. 근데 메인화면으로 연결될 버튼은 하나 남겨주세용-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".LoginActivity"
-    android:gravity="center_horizontal"
     >
 
-
     <TextView
-        android:id="@+id/LoginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인"
+        android:text="Login Activity"
         android:textSize="30sp"
-        android:textAppearance="@style/some_id"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="100dp"
-        android:textStyle="bold"
+        android:textColor="@color/brown"/>
+
+    <Button
+        android:id="@+id/btn_loginActi_to_mainActi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="메인 화면으로"
         />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        >
-
-        <EditText
-            android:id="@+id/getloginemail"
-            android:layout_width="275dp"
-            android:layout_height="50dp"
-            android:hint="@string/email"
-            android:paddingHorizontal="30dp"
-            android:background="@drawable/regitextback"/>
-
-
-        <EditText
-            android:id="@+id/getloginpw"
-            android:layout_width="275dp"
-            android:layout_height="50dp"
-            android:hint="비밀번호"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="100dp"
-            android:paddingHorizontal="30dp"
-            android:background="@drawable/regitextback"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnlogin"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="확인"
-        android:textSize="18sp"
-        android:background="@drawable/rectangle_3"
-        android:elevation="1dp" />
-
-    <Button
-        android:id="@+id/btnAutoInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="자동 input(임시)"
-        android:textSize="18sp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/rectangle_3"
-        android:elevation="1dp" />
-
 
 </LinearLayout>

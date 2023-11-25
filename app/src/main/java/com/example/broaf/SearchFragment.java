@@ -5,61 +5,63 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
-//알아서 수정해주세요
-//홈에서 내용 끌어오는건 구현함
-
+//그냥 빈 frag 만드니까 이렇게 떴음. 알아서 수정해주세요
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link SearchFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class SearchFragment extends Fragment {
-    View view;
 
-    String search_uid = "11111";    //11111이면 에러란 뜻.
-    String searchKeyword = "ERROR";   //입력된 검색어를 저장하는 변수
-    TextView search_uid_view;   //uid 띄울 layout 창
-    TextView searchKeyword_textview;    //입력된 검색어 띄울 layout 창
-    ImageButton btn_back_search_to_home;    //뒤로가기 버튼 (== 홈으로 돌아가기 버튼)
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public SearchFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment SearchFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static SearchFragment newInstance(String param1, String param2) {
+        SearchFragment fragment = new SearchFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_search, container, false);
-
-//        //홈으로부터 검색 결과 받아오기
-//        search_uid=getArguments().getInt("uid");
-//        search_uid_view.setText("search_uid");    //이 부분에서 에러남
-//        searchKeyword_textview = view.findViewById(R.id.searchKeyword_textview);
-//        if(getArguments()!=null){
-//            searchKeyword=getArguments().getString("searchKeyword_input");
-//            searchKeyword_textview.setText(searchKeyword);
-//            search_uid=getArguments().getInt("uid");
-//            search_uid_view.setText(search_uid);
-//        }
-        //여기까지 홈으로부터 검색 결과 받아오기
-
-        //메인화면으로 돌아가기 버튼
-        btn_back_search_to_home=(ImageButton) view.findViewById(R.id.btn_back_search_to_home);
-        btn_back_search_to_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_back_search_to_home.setOnClickListener((view)->{
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    HomeFragment homeFragment=new HomeFragment();
-                    fragmentTransaction.replace(R.id.frame_layout,homeFragment);
-                    fragmentTransaction.commit();
-                });
-            }
-        });
-        //여기까지 메인화면으로 돌아가기 버튼
-
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
 
