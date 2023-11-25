@@ -25,4 +25,13 @@
     <string name="admin_reported_posts">신고함</string>
     <string name="admin_banned_users">정지 이용자 관리</string>
 
+<!--<<<<<< Updated upstream
+======= -->
+
+    <string name="open_range">공개범위</string>
+    <string name="open_time">공개시간</string>
+    <string name="test">test</string>
+    <string name="add_image_btn">사 진\n첨 부</string>
+
+>>>>>>> Stashed changes
 </resources>

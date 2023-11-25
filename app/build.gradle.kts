@@ -46,7 +46,7 @@ dependencies {
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
     implementation("com.google.firebase:firebase-analytics")
-//    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database:20.3.0")
 
     //카카오맵 SDK에의 의존성

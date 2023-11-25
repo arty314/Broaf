@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- _______ colors -->
+	<!-- __________ colors -->
 
 	<color name="colorPrimary">#008577</color>
 	<color name="colorPrimaryDark">#00574B</color>
 	<color name="colorAccent">#D81B60</color>
-    <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+	<color name="purple_200">#FFBB86FC</color>
+	<color name="light_blue_900">#01579B</color>
+	<color name="light_blue_A400">#00B0FF</color>
+	<color name="create_post_bg_color">#FAF7F1</color>
+	<color name="top_btn_bg_color">#EAD2A7</color>
+	<color name="text_bg_color">#EEE3CF</color>
+	<color name="_save_btn_color">#DB8447</color>
+	<color name="cancel_btn_color">#DEDEDE</color>
     <color name="orange">#DC8547</color>
     <color name="brown">#8F5224</color>
     <color name="cream">#FAF7F1</color>
