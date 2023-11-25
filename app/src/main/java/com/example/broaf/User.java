@@ -1,3 +1,5 @@
+//realtime-database에 User 정보를 넣기위해 정의하는 클래스
+
 package com.example.broaf;
 
 import java.util.List;

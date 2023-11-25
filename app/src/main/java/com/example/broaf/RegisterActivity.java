@@ -23,7 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 //회원가입
-public class RegisterActivity extends AppCompatActivity {
+public class
+RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef;
     private EditText editNickname, editID, editemail, editPW, editPWcheck;
@@ -65,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
                                             // 회원가입 성공 시의 동작
+                                            // 회원가입시 작성한 데이터 realtime-database에도 작성
                                             DBUser dao = new DBUser();
 
                                             User user = new User(email, Nickname, PW, null,null,null);
@@ -80,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                 }
                                             });
+                                            //
                                             Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(RegisterActivity.this, IntroActivity.class));
                                             finish();
