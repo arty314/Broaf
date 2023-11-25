@@ -1,4 +1,4 @@
-//User클래스 정보를 데이터베이스에 넣기 위한 클래스
+//User클래스 정보를 데이터베이스에 넣기위한 클래스
 
 package com.example.broaf;
 import androidx.annotation.NonNull;
