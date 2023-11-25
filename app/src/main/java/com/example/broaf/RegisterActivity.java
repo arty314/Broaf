@@ -52,21 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String PW = editPW.getText().toString();
                 String PWcheck = editPWcheck.getText().toString();
 
-                DBUser dao = new DBUser();
 
-                User user = new User(email, Nickname, PW, null,null,null);
-
-                dao.add(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
 
                 if((email != null) && !email.isEmpty()
                 && (Nickname != null) && !Nickname.isEmpty()
@@ -79,6 +65,21 @@ public class RegisterActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
                                             // 회원가입 성공 시의 동작
+                                            DBUser dao = new DBUser();
+
+                                            User user = new User(email, Nickname, PW, null,null,null);
+
+                                            dao.add(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+
+                                                }
+                                            });
                                             Toast.makeText(RegisterActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(RegisterActivity.this, IntroActivity.class));
                                             finish();
