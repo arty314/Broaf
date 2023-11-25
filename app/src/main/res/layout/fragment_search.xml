@@ -8,14 +8,49 @@
     <!--임시 뒤로가기 버튼-->
     <ImageButton
         android:id="@+id/btn_back_search_to_home"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:src="?attr/actionModeCloseDrawable"
         android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
+        android:elevation="5dp"
         android:padding="20dp"
-        />
+        android:layout_marginTop="8dp"
+        android:scaleType="fitCenter"
+        android:src="?attr/actionModeCloseDrawable" />
 
+    <LinearLayout
+        android:id="@+id/search_bar_main"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center|top"
+        android:padding="10dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/search_btn_background"
+        android:elevation="4dp"
+        >
+
+        <EditText
+            android:id="@+id/input_text_search_result"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="10dp"
+            android:hint="게시글 검색"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+
+            android:inputType="text"
+            android:maxLines="1"
+            />
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/transparent"
+            />
+    </LinearLayout>
     <!--임시 검색어 확인 뷰-->
     <TextView
         android:id="@+id/searchKeyword_textview"
