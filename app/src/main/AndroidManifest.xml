@@ -16,27 +16,23 @@
         android:theme="@style/Theme.Broaf"
         tools:targetApi="31">
         <activity
+            android:name=".IntroActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".PostEditerActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="true">
-        </activity>
-
-        <activity
-            android:name=".FirstActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -45,7 +41,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 카카오 native app key 추가 -->
+        </activity>
+
+        <!-- 카카오 native app key 추가 -->
         <meta-data
             android:name="com.kakao.vectormap.APP_KEY"
             android:value="d9bbdb5b3184a4b3466a916346b9d2ae" />

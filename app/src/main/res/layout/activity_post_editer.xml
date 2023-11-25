@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:text="post editer Activity"
         android:textSize="30sp"
-        android:textColor="@color/brown"/>
+        android:textColor="@color/brown"
+        />
 
     <Button
         android:id="@+id/btn_postEditerActi_to_mainActi"

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity"
+    android:gravity="center_horizontal"
+    >
+
+    <TextView
+        android:id="@+id/LoginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원 가입"
+        android:textSize="30sp"
+        android:textAppearance="@style/some_id"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="100dp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/editNickname"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:hint="닉네임"
+                android:paddingHorizontal="30dp"
+                android:background="@drawable/regitextback"
+                android:layout_marginRight="10dp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="중복 확인"
+                android:textSize="10dp"
+                android:layout_marginTop="-3dp"
+                android:background="@drawable/rectangle_3"
+                android:elevation="1dp"
+            />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editemail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="이메일"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="30dp"
+            android:background="@drawable/regitextback"/>
+
+        <EditText
+            android:id="@+id/editPW"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="비밀번호"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="30dp"
+            android:background="@drawable/regitextback"/>
+
+        <EditText
+            android:id="@+id/editPWcheck"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="비밀번호 확인"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="100dp"
+            android:paddingHorizontal="30dp"
+            android:background="@drawable/regitextback"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnRegi"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        android:elevation="1dp"
+        android:text="확인"
+        android:textSize="18sp" />
+
+</LinearLayout>
