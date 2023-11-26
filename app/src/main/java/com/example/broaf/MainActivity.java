@@ -43,7 +43,18 @@ public class MainActivity extends AppCompatActivity {
 
         binding.naviToHome.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){replaceFragment(new HomeFragment());}
+            public void onClick(View v){ // 일단 홈 프레그먼트에서 바로 게시글작성 프레그먼트 호촐하도록 만들었음, 다른탭일경우 지도로 돌아감
+                for (Fragment fragment: getSupportFragmentManager().getFragments()){
+                    if(fragment.isVisible()){
+                        if(fragment instanceof HomeFragment){
+                            replaceFragment(new CreatePostFragment());
+                            return;
+                        }
+                    }
+                }
+                replaceFragment(new HomeFragment());
+
+            }
             //여기까지 '지도로 돌아가기 버튼'
         });
 
@@ -55,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.addToBackStack(null); //프레그먼트간 백스택 저장 다른탭에서 뒤로가기 누르면 지도로 돌아온다.
         fragmentTransaction.commit();
     }
 
@@ -66,5 +78,14 @@ public class MainActivity extends AppCompatActivity {
         else if (item.getItemId()== R.id.myinfo)
             replaceFragment(new MyinfoFragment());
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

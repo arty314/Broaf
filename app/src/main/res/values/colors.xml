@@ -18,4 +18,8 @@
     <color name="white_2">#F8F8F8</color>
     <color name="oat">#F1DFBD</color>
     <color name="pink">#ED3C61</color>
+    <color name="top_btn_bg_color">#EAD2A7</color>
+    <color name="text_bg_color">#EEE3CF</color>
+    <color name="_save_btn_color">#DB8447</color>
+    <color name="cancel_btn_color">#DEDEDE</color>
 </resources>
