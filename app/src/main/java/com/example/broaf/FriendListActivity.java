@@ -22,9 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class FriendListActivity extends AppCompatActivity {
 
     private EditText getNickname;
-
+    //Auth 데이터를 가져오기 위한 변수
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
+    //
 
 
     private ImageButton add;
@@ -47,8 +48,8 @@ public class FriendListActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FriendListActivity.this, "이미지 버튼이 클릭되었습니다.", Toast.LENGTH_SHORT).show();
-                String FNickname = getNickname.getText().toString();
+                Toast.makeText(FriendListActivity.this, "이미지 버튼이 클릭되었습니다.", Toast.LENGTH_SHORT).show(); //버튼 클릭 확인용. 나중에 지울꺼임
+                String FNickname = getNickname.getText().toString(); // 입력한 닉네임 저장
 
 
                 if (currentUser != null) {
@@ -65,12 +66,12 @@ public class FriendListActivity extends AppCompatActivity {
 
                                 Log.d("User UID", currentUid);
 
-                                // "asdf" 닉네임을 가진 사용자의 UID 찾기
+                                // 검색창에 입력한 닉네임을 가진 사용자의 UID 찾기
                                 usersRef.orderByChild("nickname").equalTo(FNickname).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         for (DataSnapshot asdfSnapshot : dataSnapshot.getChildren()) {
-                                            String asdfUid = asdfSnapshot.getKey(); // "asdf" 닉네임을 가진 사용자의 UID (B)
+                                            String asdfUid = asdfSnapshot.getKey(); // 검색창 닉네임을 가진 사용자의 UID (B)
 
                                             Log.d("Friend UID", asdfUid);
 
