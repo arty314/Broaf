@@ -6,11 +6,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 
 //그냥 빈 frag 만드니까 이렇게 떴음. 알아서 수정해주세요
@@ -29,6 +32,7 @@ public class MyinfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button btn_close_viewer;
 
     public MyinfoFragment() {
         // Required empty public constructor
@@ -80,6 +84,26 @@ public class MyinfoFragment extends Fragment {
             }
         });
 
+        btn_close_viewer= view.findViewById(R.id.btn_close_viewer);
+        btn_close_viewer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_close_viewer= (Button) view.findViewById(R.id.btn_close_viewer);
+                btn_close_viewer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btn_close_viewer.setOnClickListener((view)->{
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            HomeFragment homeFragment=new HomeFragment();
+                            fragmentTransaction.replace(R.id.frame_layout,homeFragment);
+                            fragmentTransaction.commit();
+                        });
+                    }
+                });
+
+            }
+        });
 
         return view;
     }

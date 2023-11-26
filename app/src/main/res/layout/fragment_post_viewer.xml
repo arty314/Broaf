@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80000000"
     tools:context=".PostViewerFragment"
     android:clickable="true"
+    android:orientation="vertical"
     >
     <!--이쪽은 뒷배경 흐리게 만들기용.... 그리고 이 상태에선 home-frag를 터치할 수 없게 해야되는데 어쩐지 조종이 가능함;-->
 
 
     <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/frame_layout_post_viewer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,26 +20,81 @@
         android:layout_marginTop="150dp"
         android:background="@drawable/post_viewer_background"
         android:elevation="10dp"
-        >
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F7F7F7"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="17dp"
+                    android:src="@drawable/myinfo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:text="그레텔"
+                    android:textSize="16dp" />
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="230dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="#F7F7F7"
+                    android:src="@drawable/morebutton" />
+            </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이도 앞에서 쌀이랑 30분 동안 놀았다.\n겨우 정신차리고 열람실 자리 잡으려고 클리커를 켜니 모두 만석ㅠㅠ\n그래도 행복했으니 만족!\n공부는 정문 카페에서 하기로~"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2023.10.9. 오후 4:50"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#F7F7F7"
+                    android:src="@drawable/noheart" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="53"
+                    android:textSize="16dp"
+                    android:layout_marginTop="-1dp"/>
+                <Button
+                    android:id="@+id/btn_close_viewer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="230dp"
+                    android:layout_marginTop="0dp"
+                    android:text="뷰어 닫기"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
         <!--post_viewer_background.xml는 포스트 뷰어의 테두리를 둥글게 하기 위한것. 컬러나 radius 값 조절해서 쓰면 됨.-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:text="임시 포스트 뷰어"/>
-        <Button
-            android:id="@+id/btn_close_viewer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
-            android:text="뷰어 닫기\n(근데 안닫힘)"
-            />
 
-    </FrameLayout>
+    </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

@@ -42,7 +42,8 @@ public class HomeFragment extends Fragment {
     int tempUID = 10001;
 
     ImageButton btn_search;
-    EditText searchKeyword_input;   //검색 내용(edittext)을 끌어오기 위해서.
+    EditText input_text_search;   //검색 내용(edittext)을 끌어오기 위해서.
+    String searchKeyword_input;
     //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
     Button editpost_normal;
@@ -56,9 +57,11 @@ public class HomeFragment extends Fragment {
 
         //검색버튼 누르면 input_text_search 내용을 search_bundle에 넣고 SearFrag로 고고
         btn_search = (ImageButton) view.findViewById(R.id.btn_search);
+        input_text_search = view.findViewById(R.id.input_text_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 //검색 내용 끌어오기 (문제 있어서 숨김
 //                Bundle search_bundle =new Bundle();
 //                search_bundle.putString("searchKeyword_input",searchKeyword_input.getText().toString());
@@ -70,6 +73,16 @@ public class HomeFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, searchFragment);
                 fragmentTransaction.commit();
+                */
+                searchKeyword_input = input_text_search.getText().toString();
+                Bundle bundle = new Bundle();
+                bundle.putString("fromHomeFrag",searchKeyword_input);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                SearchFragment searchFragment = new SearchFragment();
+                searchFragment.setArguments(bundle);
+                transaction.replace(R.id.frame_layout,searchFragment); //framg_layout영역을 searchFragment로 교체한다.
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         //여기까지 검색버튼
