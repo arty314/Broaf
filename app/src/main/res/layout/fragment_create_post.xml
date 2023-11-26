@@ -134,7 +134,7 @@
                     android:layout_marginTop="5dp"
                     android:inputType="textMultiLine"
                     android:textSize="20sp"
-                    android:text="test"
+                    android:hint="내용을 입력하세요."
                     android:gravity="start|top"
                     android:background="@android:color/transparent">
                 </EditText>
