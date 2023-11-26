@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Broaf"
         tools:targetApi="31">
         <activity
+            android:name=".FriendListActivity"
+            android:exported="false" />
+        <activity
             android:name=".IntroActivity"
             android:exported="true">
             <intent-filter>
@@ -41,9 +44,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 카카오 native app key 추가 -->
+        </activity> <!-- 카카오 native app key 추가 -->
         <meta-data
             android:name="com.kakao.vectormap.APP_KEY"
             android:value="d9bbdb5b3184a4b3466a916346b9d2ae" />
