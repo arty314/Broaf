@@ -1,5 +1,6 @@
 package com.example.broaf;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -9,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+
 //그냥 빈 frag 만드니까 이렇게 떴음. 알아서 수정해주세요
 /**
  * A simple {@link Fragment} subclass.
@@ -64,6 +68,18 @@ public class MyinfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_myinfo, container, false);
         getActivity().setTitle("내 정보");     //상단 액션바에 표기할 텍스트 내용 정하는 코드
 
+        // FriendListButton 버튼 찾기
+        Button friendListButton = view.findViewById(R.id.FriendListButton);
+
+        // FriendListButton에 대한 클릭 이벤트 처리
+        friendListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FriendListActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }
@@ -80,4 +96,6 @@ public class MyinfoFragment extends Fragment {
         }
     }
     //액션바 가시성 조절 끝
+
+
 }
