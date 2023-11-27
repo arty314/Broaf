@@ -4,6 +4,8 @@
     package="com.example.broaf">
     <!-- 인터넷 권한임. 지도 불러올 때 필요. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 갤러리 권한, 사진추가시 필요 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"

@@ -28,6 +28,8 @@ public class NormalPost {
         this.pLocation[1] = 0.0;
         this.imgurl = "";
         this.openRange = 1;
-        this.opentilldate = null;
+        this.opentilldate = Calendar.getInstance();
     }
+
+    public void setOpenRange(int i){this.openRange = i;}
 }

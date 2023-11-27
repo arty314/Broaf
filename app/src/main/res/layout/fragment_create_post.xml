@@ -243,21 +243,22 @@
                 <TextView
                     android:id="@+id/open_time_view"
                     android:layout_width="60dp"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="0dp"
                     android:layout_alignParentEnd="true"
+                    android:text="4 일"
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:background="@drawable/round_rectangle_top_btn">
                 </TextView>
 
                 <SeekBar
-                    android:id="@+id/open_time_int"
+                    android:id="@+id/open_time_ratio"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="30dp"
-                    android:max="6"
-                    android:progress="3">
+                    android:max="18"
+                    android:progress="9">
 
                 </SeekBar>
 
@@ -274,7 +275,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/open_time_int"
+                    android:layout_below="@+id/open_time_ratio"
                     android:text="짧게">
 
                 </TextView>
@@ -282,7 +283,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/open_time_int"
+                    android:layout_below="@+id/open_time_ratio"
                     android:layout_centerHorizontal="true"
                     android:text="보통">
 
@@ -291,7 +292,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/open_time_int"
+                    android:layout_below="@+id/open_time_ratio"
                     android:layout_marginEnd="0dp"
                     android:layout_alignParentEnd="true"
                     android:text="길게">
@@ -322,7 +323,7 @@
                     android:layout_width="150dp"
                     android:layout_height="70dp"
                     android:background="@drawable/round_rectangle_save_btn"
-                    android:text="저장"
+                    android:text="등록"
                     android:textColor="@color/white"
                     android:textSize="23sp"
                     android:textStyle="bold"
