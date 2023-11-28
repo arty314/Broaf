@@ -9,6 +9,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+
         android:gravity="center"
         android:text="공지 뷰어" />
 
@@ -25,7 +27,7 @@
         android:gravity="center_vertical"
         >
         <ImageButton
-            android:id="@+id/toolbar_notice_back"
+            android:id="@+id/toolbar_announcement_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"

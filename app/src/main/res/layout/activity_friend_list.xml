@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_2"
+    android:background="@color/oat"
     tools:context=".FriendListActivity">
 
     <!-- 본 컨텐츠가 올라올 프레임 -->
@@ -13,80 +13,67 @@
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/friendlist_upperbar"
+        android:layout_marginTop="60dp"
         >
 
+        <!-- 이미지 버튼 -->
+        <ImageButton
+            android:id="@+id/Iaddfriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/addfriendbutton"
+
+            />
+
+        <EditText
+            android:id="@+id/getFriendNickname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="닉네임"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="30dp"
+            android:background="@drawable/search_btn_background"/>
 
 
     </FrameLayout>
 
 
-    <!-- 하단바 -->
-    <com.google.android.material.bottomappbar.BottomAppBar
+
+
+
+
+
+
+    <!--커스텀 상단바(xml 최하단에 둘 것)-->
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottomAppBar"
-        android:layout_gravity="bottom"
-        android:background="@color/cream"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="50dp"
+        android:layout_height="60dp"
+        android:elevation="4dp"
+        android:background="@color/white_2"
+        android:paddingTop="10dp"
+        android:gravity="center_vertical"
         >
-        <!-- 알림, 내 정보 보기 있는 하단바 -->
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/toolbar_friend_back"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/cream"
-            android:layout_marginEnd="20dp"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_nav_menu"
+            android:layout_gravity="left"
+            android:background="@drawable/icon_back"
             />
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <!-- 지도로 돌아가기 버튼(=홈으로 돌아가기) -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/navi_to_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/cream"
-        android:contentDescription="게시글 작성"
-        android:src="@drawable/back_to_map"
-        app:fabCustomSize="90dp"
-        app:hideMotionSpec="@null"
-        app:layout_anchor="@id/bottomAppBar"
-        app:maxImageSize="70dp"
-        app:showMotionSpec="@null"
-        app:tint="@null"
-        />
-
-    <ImageView
-        android:id="@+id/friendlist_upperbar"
-        android:src="@drawable/friendlist_upperbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
-    <!-- 이미지 버튼 -->
-    <ImageButton
-        android:id="@+id/Iaddfriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="#FEFAFD"
-        android:src="@drawable/addfriendbutton"
-        app:layout_anchor="@id/bottomAppBar"
-        app:layout_anchorGravity="bottom|end"
-    />
-
-    <EditText
-        android:id="@+id/getFriendNickname"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="닉네임"
-        android:layout_marginTop="10dp"
-        android:paddingHorizontal="30dp"
-        android:background="@drawable/regitextback"/>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="친구"
+            android:fontFamily="@font/notosanskrbold"
+            android:textColor="@color/top_nav_text"
+            />
+    </androidx.appcompat.widget.Toolbar>
+    <!--여기까지 상단바: 친구-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
