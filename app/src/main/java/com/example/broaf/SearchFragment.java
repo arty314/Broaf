@@ -58,21 +58,7 @@ public class SearchFragment extends Fragment {
         //recyclerview
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://broaf-72e4c-default-rtdb.firebaseio.com/");
 
-        //메인화면으로 돌아가기 버튼
-        btn_back_search_to_home=(ImageButton) view.findViewById(R.id.btn_back_search_to_home);
-        btn_back_search_to_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_back_search_to_home.setOnClickListener((view)->{
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    HomeFragment homeFragment=new HomeFragment();
-                    fragmentTransaction.replace(R.id.frame_layout,homeFragment);
-                    fragmentTransaction.commit();
-                });
-            }
-        });
-        //여기까지 메인화면으로 돌아가기 버튼
+        //메인화면으로 돌아가기 버튼 뺐어요. 이유: Searchfragment에서는 휴대폰 뒤로가기가 잘먹힘. 그리고 하단바의 메인 지도 버튼 눌러도 되기에.
 
         return view;
     }
