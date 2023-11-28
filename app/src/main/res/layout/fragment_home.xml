@@ -75,13 +75,6 @@
             android:layout_gravity="center"
             android:text="임시 게시글 열람 버튼\n(게시글 뷰어 frag 생성)"
             />
-        <Button
-            android:id="@+id/editpost_normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="임시 게시글 작성 버튼\n(게시글 에디터 acti [normal]로 이동)"
-            />
 
         <!--필요하시면 밑에 임시 버튼 더 다셔도 돼요-->
 

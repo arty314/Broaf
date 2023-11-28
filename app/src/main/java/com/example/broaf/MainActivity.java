@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         replaceFragment(new HomeFragment());        //처음엔 HomeFragment가 표시됨
         binding.bottomNavigationView.setBackground(null);
 
