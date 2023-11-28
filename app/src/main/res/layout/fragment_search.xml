@@ -52,15 +52,23 @@
         android:layout_marginHorizontal="20dp">
 
 
+        <!-- 전체 id 정리
+        search_input : 사용자가 입력한 검색어
+        search_result_count : 검색 결과의 개수
 
-        <!--입력한 검색어 표시 영역-->
+        recyclerview는 아직 못만들었는데 대충 틀 잡아두시면 디자인 들어갈게요
+        -->
+
+
+
+        <!--입력한 검색어 및 결과 갯수 표시 영역-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
             <TextView
-                android:id="@+id/input_search"
+                android:id="@+id/search_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosanskrbold"
@@ -70,6 +78,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="의 검색 결과"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="("
+                />
+            <TextView
+                android:id="@+id/search_result_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nn "
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
                 />
         </LinearLayout>
         <View
