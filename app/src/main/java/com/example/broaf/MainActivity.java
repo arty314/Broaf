@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             //여기까지 '지도로 돌아가기 버튼'
         });
 
+        NormalPost normalPost;
+
     }
 
     //flagment 전환 메소드
