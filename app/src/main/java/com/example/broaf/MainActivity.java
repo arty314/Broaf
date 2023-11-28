@@ -1,14 +1,22 @@
 package com.example.broaf;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,26 +30,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
+        //처음엔 HomeFragment가 표시됨
+        replaceFragment(new HomeFragment());
+
+
         //여기부터 '지도로 돌아가기 버튼'
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-        replaceFragment(new HomeFragment());        //처음엔 HomeFragment가 표시됨
-
-
-
-
+        //하단바 관련.
         binding.bottomNavigationView.setBackground(null);
-
         binding.bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
-
         binding.naviToHome.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){ // 일단 홈 프레그먼트에서 바로 게시글작성 프레그먼트 호촐하도록 만들었음, 다른탭일경우 지도로 돌아감
@@ -57,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             }
             //여기까지 '지도로 돌아가기 버튼'
         });
-
         NormalPost normalPost;
 
     }
@@ -98,5 +103,6 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new HomeFragment());
         FloatingActionButton fab = findViewById(R.id.navi_to_home);
     }
+
 
 }

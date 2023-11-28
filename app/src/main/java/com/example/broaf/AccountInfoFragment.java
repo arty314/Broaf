@@ -41,3 +41,4 @@ public class AccountInfoFragment extends Fragment {
         return view;
     }
 }
+

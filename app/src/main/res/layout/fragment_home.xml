@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/oat"
+    android:background="@color/white_2"
     tools:context=".HomeFragment">
 
 
-    <!--카카오맵 화면 (전 멤버의 키해시 얻을때까지 안 띄움-->
+    <!--카카오맵 화면 -->
     <com.kakao.vectormap.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
@@ -80,14 +80,38 @@
 
     </LinearLayout>
     <!--여기까지 임시 버튼들-->
-
-    <!-- post viewer가 올라올 프레임 -->
+    
     <FrameLayout
-        android:id="@+id/frame_layout_post_viewer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="5dp"
-        />
-    <!--게시글 뷰어 창:근데 조금 문제있어서 조정 필요(검색창이 뷰어 위에 뜸..)-->
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="100dp"
+        android:paddingHorizontal="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:clipToPadding="false"
+        >
+        <ImageButton
+            android:id="@+id/btn_follow_my_pos"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/icon_follow_my_pos"
+            android:background="@drawable/post_viewer_background"
+            android:backgroundTint="@color/cream"
+            android:layout_gravity="top"
+            android:elevation="2dp"
+            />
 
+        <ImageButton
+            android:id="@+id/btn_new"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/icon_new"
+            android:background="@drawable/post_viewer_background"
+            android:backgroundTint="@color/cream"
+            android:layout_gravity="top|end"
+            android:elevation="2dp"
+            />
+    </FrameLayout>
+    
 </FrameLayout>
