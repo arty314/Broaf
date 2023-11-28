@@ -40,13 +40,7 @@
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
-            <Button
-                android:id="@+id/btn_close_viewer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="180dp"
-                android:layout_marginTop="20dp"
-                android:text="뷰어 닫기" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -55,7 +49,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/myInfoButton"
+                android:id="@+id/btn_to_account_info"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -81,6 +75,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
+
+
 
 
 

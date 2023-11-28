@@ -17,53 +17,12 @@ import android.widget.ImageButton;
 
 
 //그냥 빈 frag 만드니까 이렇게 떴음. 알아서 수정해주세요
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyinfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class MyinfoFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private Button btn_close_viewer;
-
-    public MyinfoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyinfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyinfoFragment newInstance(String param1, String param2) {
-        MyinfoFragment fragment = new MyinfoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private ImageButton toolbar_myInfo_back;
+    private Button btn_to_account_info;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,26 +43,41 @@ public class MyinfoFragment extends Fragment {
             }
         });
 
-        btn_close_viewer= view.findViewById(R.id.btn_close_viewer);
-        btn_close_viewer.setOnClickListener(new View.OnClickListener() {
+
+        //계정정보 frag로
+        btn_to_account_info = (Button) view.findViewById(R.id.btn_to_account_info);
+        btn_to_account_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_close_viewer= (Button) view.findViewById(R.id.btn_close_viewer);
-                btn_close_viewer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        btn_close_viewer.setOnClickListener((view)->{
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            HomeFragment homeFragment=new HomeFragment();
-                            fragmentTransaction.replace(R.id.frame_layout,homeFragment);
-                            fragmentTransaction.commit();
-                        });
-                    }
-                });
-
+                AccountInfoFragment accountInfoFragment=new AccountInfoFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.frame_layout, accountInfoFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
+        //여기까지 계정정보 frag
+
+
+
+
+
+        //뒤로가기 버튼
+        toolbar_myInfo_back = (ImageButton) view.findViewById(R.id.toolbar_myInfo_back);
+        toolbar_myInfo_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment homeFragment=new HomeFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.frame_layout, homeFragment);
+                fragmentTransaction.commit();
+            }
+        });
+        //여기까지 뒤로가기
+        
+        
 
         return view;
     }
