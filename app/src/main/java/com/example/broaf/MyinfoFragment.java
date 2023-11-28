@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 //그냥 빈 frag 만드니까 이렇게 떴음. 알아서 수정해주세요
 
@@ -29,7 +31,12 @@ public class MyinfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_myinfo, container, false);
-        getActivity().setTitle("내 정보");     //상단 액션바에 표기할 텍스트 내용 정하는 코드
+
+        //중앙 버튼 이미지 설정
+        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
+        fab.setImageResource(R.drawable.back_to_map);
+        //
+
 
         // FriendListButton 버튼 찾기
         Button friendListButton = view.findViewById(R.id.FriendListButton);

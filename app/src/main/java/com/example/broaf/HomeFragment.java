@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kakao.vectormap.KakaoMap;
 import com.kakao.vectormap.KakaoMapReadyCallback;
 import com.kakao.vectormap.MapLifeCycleCallback;
@@ -52,7 +53,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         //표시할 xml layout 선택
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-//        search_bundle.clear();  //번들 내 기존 검색 내용 초기화
+
+        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
+        fab.setImageResource(R.drawable.re_writepost);
+
 
         //검색버튼 누르면 input_text_search 내용을 search_bundle에 넣고 SearFrag로 고고
         btn_search = (ImageButton) view.findViewById(R.id.btn_search);

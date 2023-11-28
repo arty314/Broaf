@@ -56,6 +56,14 @@
         app:tint="@null"
         />
 
+    <!-- home에선 map 버튼 위에 write 이미지 올릴 프레임 -->
+    <FrameLayout
+        android:id="@+id/frame_centerbutton"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="12dp"
+        />
 
 
 

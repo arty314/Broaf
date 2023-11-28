@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,6 +47,11 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
+        //중앙 버튼 이미지 설정
+        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
+        fab.setImageResource(R.drawable.back_to_map);
+        //
+
         input_text_search_Result = view.findViewById(R.id.input_text_search_Result);
 
 

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.broaf.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         replaceFragment(new HomeFragment());        //처음엔 HomeFragment가 표시됨
+
+
+
+
         binding.bottomNavigationView.setBackground(null);
 
         binding.bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
@@ -70,10 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
     //선택한 메뉴 아이템에 따라 replaceFragment(선택 flagment) 호출
     private boolean onNavigationItemSelected(MenuItem item) {
-        if (item.getItemId()== R.id.notice)
+        if (item.getItemId()== R.id.notice) {
             replaceFragment(new NoticeFragment());
-        else if (item.getItemId()== R.id.myinfo)
+        }
+        else if (item.getItemId()== R.id.myinfo) {
             replaceFragment(new MyinfoFragment());
+
+        }
         return true;
     }
 
@@ -88,5 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void closePostFrag(){
         replaceFragment(new HomeFragment());
+        FloatingActionButton fab = findViewById(R.id.navi_to_home);
     }
+
 }
