@@ -46,7 +46,6 @@ public class HomeFragment extends Fragment {
     String searchKeyword_input;
     //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
-    Button editpost_normal;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,19 +60,6 @@ public class HomeFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                //검색 내용 끌어오기 (문제 있어서 숨김
-//                Bundle search_bundle =new Bundle();
-//                search_bundle.putString("searchKeyword_input",searchKeyword_input.getText().toString());
-//                search_bundle.putInt("uid",tempUID);
-//                searchFragment.setArguments(search_bundle);
-
-                SearchFragment searchFragment = new SearchFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, searchFragment);
-                fragmentTransaction.commit();
-                */
                 searchKeyword_input = input_text_search.getText().toString();
                 Bundle bundle = new Bundle();
                 bundle.putString("fromHomeFrag",searchKeyword_input);
@@ -104,19 +90,6 @@ public class HomeFragment extends Fragment {
         });
         //여기까지 포스트 뷰어 add
 
-        //editpost 누르면 포스트 에디터 acti로 이동
-        editpost_normal = (Button) view.findViewById(R.id.editpost_normal);
-        editpost_normal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //포스트 에디터 acti로 이동
-                Intent intent = new Intent(getActivity(), PostEditerActivity.class);
-                startActivity(intent);
-            }
-        });
-        //여기까지 포스트 에디터 acti로 이동
-
-
         //여기부터 카카오맵
         MapView mapView = view.findViewById(R.id.map_view);
         mapView.start(new MapLifeCycleCallback() {
@@ -138,19 +111,10 @@ public class HomeFragment extends Fragment {
         /**여기까지 카카오맵**/
 
 
+
         return view;
     }
 
-    //액션바 가시성
-    @Override
-    public void onResume() {
-        super.onResume();
-        ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            ab.hide();      //상단바 숨기기
-            //ab.show();    //상단바 보이기
-        }
-    }
-    //액션바 가시성 조절 끝
+
 
 }

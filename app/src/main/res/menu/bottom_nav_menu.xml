@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/notice"
-        android:icon="@drawable/noti_new"
+        android:icon="@drawable/noti_none"
         android:title="알림" />
 
 
