@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resodurces>
+<resources>
 	<!-- _______ colors -->
 
 	<color name="colorPrimary">#008577</color>
@@ -23,5 +23,4 @@
     <color name="text_bg_color">#EEE3CF</color>
     <color name="_save_btn_color">#DB8447</color>
     <color name="cancel_btn_color">#DEDEDE</color>
-
-</resodurces>
+</resources>
