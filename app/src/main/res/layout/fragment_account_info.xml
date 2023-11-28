@@ -8,6 +8,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
         >
 
         <LinearLayout
@@ -36,4 +37,32 @@
 
     </ScrollView>
 
+
+    <!--커스텀 상단바(xml 최하단에 둘 것)-->
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:background="@color/white_2"
+        android:paddingTop="10dp"
+        android:gravity="center_vertical"
+        >
+        <ImageButton
+            android:id="@+id/toolbar_notice_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:background="@drawable/icon_back"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="계정 정보"
+            android:fontFamily="@font/notosanskrbold"
+            android:textColor="@color/top_nav_text"
+            />
+    </androidx.appcompat.widget.Toolbar>
+    <!--여기까지 상단바: 계정 정보-->
 </FrameLayout>
