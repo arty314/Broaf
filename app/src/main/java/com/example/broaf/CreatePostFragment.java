@@ -4,7 +4,6 @@ package com.example.broaf;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -35,6 +34,7 @@ import java.util.Calendar;
 public class CreatePostFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView attach_img_view;
+    private Button del_img_btn;
     private PostBody postBody;
 
     @Override
@@ -123,13 +123,15 @@ public class CreatePostFragment extends Fragment {
             }
         });// -------여기까지 하단 취소버튼 지정
 
-        Button del_img_btn = view.findViewById(R.id.delete_img_btn);
+        del_img_btn = view.findViewById(R.id.delete_img_btn);
         del_img_btn.setVisibility(View.GONE); // 처음에는 숨겨져있음
         del_img_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //첨부된 이미지를 지우는 코드
                 del_img_btn.setVisibility(View.GONE);
+                postBody.setImgurl(Uri.parse(""));
+                attach_img_view.setImageURI(Uri.parse(""));
             }
         });
 
@@ -147,10 +149,9 @@ public class CreatePostFragment extends Fragment {
                             case 0:
                                 //Toast.makeText(getActivity(),i + "번째 누름", Toast.LENGTH_SHORT).show();
                                 pickImageFromGallery();
-                                del_img_btn.setVisibility(View.VISIBLE);
                                 break; //갤러리 열어서 하는거 추가
                             case 1:
-                                del_img_btn.setVisibility(View.VISIBLE);
+
                                 //카메라 열어서 하는거 추가
                         }
                     }
@@ -230,6 +231,8 @@ public class CreatePostFragment extends Fragment {
     private void handleSelectedImage(Uri imageUri) {
         // 이미지 처리 로직을 구현
         attach_img_view.setImageURI(imageUri);
+        postBody.setImgurl(imageUri);
+        del_img_btn.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -294,14 +297,14 @@ public class CreatePostFragment extends Fragment {
         private Calendar writeTime;
         //private int? badge; // 이모티콘 구분자는 뭘로할지 몰라서 일단 주석처리
         private Calendar opentilldate;
-        private String imgurl;
+        private Uri imguri;
         private int openRange;
         private int openratio;
 
         PostBody(){
             this.content = "";
             this.writeTime = Calendar.getInstance();
-            this.imgurl = "";
+            this.imguri = null;
             this.openRange = 1;
             this.opentilldate = Calendar.getInstance();
             this.openratio = 9;
@@ -309,8 +312,8 @@ public class CreatePostFragment extends Fragment {
 
         public String getContent(){return content;}
         public void setContent(String str){this.content = str;}
-        public String getImgurl(){return imgurl;}
-        public void setImgurl(String str){this.imgurl = str;}
+        public Uri getImgurl(){return imguri;}
+        public void setImgurl(Uri uri){this.imguri = uri;}
         public int getOpenRange(){return openRange;}
         public void setOpenRange(int n){this.openRange = n;}
         public Calendar getOpentilldate(){return opentilldate;}
@@ -318,4 +321,5 @@ public class CreatePostFragment extends Fragment {
         public int getOpenratio(){return openratio;}
         public void setOpenratio(int n){this.openratio = n;}
     }
+
 }
