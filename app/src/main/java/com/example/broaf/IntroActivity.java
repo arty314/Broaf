@@ -32,7 +32,7 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceStart);
         setContentView(R.layout.activity_intro);
 
-        onCheckPermission();
+        onCheckPermission();// 권한 확인 함수
 
         ///**
         //키 해시 얻기
@@ -97,7 +97,7 @@ public class IntroActivity extends AppCompatActivity {
         //여기까지 액션바 가시성 조절
     }
 
-    public void onCheckPermission() // 권한을 확인하는 함수
+    public void onCheckPermission() // 권한을 확인하는 함수, 근데 권한을 계속 켰다 껏다 하니 동작을 했다 안했다함
     {
         String[] permissions = null;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -117,7 +117,7 @@ public class IntroActivity extends AppCompatActivity {
                 denied_permissions.add(perm);
         }
 
-        if(denied_permissions.size() > 0){
+        if(denied_permissions.size() != 0){
             String [] deniedPerms = denied_permissions.toArray(new String[denied_permissions.size()]);
             ActivityCompat.requestPermissions(this, deniedPerms, 10);
         }
@@ -130,9 +130,9 @@ public class IntroActivity extends AppCompatActivity {
             case 10: // requestCode = 10으로 해놓았음
                 if (grantResult.length > 0 && grantResult[0] == PackageManager.PERMISSION_GRANTED) { // 권한이 부여되었을 때
                     Toast.makeText(this, "앱 실행을 위한 권한이 설정 되었습니다", Toast.LENGTH_SHORT).show();
-                } else { // 권한이 부여되지 않은 경우 앱이 종료됨
-                    Toast.makeText(this, "앱 실행을 위한 권한이 취소 되었습니다. 앱을 종료합니다.", Toast.LENGTH_SHORT).show();
-                    finish();
+                } else { // 권한이 부여되지 않은 경우 앱이 종료됨(종료하려 했으나 finish(); 를 넣으니 한번 나가지니까 다시 못들어가는 경우 발생)
+                    Toast.makeText(this, "앱 실행을 위한 권한이 취소 되었습니다", Toast.LENGTH_SHORT).show();
+                    //finish(); // 이거 넣으면 한번 취소하면 계속 토스트메시지 뜨면서 앱이 켜졌다 바로꺼짐
                 }
                 break;
         }
