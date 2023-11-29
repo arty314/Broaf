@@ -61,11 +61,13 @@ public class CreatePostFragment extends Fragment {
     private PostBody postBody;
     private String currentFilePath;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_post, container, false);
 
+        SeekBar open_time_ratio = view.findViewById(R.id.open_time_ratio); // 시크바 토글에 사용하기 위해 위로 땡김
         postBody = new PostBody();
         TextView open_time = view.findViewById(R.id.open_time_view);
         // 공개범위 토글스위치 세팅
@@ -83,7 +85,7 @@ public class CreatePostFragment extends Fragment {
                 }
                 open_range[0].setChecked(true);
                 postBody.setOpenRange(1);
-                int n = postBody.getOpenratio();
+                int n = open_time_ratio.getProgress();
                 String t = (1 + n / 3) + " 일";
                 open_time.setText(t);
             }
@@ -96,7 +98,7 @@ public class CreatePostFragment extends Fragment {
                 }
                 open_range[1].setChecked(true);
                 postBody.setOpenRange(2);
-                int n = postBody.getOpenratio();
+                int n = open_time_ratio.getProgress();
                 String t = (1 + n / 2) + " 일";
                 open_time.setText(t);
             }
@@ -109,7 +111,7 @@ public class CreatePostFragment extends Fragment {
                 }
                 open_range[2].setChecked(true);
                 postBody.setOpenRange(3);
-                int n = postBody.getOpenratio();
+                int n = open_time_ratio.getProgress();
                 if (n == 18)
                     open_time.setText("무제한");
                 else {
@@ -213,7 +215,7 @@ public class CreatePostFragment extends Fragment {
         });
 
         // 공개시간 SeekBar동작 정의
-        SeekBar open_time_ratio = view.findViewById(R.id.open_time_ratio);
+
         open_time_ratio.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
