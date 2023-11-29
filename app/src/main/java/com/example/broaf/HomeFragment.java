@@ -34,7 +34,7 @@ import com.kakao.vectormap.MapView;
 //                  //Idea: 어케 잘 캐싱하면 게시글 재로드 속도 향상?
 //      열람 가능 여부 테스트 하고 나면 어케저게 잘 게시글 label 별로 icon 변경 및 badge 달아주기
 //                  //Idea: 이 또한 어케 잘 캐싱하면 게시글 재로드 속도 향상? 친구 프사, 미리보기 등
-
+//롤백....
 public class HomeFragment extends Fragment {
 
     ImageButton btn_search;
