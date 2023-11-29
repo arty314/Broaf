@@ -2,7 +2,6 @@ package com.example.broaf;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -12,11 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -29,21 +26,15 @@ import com.kakao.vectormap.KakaoMap;
 import com.kakao.vectormap.KakaoMapReadyCallback;
 import com.kakao.vectormap.LatLng;
 import com.kakao.vectormap.MapView;
-import com.kakao.vectormap.animation.Interpolation;
+import com.kakao.vectormap.camera.CameraAnimation;
+import com.kakao.vectormap.camera.CameraUpdateFactory;
 import com.kakao.vectormap.label.Label;
 import com.kakao.vectormap.label.LabelLayer;
 import com.kakao.vectormap.label.LabelOptions;
 import com.kakao.vectormap.label.LabelStyle;
-import com.kakao.vectormap.label.PathOptions;
-import com.kakao.vectormap.label.TrackingManager;
-import com.kakao.vectormap.shape.DotPoints;
-import com.kakao.vectormap.shape.Polygon;
-import com.kakao.vectormap.shape.PolygonOptions;
-import com.kakao.vectormap.shape.PolygonStyles;
-import com.kakao.vectormap.shape.PolygonStylesSet;
-import com.kakao.vectormap.shape.ShapeAnimator;
-import com.kakao.vectormap.shape.animation.CircleWave;
-import com.kakao.vectormap.shape.animation.CircleWaves;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 //홈 frag 구현 방향
@@ -69,7 +60,7 @@ public class HomeFragment extends Fragment {
     //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
 
-    ImageButton btn_follow_my_pos, btn_new;
+    ImageButton btn_fit, btn_new;
     boolean isTrackingMode = false; //trackingmode의 온오프 여부를 기록하는 변수. btn_follow_my_pos 버튼을 누를 시 토글
 
     //현재 GPS 위치
@@ -79,9 +70,9 @@ public class HomeFragment extends Fragment {
 
     //지도에 현재 마커 표시
     private KakaoMap kakaoMap;
-    private ShapeAnimator shapeAnimator;
     private LabelLayer labelLayer;
-    private Label centerLabel, directionLabel, chatLabel;
+    private Label centerLabel;
+    private List<Label> selectedList = new ArrayList<>();
 
     ///////
 
@@ -174,6 +165,16 @@ public class HomeFragment extends Fragment {
         });
         //여기까지 GPS 불러오기
 
+        //화면 중심 되돌리기
+        btn_fit = (ImageButton)view.findViewById(R.id.btn_fit);
+        btn_fit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                kakaoMap.moveCamera(CameraUpdateFactory.fitMapPoints(getSelectedPoints(), 20),
+                        CameraAnimation.from(500, true, true));
+            }
+        });
+
 
 
 
@@ -248,31 +249,18 @@ public class HomeFragment extends Fragment {
     private void createLabels(LatLng pos) {
         // 중심 라벨 생성
         centerLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng).setAnchorPoint(0, 0))
+                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng2).setAnchorPoint(0, 0))
                 .setRank(1));
-
+        selectedList.add(centerLabel);
     }
 
-    public void onCheckBoxClicked(View view) {
-        boolean isChecked = ((CheckBox) view).isChecked();
-        final TrackingManager trackingManager = kakaoMap.getTrackingManager();
-
-        int id = view.getId();
-        if (id == R.id.ck_tracking_mode) {
-            if (isChecked) {
-                if (directionLabel != null) {
-                    trackingManager.startTracking(directionLabel);
-                } else {
-                    Toast.makeText(getActivity(),
-                            "DirectionLabel is null.", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                trackingManager.stopTracking();
-            }
+    private LatLng[] getSelectedPoints() {
+        int count = selectedList.size();
+        LatLng[] points = new LatLng[count];
+        for (int i = 0; i < selectedList.size(); i++) {
+            points[i] = selectedList.get(i).getPosition();
         }
-
+        return points;
     }
-
-
 
 }

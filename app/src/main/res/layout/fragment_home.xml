@@ -21,20 +21,6 @@
 
     <!--여기부터 도려내면 됨-->
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
-
-        <CheckBox
-            android:id="@+id/ck_tracking_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="startTracking"
-            android:onClick="onCheckBoxClicked"/>
-
-    </LinearLayout>
 
 
     <!-- 게시글 검색창. -->
@@ -113,7 +99,7 @@
         android:clipToPadding="false"
         >
         <ImageButton
-            android:id="@+id/btn_follow_my_pos"
+            android:id="@+id/btn_fit"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:src="@drawable/icon_follow_my_pos"
