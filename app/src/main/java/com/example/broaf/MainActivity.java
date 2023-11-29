@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -42,11 +43,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        try { //인텐트로 PostBody객체가 도착하지 않으면 무시함
+            Intent recivepostbody = getIntent();
+            NormalPost normalPost = new NormalPost((CreatePostFragment.PostBody)
+                    recivepostbody.getSerializableExtra("postbody"));
+            Toast.makeText(this, "Normalpost 생성 완료", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){ }
+
         //처음엔 HomeFragment가 표시됨
         replaceFragment(new HomeFragment());
-
-
-
 
         //여기부터 '지도로 돌아가기 버튼'
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -70,11 +76,8 @@ public class MainActivity extends AppCompatActivity {
             }
             //여기까지 '지도로 돌아가기 버튼'
         });
-        NormalPost normalPost;
 
     }
-
-
 
 
     //flagment 전환 메소드
@@ -112,6 +115,5 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new HomeFragment());
         FloatingActionButton fab = findViewById(R.id.navi_to_home);
     }
-
 
 }

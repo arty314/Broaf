@@ -117,7 +117,7 @@ public class IntroActivity extends AppCompatActivity {
                 denied_permissions.add(perm);
         }
 
-        if(denied_permissions.size() != 0){
+        if(denied_permissions.size() != 0){ // 이전버전  < 0 이었음
             String [] deniedPerms = denied_permissions.toArray(new String[denied_permissions.size()]);
             ActivityCompat.requestPermissions(this, deniedPerms, 10);
         }

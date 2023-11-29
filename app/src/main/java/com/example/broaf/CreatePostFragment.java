@@ -1,17 +1,31 @@
 package com.example.broaf;
 
 
+import static androidx.core.content.PermissionChecker.checkCallingPermission;
+import static androidx.core.content.PermissionChecker.checkSelfPermission;
+
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.content.PermissionChecker;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,15 +41,25 @@ import android.widget.ToggleButton;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class CreatePostFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int TAKE_PICTURE_OK = 2;
     private ImageView attach_img_view;
     private Button del_img_btn;
     private PostBody postBody;
+    private String currentFilePath;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +73,7 @@ public class CreatePostFragment extends Fragment {
         open_range[0] = view.findViewById(R.id.toggle_open_range_public);
         open_range[1] = view.findViewById(R.id.toggle_open_range_friends);
         open_range[2] = view.findViewById(R.id.toggle_open_range_onlyme);
+
         EditText content = view.findViewById(R.id.post_content);
         open_range[0].setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,15 +170,41 @@ public class CreatePostFragment extends Fragment {
                 builder.setItems(R.array.attach_img, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i) {
-                            case 0:
-                                //Toast.makeText(getActivity(),i + "번째 누름", Toast.LENGTH_SHORT).show();
-                                pickImageFromGallery();
-                                break; //갤러리 열어서 하는거 추가
-                            case 1:
+                        if (checkSelfPermission(view.getContext(), Manifest.permission.READ_MEDIA_IMAGES) ==
+                        PermissionChecker.PERMISSION_GRANTED &&
+                        checkSelfPermission(view.getContext(), Manifest.permission.CAMERA) ==
+                        PermissionChecker.PERMISSION_GRANTED) {
+                            switch (i) {
+                                case 0:
+                                    //Toast.makeText(getActivity(),i + "번째 누름", Toast.LENGTH_SHORT).show();
+                                    pickImageFromGallery();
+                                    break; //갤러리 열어서 하는거 추가
+                                case 1:
+                                    Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    if(cameraintent.resolveActivity(getActivity().getPackageManager()) != null){
+                                        File pictureFile = null;
+                                        try{pictureFile = createImageFile(view.getContext());}
+                                        catch (IOException ex){Toast.makeText(getActivity(), "파일 생성 실패",Toast.LENGTH_SHORT).show();}
+                                        if (pictureFile != null){
+                                            try { // 현재 카메라 구동안됨
+                                            Uri pictureUri = FileProvider.getUriForFile(view.getContext(),
+                                                    "com.example.broaf.fileprovider", pictureFile);
+                                                cameraintent.putExtra(MediaStore.EXTRA_OUTPUT, pictureUri);
+                                                startActivityForResult(cameraintent, TAKE_PICTURE_OK);
+                                            }catch(Exception e){Toast.makeText(getActivity(), "URI ㅕㄴ동 구동실패",Toast.LENGTH_SHORT).show();}
+                                        }
+                                    }
 
-                                //카메라 열어서 하는거 추가
+                                    //카메라 열어서 하는거 추가
+                            }
                         }
+                        else{
+                            requestPermissions(new String[]{
+                                    Manifest.permission.READ_MEDIA_IMAGES,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.CAMERA }, 10);
+                        }
+
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -192,15 +243,38 @@ public class CreatePostFragment extends Fragment {
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                postBody.setOpenratio(seekBar.getProgress());
+                switch(postBody.getOpenRange()) {
+                    case 1:
+                        postBody.setOpenratio((1 + seekBar.getProgress()/3));
+                        break;
+                    case 2:
+                        postBody.setOpenratio((1 + seekBar.getProgress()/2));
+                        break;
+                    case 3:
+                        postBody.setOpenratio(1 + seekBar.getProgress());
+                }
             }
         });
-
-
-
-
-
-
+        // 저장버튼 동작 정의 및 데이터객체 내보내기
+        Button save_btn = view.findViewById(R.id.save_btn);
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postBody.setText(String.valueOf(content.getText()));
+                if (!postBody.getText().trim().isEmpty()){
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.DATE, postBody.getOpenratio());
+                    Date d = new Date(cal.getTimeInMillis());
+                    postBody.setOpentilldate(d);
+                    Intent intent = new Intent(view.getContext(), MainActivity.class); // 또는 getActivity()사용
+                    intent.putExtra("postbody", postBody);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(view.getContext(), "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
 
@@ -226,6 +300,26 @@ public class CreatePostFragment extends Fragment {
                 handleSelectedImage(selectedImageUri);
             }
         }
+        /*else if (requestCode == TAKE_PICTURE_OK && resultCode == Activity.RESULT_OK) {
+            File file = new File(currentFilePath);
+            Bitmap bitmap;
+            if (Build.VERSION.SDK_INT >= 29) {
+                ImageDecoder.Source source = ImageDecoder.createSource(getcontentResolver(), Uri.fromFile(file));
+                try {
+                    bitmap = ImageDecoder.decodeBitmap(source);
+                    if (bitmap != null) { attach_img_view.setImageBitmap(bitmap); }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), Uri.fromFile(file));
+                    if (bitmap != null) { attach_img_view.setImageBitmap(bitmap); }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }*/ // 오류로인한 카메라 이미지 처리부분 주석처리
     }
     // 선택한 이미지 처리를 위한 메서드
     private void handleSelectedImage(Uri imageUri) {
@@ -233,6 +327,25 @@ public class CreatePostFragment extends Fragment {
         attach_img_view.setImageURI(imageUri);
         postBody.setImgurl(imageUri);
         del_img_btn.setVisibility(View.VISIBLE);
+    }
+
+    private void handleTakePicture(Bitmap bitmap){
+        if (bitmap != null){
+            attach_img_view.setImageBitmap(bitmap);
+        }
+    }
+
+    private File createImageFile(Context context) throws IOException{
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+        currentFilePath = image.getAbsolutePath();
+        return image;
     }
 
     @Override
@@ -292,34 +405,38 @@ public class CreatePostFragment extends Fragment {
         return -1;
     }
 
-    private static class PostBody{
-        private String content;
-        private Calendar writeTime;
-        //private int? badge; // 이모티콘 구분자는 뭘로할지 몰라서 일단 주석처리
-        private Calendar opentilldate;
-        private Uri imguri;
+    public static class PostBody implements Serializable {
+        private String text;
+        private Date writeTime;
+        private int icon; // 아이콘 구분자는 뭘로할지 몰라서 일단 주석처리
+        private Date opentilldate;
+        private String imguri;
         private int openRange;
         private int openratio;
 
         PostBody(){
-            this.content = "";
-            this.writeTime = Calendar.getInstance();
+            this.text = "";
+            this.writeTime = new Date();
             this.imguri = null;
             this.openRange = 1;
-            this.opentilldate = Calendar.getInstance();
+            this.opentilldate = new Date();
             this.openratio = 9;
+            this.icon = 0;
         }
 
-        public String getContent(){return content;}
-        public void setContent(String str){this.content = str;}
-        public Uri getImgurl(){return imguri;}
-        public void setImgurl(Uri uri){this.imguri = uri;}
+        public String getText(){return text;}
+        public void setText(String str){this.text = str;}
+        public String getImgurl(){return imguri;}
+        public void setImgurl(Uri uri){this.imguri = uri.toString();}
         public int getOpenRange(){return openRange;}
         public void setOpenRange(int n){this.openRange = n;}
-        public Calendar getOpentilldate(){return opentilldate;}
-        public void setOpentilldate(Calendar calendar){this.opentilldate = calendar;}
+        public Date getOpentilldate(){return opentilldate;}
+        public void setOpentilldate(Date date){this.opentilldate = date;}
         public int getOpenratio(){return openratio;}
         public void setOpenratio(int n){this.openratio = n;}
+        public int getIcon(){return this.icon;}
+        public void setIcon(int n) {this.icon = n;}
+        public Date getWriteTime(){return this.writeTime;}
     }
 
 }

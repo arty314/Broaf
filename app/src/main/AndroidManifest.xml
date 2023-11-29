@@ -63,6 +63,16 @@
         <meta-data
             android:name="com.kakao.vectormap.APP_KEY"
             android:value="d9bbdb5b3184a4b3466a916346b9d2ae" />
+        <!-- 카메라로 찍은 사진 저장경로 설정 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.mydomain.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/camera_picture_paths" />
+        </provider>
     </application>
 
 </manifest>
