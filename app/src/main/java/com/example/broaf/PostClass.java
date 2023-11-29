@@ -50,4 +50,12 @@ public class PostClass {
         this.writtenDateTime=writtenDateTime; this.openToDateTime=openToDateTime;
     }
 
+//    public String getPostIcon(PostClass post){
+//
+//        switch (post.icon_no){
+//            case 1:
+//                break;
+//        }
+//    }
+
 }
