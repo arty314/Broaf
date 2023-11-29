@@ -82,7 +82,6 @@ public class HomeFragment extends Fragment {
     private ShapeAnimator shapeAnimator;
     private LabelLayer labelLayer;
     private Label centerLabel, directionLabel, chatLabel;
-    private Polygon animationPolygon;
 
     ///////
 
@@ -132,28 +131,6 @@ public class HomeFragment extends Fragment {
         });
         //여기까지 포스트 뷰어 add
 
-
-
-
-//        //tracking mode 온오프
-//        btn_follow_my_pos = (ImageButton)view.findViewById(R.id.btn_follow_my_pos);
-//        btn_follow_my_pos.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                TrackingManager trackingManager = kakaoMap.getTrackingManager();
-//                if(isTrackingMode==false){
-//                    //지도의 중심이 현재 위치 마커를 추적한다.
-//                    //false에서 버튼 클릭 시 true
-//                    Toast.makeText(getActivity(), "tracking mode ON", Toast.LENGTH_SHORT).show();
-//                    isTrackingMode=true;
-//                }
-//                else{
-//                    //추적을 멈춘다.
-//                    Toast.makeText(getActivity(), "tracking mode OFF", Toast.LENGTH_SHORT).show();
-//                    isTrackingMode=false;
-//                }
-//            }
-//        });
 
         //GPS 불러오기!!
         btn_new = (ImageButton)view.findViewById(R.id.btn_new);   //새로고침 버튼 누르면 됨.
@@ -209,27 +186,12 @@ public class HomeFragment extends Fragment {
             public LatLng getPosition() {
                 return LatLng.from(35.832038,128.754193);
             }
-
+            //이슈: latitude와 longitude를 GPS값으로 불러와야 하는데 안불러와진다!
             @Override
             public void onMapReady(KakaoMap map) {
                 kakaoMap = map;
                 labelLayer = kakaoMap.getLabelManager().getLayer();
                 LatLng pos = kakaoMap.getCameraPosition().getPosition();
-
-                // circleWave 애니메이션을 위한 Polygon 및 Animator 미리 생성
-                animationPolygon = kakaoMap.getShapeManager().getLayer().addPolygon(
-                        PolygonOptions.from("circlePolygon")
-                                .setDotPoints(DotPoints.fromCircle(pos, 1.0f))
-                                .setStylesSet(PolygonStylesSet.from(
-                                        PolygonStyles.from(Color.parseColor("#f55d44")))));
-
-                CircleWaves circleWaves = CircleWaves.from("circleWaveAnim",
-                                CircleWave.from(1, 0, 0, 200))
-                        .setHideShapeAtStop(false)
-                        .setInterpolation(Interpolation.CubicInOut)
-                        .setDuration(1500).setRepeatCount(100);
-                shapeAnimator = kakaoMap.getShapeManager().addAnimator(circleWaves);
-
                 createLabels(pos);
             }
         });
@@ -258,7 +220,6 @@ public class HomeFragment extends Fragment {
         }
     };
 
-
     //label level 설정
 //    private Bitmap getRankBitmap(float rank, int bgResId) {
 //        View rankView = LayoutInflater.from(getBaseContext()).inflate(R.layout.layout_rank_label, null);
@@ -270,8 +231,6 @@ public class HomeFragment extends Fragment {
 //        return createBitmap(rankView, width, height);
 //    }
     //label level 끝
-
-
 //    //trackingmode ON/OFF
 //    public void setTrackingMode(boolean isTrackingMode) {
 //        TrackingManager trackingManager = kakaoMap.getTrackingManager();
@@ -286,28 +245,12 @@ public class HomeFragment extends Fragment {
 //    //
 
 
-
     private void createLabels(LatLng pos) {
         // 중심 라벨 생성
         centerLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng).setAnchorPoint(0.5f, 0.5f))
+                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng).setAnchorPoint(0, 0))
                 .setRank(1));
 
-        // 중심라벨에 방향라벨 연결 - 중심라벨의 회전값 및 Transform 을 공유하기 위해 addShareTransform 사용
-        directionLabel = labelLayer.addLabel(LabelOptions.from("directionLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng)
-                        .setAnchorPoint(0.5f, 0.7f)).setRank(0));
-        centerLabel.addShareTransform(directionLabel);
-
-        // 중심라벨에 말풍선라벨 연결 - 중심라벨의 위치값만 공유하기 위해 addSharePosition 사용
-        chatLabel = labelLayer.addLabel(LabelOptions.from("followingLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng)
-                        .setAnchorPoint(0.5f, 0.5f)).setVisible(false));
-        chatLabel.changePixelOffset(60, -60);
-        centerLabel.addSharePosition(chatLabel);
-
-        // 중심라벨에 애니메이션 폴리곤 연결
-        centerLabel.addShareTransform(animationPolygon);
     }
 
     public void onCheckBoxClicked(View view) {
@@ -315,22 +258,7 @@ public class HomeFragment extends Fragment {
         final TrackingManager trackingManager = kakaoMap.getTrackingManager();
 
         int id = view.getId();
-        if (id == R.id.ck_attach_polygon) {
-            if (isChecked) {
-                shapeAnimator.addPolygons(animationPolygon);
-                shapeAnimator.setHideShapeAtStop(true);
-                shapeAnimator.start();
-            } else {
-                shapeAnimator.stop();
-            }
-        } else if (id == R.id.ck_add_shared_label) {
-            if (isChecked) {
-                chatLabel.show();
-            } else {
-                chatLabel.hide();
-            }
-        } else if (id == R.id.ck_tracking_mode) {
-            ((CheckBox) view.findViewById(R.id.ck_tracking_rotation)).setEnabled(isChecked);
+        if (id == R.id.ck_tracking_mode) {
             if (isChecked) {
                 if (directionLabel != null) {
                     trackingManager.startTracking(directionLabel);
@@ -341,48 +269,10 @@ public class HomeFragment extends Fragment {
             } else {
                 trackingManager.stopTracking();
             }
-        } else if (id == R.id.ck_tracking_rotation) {
-            trackingManager.setTrackingRotation(isChecked);
         }
 
     }
 
-    public void onButtonClicked(View view) {
-        int id = view.getId();
-        if (id == R.id.btn_set_pos) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveTo(LatLng.from(currentPos.getLatitude() - 0.0003,
-                    currentPos.getLongitude() - 0.0003));
-        } else if (id == R.id.btn_set_rotation) {
-            double currentAngle = centerLabel.getRotation();
-            centerLabel.rotateTo((float) currentAngle - 0.5f);
-        } else if (id == R.id.btn_move_to) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveTo(LatLng.from(currentPos.getLatitude() + 0.0006,
-                    currentPos.getLongitude() + 0.0006), 800);
-        } else if (id == R.id.btn_rotate_to) {
-            double currentAngle = centerLabel.getRotation();
-            centerLabel.rotateTo((float) currentAngle + 0.5f, 800);
-        } else if (id == R.id.btn_move_on_path) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveOnPath(PathOptions.fromPath(currentPos,
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0003),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0006),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.0003, currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.0006, currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.0009, currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.001, currentPos.getLongitude())).setDuration(5000));
-        } else if (id == R.id.btn_move_on_path_direction) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveOnPath(PathOptions.fromPath(currentPos,
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0003),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0006),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.003, currentPos.getLongitude())).setDuration(5000), true);
-        }
-
-    }
 
 
 }

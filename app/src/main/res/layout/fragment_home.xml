@@ -9,134 +9,7 @@
 
 
 
-    <!--여기부터 도려내면 됨-->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_10">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <CheckBox
-                    android:id="@+id/ck_attach_polygon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="shareTransform(circleWave)"
-                    android:onClick="onCheckBoxClicked"/>
-
-                <CheckBox
-                    android:id="@+id/ck_add_shared_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="sharePosition(label)"
-                    android:onClick="onCheckBoxClicked"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <CheckBox
-                    android:id="@+id/ck_tracking_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="startTracking"
-                    android:onClick="onCheckBoxClicked"/>
-
-                <CheckBox
-                    android:id="@+id/ck_tracking_rotation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="setTrackingRotation"
-                    android:onClick="onCheckBoxClicked"
-                    android:enabled="false"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <Button
-                        android:id="@+id/btn_set_pos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/padding_1"
-                        android:textAllCaps="false"
-                        android:text="setPosition"
-                        android:onClick="onButtonClicked"/>
-
-                    <Button
-                        android:id="@+id/btn_set_rotation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/padding_1"
-                        android:textAllCaps="false"
-                        android:text="setRotation"
-                        android:onClick="onButtonClicked"/>
-
-                    <Button
-                        android:id="@+id/btn_move_to"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/padding_1"
-                        android:textAllCaps="false"
-                        android:text="moveTo + (800ms)"
-                        android:onClick="onButtonClicked"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <Button
-                        android:id="@+id/btn_rotate_to"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/padding_1"
-                        android:textAllCaps="false"
-                        android:text="rotateTo + (800ms)"
-                        android:onClick="onButtonClicked"/>
-
-                    <Button
-                        android:id="@+id/btn_move_on_path"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/padding_1"
-                        android:textAllCaps="false"
-                        android:text="moveOnPath"
-                        android:onClick="onButtonClicked"/>
-
-                    <Button
-                        android:id="@+id/btn_move_on_path_direction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/padding_1"
-                        android:textAllCaps="false"
-                        android:text="moveOnPath (direction)"
-                        android:onClick="onButtonClicked"/>
-
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </HorizontalScrollView>
 
     <!--카카오맵 화면 -->
     <com.kakao.vectormap.MapView
@@ -144,6 +17,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <!--여기까지카카오맵-->
+
+
+    <!--여기부터 도려내면 됨-->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
+
+        <CheckBox
+            android:id="@+id/ck_tracking_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="startTracking"
+            android:onClick="onCheckBoxClicked"/>
+
+    </LinearLayout>
+
 
     <!-- 게시글 검색창. -->
     <LinearLayout
