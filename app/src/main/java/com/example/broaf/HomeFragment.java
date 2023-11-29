@@ -25,25 +25,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kakao.vectormap.KakaoMap;
-import com.kakao.vectormap.KakaoMapReadyCallback;
-import com.kakao.vectormap.LatLng;
-import com.kakao.vectormap.MapView;
-import com.kakao.vectormap.animation.Interpolation;
-import com.kakao.vectormap.label.Label;
-import com.kakao.vectormap.label.LabelLayer;
-import com.kakao.vectormap.label.LabelOptions;
-import com.kakao.vectormap.label.LabelStyle;
-import com.kakao.vectormap.label.PathOptions;
-import com.kakao.vectormap.label.TrackingManager;
-import com.kakao.vectormap.shape.DotPoints;
-import com.kakao.vectormap.shape.Polygon;
-import com.kakao.vectormap.shape.PolygonOptions;
-import com.kakao.vectormap.shape.PolygonStyles;
-import com.kakao.vectormap.shape.PolygonStylesSet;
-import com.kakao.vectormap.shape.ShapeAnimator;
-import com.kakao.vectormap.shape.animation.CircleWave;
-import com.kakao.vectormap.shape.animation.CircleWaves;
+
+
 
 
 //홈 frag 구현 방향
@@ -66,23 +49,15 @@ public class HomeFragment extends Fragment {
     ImageButton btn_search;
     EditText input_text_search;   //검색 내용(edittext)을 끌어오기 위해서.
     String searchKeyword_input;
-    //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
 
     ImageButton btn_follow_my_pos, btn_new;
-    boolean isTrackingMode = false; //trackingmode의 온오프 여부를 기록하는 변수. btn_follow_my_pos 버튼을 누를 시 토글
+
 
     //현재 GPS 위치
     double longitude=35.8318293, latitude=128.7544701, altitude=86.0;
     TextView txtResult; //이건 GPS 임시 뷰어
     //
-
-    //지도에 현재 마커 표시
-    private KakaoMap kakaoMap;
-    private ShapeAnimator shapeAnimator;
-    private LabelLayer labelLayer;
-    private Label centerLabel, directionLabel, chatLabel;
-    private Polygon animationPolygon;
 
     ///////
 
@@ -133,28 +108,6 @@ public class HomeFragment extends Fragment {
         //여기까지 포스트 뷰어 add
 
 
-
-
-//        //tracking mode 온오프
-//        btn_follow_my_pos = (ImageButton)view.findViewById(R.id.btn_follow_my_pos);
-//        btn_follow_my_pos.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                TrackingManager trackingManager = kakaoMap.getTrackingManager();
-//                if(isTrackingMode==false){
-//                    //지도의 중심이 현재 위치 마커를 추적한다.
-//                    //false에서 버튼 클릭 시 true
-//                    Toast.makeText(getActivity(), "tracking mode ON", Toast.LENGTH_SHORT).show();
-//                    isTrackingMode=true;
-//                }
-//                else{
-//                    //추적을 멈춘다.
-//                    Toast.makeText(getActivity(), "tracking mode OFF", Toast.LENGTH_SHORT).show();
-//                    isTrackingMode=false;
-//                }
-//            }
-//        });
-
         //GPS 불러오기!!
         btn_new = (ImageButton)view.findViewById(R.id.btn_new);   //새로고침 버튼 누르면 됨.
         txtResult = (TextView)view.findViewById(R.id.txtResult);
@@ -201,40 +154,16 @@ public class HomeFragment extends Fragment {
 
 
         //여기부터 카카오맵
-        MapView mapView = view.findViewById(R.id.map_view);
-        mapView.start(new KakaoMapReadyCallback() {
 
 
-            @Override
-            public LatLng getPosition() {
-                return LatLng.from(35.832038,128.754193);
-            }
 
-            @Override
-            public void onMapReady(KakaoMap map) {
-                kakaoMap = map;
-                labelLayer = kakaoMap.getLabelManager().getLayer();
-                LatLng pos = kakaoMap.getCameraPosition().getPosition();
-
-                // circleWave 애니메이션을 위한 Polygon 및 Animator 미리 생성
-                animationPolygon = kakaoMap.getShapeManager().getLayer().addPolygon(
-                        PolygonOptions.from("circlePolygon")
-                                .setDotPoints(DotPoints.fromCircle(pos, 1.0f))
-                                .setStylesSet(PolygonStylesSet.from(
-                                        PolygonStyles.from(Color.parseColor("#f55d44")))));
-
-                CircleWaves circleWaves = CircleWaves.from("circleWaveAnim",
-                                CircleWave.from(1, 0, 0, 200))
-                        .setHideShapeAtStop(false)
-                        .setInterpolation(Interpolation.CubicInOut)
-                        .setDuration(1500).setRepeatCount(100);
-                shapeAnimator = kakaoMap.getShapeManager().addAnimator(circleWaves);
-
-                createLabels(pos);
-            }
-        });
         /**여기까지 카카오맵**/
 
+
+        //
+
+
+        //
 
         return view;
     }
@@ -259,130 +188,6 @@ public class HomeFragment extends Fragment {
     };
 
 
-    //label level 설정
-//    private Bitmap getRankBitmap(float rank, int bgResId) {
-//        View rankView = LayoutInflater.from(getBaseContext()).inflate(R.layout.layout_rank_label, null);
-//        rankView.setBackgroundResource(bgResId);
-//        ((TextView) rankView.findViewById(R.id.tv_rank)).setText("Rank\n" + (int)rank);
-//
-//        int width = convertDpToPixels(convertPixelToDp(113 * 2));
-//        int height = convertDpToPixels(convertPixelToDp(152 * 2));
-//        return createBitmap(rankView, width, height);
-//    }
-    //label level 끝
-
-
-//    //trackingmode ON/OFF
-//    public void setTrackingMode(boolean isTrackingMode) {
-//        TrackingManager trackingManager = kakaoMap.getTrackingManager();
-//        if(isTrackingMode==true)
-//            if (centerLabel != null)   //centerlabel이 없다면 추적 안하게
-//                trackingManager.startTracking(centerLabel);
-//             else
-//                Toast.makeText(getActivity(), "내 위치 핀이 없습니다.", Toast.LENGTH_SHORT).show();
-//        else
-//            trackingManager.stopTracking();
-//    }
-//    //
-
-
-
-    private void createLabels(LatLng pos) {
-        // 중심 라벨 생성
-        centerLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng).setAnchorPoint(0.5f, 0.5f))
-                .setRank(1));
-
-        // 중심라벨에 방향라벨 연결 - 중심라벨의 회전값 및 Transform 을 공유하기 위해 addShareTransform 사용
-        directionLabel = labelLayer.addLabel(LabelOptions.from("directionLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng)
-                        .setAnchorPoint(0.5f, 0.7f)).setRank(0));
-        centerLabel.addShareTransform(directionLabel);
-
-        // 중심라벨에 말풍선라벨 연결 - 중심라벨의 위치값만 공유하기 위해 addSharePosition 사용
-        chatLabel = labelLayer.addLabel(LabelOptions.from("followingLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng)
-                        .setAnchorPoint(0.5f, 0.5f)).setVisible(false));
-        chatLabel.changePixelOffset(60, -60);
-        centerLabel.addSharePosition(chatLabel);
-
-        // 중심라벨에 애니메이션 폴리곤 연결
-        centerLabel.addShareTransform(animationPolygon);
-    }
-
-    public void onCheckBoxClicked(View view) {
-        boolean isChecked = ((CheckBox) view).isChecked();
-        final TrackingManager trackingManager = kakaoMap.getTrackingManager();
-
-        int id = view.getId();
-        if (id == R.id.ck_attach_polygon) {
-            if (isChecked) {
-                shapeAnimator.addPolygons(animationPolygon);
-                shapeAnimator.setHideShapeAtStop(true);
-                shapeAnimator.start();
-            } else {
-                shapeAnimator.stop();
-            }
-        } else if (id == R.id.ck_add_shared_label) {
-            if (isChecked) {
-                chatLabel.show();
-            } else {
-                chatLabel.hide();
-            }
-        } else if (id == R.id.ck_tracking_mode) {
-            ((CheckBox) view.findViewById(R.id.ck_tracking_rotation)).setEnabled(isChecked);
-            if (isChecked) {
-                if (directionLabel != null) {
-                    trackingManager.startTracking(directionLabel);
-                } else {
-                    Toast.makeText(getActivity(),
-                            "DirectionLabel is null.", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                trackingManager.stopTracking();
-            }
-        } else if (id == R.id.ck_tracking_rotation) {
-            trackingManager.setTrackingRotation(isChecked);
-        }
-
-    }
-
-    public void onButtonClicked(View view) {
-        int id = view.getId();
-        if (id == R.id.btn_set_pos) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveTo(LatLng.from(currentPos.getLatitude() - 0.0003,
-                    currentPos.getLongitude() - 0.0003));
-        } else if (id == R.id.btn_set_rotation) {
-            double currentAngle = centerLabel.getRotation();
-            centerLabel.rotateTo((float) currentAngle - 0.5f);
-        } else if (id == R.id.btn_move_to) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveTo(LatLng.from(currentPos.getLatitude() + 0.0006,
-                    currentPos.getLongitude() + 0.0006), 800);
-        } else if (id == R.id.btn_rotate_to) {
-            double currentAngle = centerLabel.getRotation();
-            centerLabel.rotateTo((float) currentAngle + 0.5f, 800);
-        } else if (id == R.id.btn_move_on_path) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveOnPath(PathOptions.fromPath(currentPos,
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0003),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0006),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.0003, currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.0006, currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.0009, currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.001, currentPos.getLongitude())).setDuration(5000));
-        } else if (id == R.id.btn_move_on_path_direction) {
-            LatLng currentPos = centerLabel.getPosition();
-            centerLabel.moveOnPath(PathOptions.fromPath(currentPos,
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0003),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0006),
-                    LatLng.from(currentPos.getLatitude(), currentPos.getLongitude() - 0.0009),
-                    LatLng.from(currentPos.getLatitude() + 0.003, currentPos.getLongitude())).setDuration(5000), true);
-        }
-
-    }
 
 
 }
