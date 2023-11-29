@@ -209,7 +209,7 @@ public class HomeFragment extends Fragment {
                 // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
             }
         }, new KakaoMapReadyCallback() {
-            
+
             //현재 위치 좌표값 설정
             @Override
             public LatLng getPosition() {
@@ -281,6 +281,3 @@ public class HomeFragment extends Fragment {
 
 
 }
-
-
-

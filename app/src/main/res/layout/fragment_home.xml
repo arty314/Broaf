@@ -79,7 +79,7 @@
 
     </LinearLayout>
     <!--여기까지 임시 버튼들-->
-    
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -112,5 +112,18 @@
             android:elevation="2dp"
             />
     </FrameLayout>
-    
+
+
+
+
+
+
+
+    <!--/////////-->
+    <!--게시글 뷰어 frame-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame_layout_post_viewer"
+        />
 </FrameLayout>
