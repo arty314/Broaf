@@ -70,9 +70,10 @@ public class HomeFragment extends Fragment {
     ImageButton btn_follow_my_pos, btn_new;
     boolean isTrackingMode = false; //trackingmode의 온오프 여부를 기록하는 변수. btn_follow_my_pos 버튼을 누를 시 토글
 
-    TextView txtResult;
-    double longitude, latitude, altitude;   //현재 GPS 위치
-
+    //현재 GPS 위치
+    double longitude, latitude, altitude;
+    TextView txtResult; //이건 GPS 임시 뷰어
+    //
 
     //지도에 현재 마커 표시
     private KakaoMap kakaoMap;
@@ -152,7 +153,7 @@ public class HomeFragment extends Fragment {
 //            }
 //        });
 
-        //GPS 불러오기
+        //GPS 불러오기!!
         btn_new = (ImageButton)view.findViewById(R.id.btn_new);   //새로고침 버튼 누르면 됨.
         txtResult = (TextView)view.findViewById(R.id.txtResult);
         final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
