@@ -132,25 +132,25 @@ public class HomeFragment extends Fragment {
 
 
 
-        //tracking mode 온오프
-        btn_follow_my_pos = (ImageButton)view.findViewById(R.id.btn_follow_my_pos);
-        btn_follow_my_pos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrackingManager trackingManager = kakaoMap.getTrackingManager();
-                if(isTrackingMode==false){
-                    //지도의 중심이 현재 위치 마커를 추적한다.
-                    //false에서 버튼 클릭 시 true
-                    Toast.makeText(getActivity(), "tracking mode ON", Toast.LENGTH_SHORT).show();
-                    isTrackingMode=true;
-                }
-                else{
-                    //추적을 멈춘다.
-                    Toast.makeText(getActivity(), "tracking mode OFF", Toast.LENGTH_SHORT).show();
-                    isTrackingMode=false;
-                }
-            }
-        });
+//        //tracking mode 온오프
+//        btn_follow_my_pos = (ImageButton)view.findViewById(R.id.btn_follow_my_pos);
+//        btn_follow_my_pos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TrackingManager trackingManager = kakaoMap.getTrackingManager();
+//                if(isTrackingMode==false){
+//                    //지도의 중심이 현재 위치 마커를 추적한다.
+//                    //false에서 버튼 클릭 시 true
+//                    Toast.makeText(getActivity(), "tracking mode ON", Toast.LENGTH_SHORT).show();
+//                    isTrackingMode=true;
+//                }
+//                else{
+//                    //추적을 멈춘다.
+//                    Toast.makeText(getActivity(), "tracking mode OFF", Toast.LENGTH_SHORT).show();
+//                    isTrackingMode=false;
+//                }
+//            }
+//        });
 
         //GPS 불러오기
         btn_new = (ImageButton)view.findViewById(R.id.btn_new);   //새로고침 버튼 누르면 됨.
@@ -219,7 +219,11 @@ public class HomeFragment extends Fragment {
             public void onMapReady(KakaoMap map) {
                 //지도 실행시 수행
                 //현재 위치 핀 생성
-                Label currentLabel = labelLayer.addLabel(LabelOptions.from(getPosition()).setStyles(R.drawable.icon_currentpos));
+                LatLng pos = kakaoMap.getCameraPosition().getPosition();
+
+                centerLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
+                        .setStyles(LabelStyle.from(R.drawable.icon_currentpos).setAnchorPoint(0.5f, 0.5f))
+                        .setRank(5));
             }
         });
         /**여기까지 카카오맵**/
