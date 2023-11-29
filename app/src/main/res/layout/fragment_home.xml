@@ -60,13 +60,12 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/txtResult"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Home"
-            android:gravity="center"
-            android:layout_marginBottom="100dp"
-            android:textSize="30sp"
-            android:textColor="@color/brown"/>
+            android:minHeight="200dp"
+            android:text="temp text"
+            />
 
         <Button
             android:id="@+id/viewpost_map_other"

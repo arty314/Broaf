@@ -1,26 +1,20 @@
 package com.example.broaf;
 
-import static android.content.Context.LOCATION_SERVICE;
-
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -58,10 +52,8 @@ public class HomeFragment extends Fragment {
     //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
 
-    //GPS 사용 목적
-    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    ImageButton button1;
+    TextView txtResult;
 
 
     @Override
@@ -72,15 +64,51 @@ public class HomeFragment extends Fragment {
         FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
         fab.setImageResource(R.drawable.re_writepost);
 
-        //gps 추적
-        if (checkLocationServicesStatus()) {
-            checkRunTimePermission();
-        } else {
-            showDialogForLocationServiceSetting();
-        }
-        GpsTracker gpsTracker = new GpsTracker(getContext());
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
+
+
+        //GPS 불러오기
+        //gps 위치 관리자
+        button1 = (ImageButton)view.findViewById(R.id.btn_follow_my_pos);
+        txtResult = (TextView)view.findViewById(R.id.txtResult);
+
+        final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ( Build.VERSION.SDK_INT >= 23 &&
+                        ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                    ActivityCompat.requestPermissions( getActivity(), new String[] {
+                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
+                }
+                else{
+                    // 가장최근 위치정보 가져오기
+                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if(location != null) {
+                        String provider = location.getProvider();
+                        double longitude = location.getLongitude();
+                        double latitude = location.getLatitude();
+                        double altitude = location.getAltitude();
+
+                        txtResult.setText("위치정보 : " + provider + "\n" +
+                                "위도 : " + longitude + "\n" +
+                                "경도 : " + latitude + "\n" +
+                                "고도  : " + altitude);
+                    }
+
+                    // 위치정보를 원하는 시간, 거리마다 갱신해준다.
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                }
+            }
+        });
+        //여기까지 GPS 불러오기
 
 
 
@@ -147,156 +175,24 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    
-    
-    
-    ///////여기부터 GPS전용
-    @Override
-    public void onRequestPermissionsResult(int permsRequestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grandResults) {
 
-        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+    //gps 수신 메소드
+    final LocationListener gpsLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            // 위치 리스너는 위치정보를 전달할 때 호출되므로 onLocationChanged()메소드 안에 위지청보를 처리를 작업을 구현 해야합니다.
+            String provider = location.getProvider();  // 위치정보
+            double longitude = location.getLongitude(); // 위도
+            double latitude = location.getLatitude(); // 경도
+            double altitude = location.getAltitude(); // 고도
+            txtResult.setText("위치정보 : " + provider + "\n" + "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도 : " + altitude);
+        } public void onStatusChanged(String provider, int status, Bundle extras) {
 
-            // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
+        } public void onProviderEnabled(String provider) {
 
-            boolean check_result = true;
-
-
-            // 모든 퍼미션을 허용했는지 체크합니다.
-
-            for (int result : grandResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    check_result = false;
-                    break;
-                }
-            }
-
-
-            if (check_result) {
-
-                //위치 값을 가져올 수 있음
-                ;
-            } else {
-                // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있습니다.
-
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[0])
-                        || ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[1])) {
-
-                    Toast.makeText(getContext(), "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
-                    getActivity().finish();
-
-
-                } else {
-
-                    Toast.makeText(getContext(), "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
-
-                }
-            }
+        } public void onProviderDisabled(String provider) {
 
         }
-    }
-
-    void checkRunTimePermission() {
-
-        //런타임 퍼미션 처리
-        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
-        int hasFineLocationPermission = ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION);
-
-
-        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
-
-            // 2. 이미 퍼미션을 가지고 있다면
-            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
-
-
-            // 3.  위치 값을 가져올 수 있음
-
-
-        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
-
-            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[0])) {
-
-                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
-                Toast.makeText(getActivity(), "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS,
-                        PERMISSIONS_REQUEST_CODE);
-
-
-            } else {
-                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
-                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS,
-                        PERMISSIONS_REQUEST_CODE);
-            }
-
-        }
-
-    }
-
-
-    //여기부터는 GPS 활성화를 위한 메소드들
-    private void showDialogForLocationServiceSetting() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("위치 서비스 비활성화");
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
-                + "위치 설정을 수정하실래요?");
-        builder.setCancelable(true);
-        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                Intent callGPSSettingIntent
-                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        builder.create().show();
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-
-            case GPS_ENABLE_REQUEST_CODE:
-
-                //사용자가 GPS 활성 시켰는지 검사
-                if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
-
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
-                        checkRunTimePermission();
-                        return;
-                    }
-                }
-
-                break;
-        }
-    }
-
-    public boolean checkLocationServicesStatus() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-
+    };
 }
 
 

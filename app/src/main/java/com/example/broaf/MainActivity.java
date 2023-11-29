@@ -1,15 +1,19 @@
 package com.example.broaf;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +21,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
-
-
+    private Button button1;
+    private TextView txtResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         //처음엔 HomeFragment가 표시됨
         replaceFragment(new HomeFragment());
+
+
 
 
         //여기부터 '지도로 돌아가기 버튼'
@@ -66,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         NormalPost normalPost;
 
     }
+
+
 
 
     //flagment 전환 메소드
