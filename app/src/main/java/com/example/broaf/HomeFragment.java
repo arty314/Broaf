@@ -28,7 +28,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 
-
 //홈 frag 구현 방향
 //1. 검색창이 켜져있다 => 검색 창은 edittext.
 //      edittext에서 엔터를 입력하거나, imagebutton인 검색 버튼을 누르면 search frag로 입력된 문자열 전달
@@ -154,7 +153,10 @@ public class HomeFragment extends Fragment {
 
 
         //여기부터 카카오맵
+//        MapView mapView = new MapView(getActivity());
 
+//        ViewGroup mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
+//        mapViewContainer.addView(mapView);
 
 
         /**여기까지 카카오맵**/
