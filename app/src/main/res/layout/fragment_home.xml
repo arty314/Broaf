@@ -100,6 +100,7 @@
     </LinearLayout>
     <!--여기까지 임시 버튼들-->
 
+    <!--여기부터 필터 버튼-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -134,8 +135,81 @@
     </FrameLayout>
 
 
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="168dp"
+        android:orientation="vertical"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="153dp"
+        android:paddingHorizontal="5dp"
+        android:layout_marginHorizontal="18dp"
+        android:clipToPadding="false"
+        >
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@android:color/transparent"
+            android:background="@drawable/filterglobal"
+            android:backgroundTint="#3E616161"
+            android:layout_gravity="top"
+            />
 
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@android:color/transparent"
+            android:background="@drawable/filterglobal"
+            android:backgroundTint="#3E616161"
+            android:layout_gravity="center_vertical"
+            />
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@android:color/transparent"
+            android:background="@drawable/filterglobal"
+            android:backgroundTint="#3E616161"
+            android:layout_gravity="bottom"
+            />
+    </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="170dp"
+        android:orientation="vertical"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="150dp"
+        android:paddingHorizontal="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:clipToPadding="false"
+        >
+        <ImageButton
+            android:id="@+id/btn_filter_global"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/filterglobal"
+            android:background="@android:color/transparent"
+            android:layout_gravity="top"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_filter_friend"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/filterfriend"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_vertical"
+            />
+        <ImageButton
+            android:id="@+id/btn_filter_me"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/filterme"
+            android:background="@android:color/transparent"
+            android:layout_gravity="bottom"
+            />
+    </FrameLayout>
+
+    <!--여기까지 필터버튼-->
 
 
 

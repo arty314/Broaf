@@ -51,7 +51,7 @@ public class PostClass {
     }
 
 //    public String getPostIcon(PostClass post){
-//
+//      //구현안: icon_no를 String 형태의 @drawable/posticon숫자 형태로 변환
 //        switch (post.icon_no){
 //            case 1:
 //                break;
