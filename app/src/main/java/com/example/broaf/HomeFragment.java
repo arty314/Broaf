@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
     boolean isTrackingMode = false; //trackingmode의 온오프 여부를 기록하는 변수. btn_follow_my_pos 버튼을 누를 시 토글
 
     //현재 GPS 위치
-    double longitude=35.8318293, latitude=128.7544701, altitude=86.0;
+    double longitude=35.8318293, latitude=128.7544701;
     TextView txtResult; //이건 GPS 임시 뷰어
     //
 
@@ -140,15 +140,11 @@ public class HomeFragment extends Fragment {
                     Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     if(location != null) {
                         String provider = location.getProvider();
-                        longitude = location.getLongitude();
                         latitude = location.getLatitude();
-                        altitude = location.getAltitude();
+                        longitude = location.getLongitude();
 
-                        txtResult.setText("위치정보 : " + provider + "\n" +
-                                "위도 : " + longitude + "\n" +
-                                "경도 : " + latitude + "\n" +
-                                "고도  : " + altitude);
-
+                        txtResult.setText(provider + " Lat," + latitude + " Lng," + longitude);
+                        //provider: 위치 정보, latitude: 위도, longitude: 경도 (altitude: 고도)
                     }
 
                     // 위치정보를 원하는 시간, 거리마다 갱신해준다. <-게시글 작성 버튼에선 이부분 빼면 됨
@@ -210,8 +206,7 @@ public class HomeFragment extends Fragment {
             String provider = location.getProvider();  // 위치정보
             double longitude = location.getLongitude(); // 위도
             double latitude = location.getLatitude(); // 경도
-            double altitude = location.getAltitude(); // 고도
-            txtResult.setText("위치정보 : " + provider + "\n" + "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도 : " + altitude);
+            txtResult.setText(provider + " Lat," + latitude + " Lng," + longitude);
         } public void onStatusChanged(String provider, int status, Bundle extras) {
 
         } public void onProviderEnabled(String provider) {
