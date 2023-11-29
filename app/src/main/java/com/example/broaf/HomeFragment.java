@@ -28,6 +28,8 @@ import com.kakao.vectormap.LatLng;
 import com.kakao.vectormap.MapView;
 import com.kakao.vectormap.camera.CameraAnimation;
 import com.kakao.vectormap.camera.CameraUpdateFactory;
+import com.kakao.vectormap.label.Badge;
+import com.kakao.vectormap.label.BadgeOptions;
 import com.kakao.vectormap.label.Label;
 import com.kakao.vectormap.label.LabelLayer;
 import com.kakao.vectormap.label.LabelOptions;
@@ -73,6 +75,7 @@ public class HomeFragment extends Fragment {
     private LabelLayer labelLayer;
     private Label centerLabel;
     private List<Label> selectedList = new ArrayList<>();
+    private List<Label> postLabelList = new ArrayList<>();
 
     ///////
 
@@ -257,5 +260,35 @@ public class HomeFragment extends Fragment {
         }
         return points;
     }
+
+
+//    private void createPostLabels() {
+//        // 게시글 라벨 생성
+//          // 이건 LabelOverviewActivity 내    ck_with_badge 파트랑 showBadgeLabel 보며 추가할 것.
+//        Label postLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
+//                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0, 0))
+//                .setRank(1));
+//        selectedList.add(centerLabel);
+//    }
+
+
+//    231130부턴 여기 게시글 뱃지 작업할 것
+//    private void showBadgeLabel(String labelId) {
+//        LatLng pos = LatLng.from(35.830278, 128.752062);
+//
+//        Label label = labelLayer.addLabel(LabelOptions.from(labelId, pos)
+//                .setStyles(R.drawable.posticon1));
+//
+//        // 라벨에 Badge 추가. 여러개 추가 가능하다. Badge 는 추가와 동시에 바로 보여진다.
+//        Badge[] badges = label.addBadge(BadgeOptions.from(R.drawable.badge_friend),
+//                BadgeOptions.from(R.drawable.filterfriend).setOffset(0.9f, 0.2f));
+//        for (Badge badge : badges) {
+//            badge.show();
+//        }
+//
+//        kakaoMap.moveCamera(CameraUpdateFactory.newCenterPosition(pos, 15),
+//                CameraAnimation.from(duration));
+//    }
+
 
 }
