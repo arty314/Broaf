@@ -1,7 +1,10 @@
 package com.example.broaf;
 
+import static android.graphics.Bitmap.createBitmap;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -24,8 +28,19 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kakao.vectormap.KakaoMap;
 import com.kakao.vectormap.KakaoMapReadyCallback;
+import com.kakao.vectormap.LatLng;
 import com.kakao.vectormap.MapLifeCycleCallback;
 import com.kakao.vectormap.MapView;
+import com.kakao.vectormap.label.Label;
+import com.kakao.vectormap.label.LabelLayer;
+import com.kakao.vectormap.label.LabelLayerOptions;
+import com.kakao.vectormap.label.LabelOptions;
+import com.kakao.vectormap.label.LabelStyle;
+import com.kakao.vectormap.label.LabelStyles;
+import com.kakao.vectormap.label.OrderingType;
+import com.kakao.vectormap.label.TrackingManager;
+import com.kakao.vectormap.shape.Polygon;
+import com.kakao.vectormap.shape.ShapeAnimator;
 
 
 
@@ -52,9 +67,22 @@ public class HomeFragment extends Fragment {
     //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
 
-    ImageButton button1;
-    TextView txtResult;
+    ImageButton btn_follow_my_pos, btn_new;
+    boolean isTrackingMode = false; //trackingmode의 온오프 여부를 기록하는 변수. btn_follow_my_pos 버튼을 누를 시 토글
 
+    TextView txtResult;
+    double longitude, latitude, altitude;   //현재 GPS 위치
+
+
+    //지도에 현재 마커 표시
+    private KakaoMap kakaoMap;
+    private ShapeAnimator shapeAnimator;
+    private LabelLayer labelLayer;
+    private int duration = 500;
+    private Label centerLabel;
+    private Polygon animationPolygon;
+
+    ///////
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,54 +93,7 @@ public class HomeFragment extends Fragment {
         fab.setImageResource(R.drawable.re_writepost);
 
 
-
-        //GPS 불러오기
-        //gps 위치 관리자
-        button1 = (ImageButton)view.findViewById(R.id.btn_follow_my_pos);
-        txtResult = (TextView)view.findViewById(R.id.txtResult);
-
-        final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ( Build.VERSION.SDK_INT >= 23 &&
-                        ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                    ActivityCompat.requestPermissions( getActivity(), new String[] {
-                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
-                }
-                else{
-                    // 가장최근 위치정보 가져오기
-                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if(location != null) {
-                        String provider = location.getProvider();
-                        double longitude = location.getLongitude();
-                        double latitude = location.getLatitude();
-                        double altitude = location.getAltitude();
-
-                        txtResult.setText("위치정보 : " + provider + "\n" +
-                                "위도 : " + longitude + "\n" +
-                                "경도 : " + latitude + "\n" +
-                                "고도  : " + altitude);
-                    }
-
-                    // 위치정보를 원하는 시간, 거리마다 갱신해준다.
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                }
-            }
-        });
-        //여기까지 GPS 불러오기
-
-
-
-        //검색버튼 누르면 input_text_search 내용을 search_bundle에 넣고 SearFrag로 고고
+        //여기부터 search & post viewer
         btn_search = (ImageButton) view.findViewById(R.id.btn_search);
         input_text_search = view.findViewById(R.id.input_text_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +132,69 @@ public class HomeFragment extends Fragment {
 
 
 
+        //tracking mode 온오프
+        btn_follow_my_pos = (ImageButton)view.findViewById(R.id.btn_follow_my_pos);
+        btn_follow_my_pos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrackingManager trackingManager = kakaoMap.getTrackingManager();
+                if(isTrackingMode==false){
+                    //지도의 중심이 현재 위치 마커를 추적한다.
+                    //false에서 버튼 클릭 시 true
+                    Toast.makeText(getActivity(), "tracking mode ON", Toast.LENGTH_SHORT).show();
+                    isTrackingMode=true;
+                }
+                else{
+                    //추적을 멈춘다.
+                    Toast.makeText(getActivity(), "tracking mode OFF", Toast.LENGTH_SHORT).show();
+                    isTrackingMode=false;
+                }
+            }
+        });
+
+        //GPS 불러오기
+        btn_new = (ImageButton)view.findViewById(R.id.btn_new);   //새로고침 버튼 누르면 됨.
+        txtResult = (TextView)view.findViewById(R.id.txtResult);
+        final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        btn_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ( Build.VERSION.SDK_INT >= 23 &&
+                        ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                    ActivityCompat.requestPermissions( getActivity(), new String[] {
+                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
+                }
+                else{
+                    // 가장최근 위치정보 가져오기
+                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if(location != null) {
+                        String provider = location.getProvider();
+                        longitude = location.getLongitude();
+                        latitude = location.getLatitude();
+                        altitude = location.getAltitude();
+
+                        txtResult.setText("위치정보 : " + provider + "\n" +
+                                "위도 : " + longitude + "\n" +
+                                "경도 : " + latitude + "\n" +
+                                "고도  : " + altitude);
+
+                    }
+
+                    // 위치정보를 원하는 시간, 거리마다 갱신해준다.
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                }
+            }
+        });
+        //여기까지 GPS 불러오기
+
+
         //여기부터 카카오맵
         MapView mapView = view.findViewById(R.id.map_view);
         mapView.start(new MapLifeCycleCallback() {
@@ -164,9 +208,18 @@ public class HomeFragment extends Fragment {
                 // 인증 실패 및 지도 사용 중 에러가 발생할 때 호출됨
             }
         }, new KakaoMapReadyCallback() {
+            
+            //현재 위치 좌표값 설정
             @Override
-            public void onMapReady(KakaoMap kakaoMap) {
-                // 인증 후 API 가 정상적으로 실행될 때 호출됨
+            public LatLng getPosition() {
+                return LatLng.from(37.394660,127.111182);
+            }
+
+            @Override
+            public void onMapReady(KakaoMap map) {
+                //지도 실행시 수행
+                //현재 위치 핀 생성
+                Label currentLabel = labelLayer.addLabel(LabelOptions.from(getPosition()).setStyles(R.drawable.icon_currentpos));
             }
         });
         /**여기까지 카카오맵**/
@@ -193,6 +246,35 @@ public class HomeFragment extends Fragment {
 
         }
     };
+
+
+    //label level 설정
+//    private Bitmap getRankBitmap(float rank, int bgResId) {
+//        View rankView = LayoutInflater.from(getBaseContext()).inflate(R.layout.layout_rank_label, null);
+//        rankView.setBackgroundResource(bgResId);
+//        ((TextView) rankView.findViewById(R.id.tv_rank)).setText("Rank\n" + (int)rank);
+//
+//        int width = convertDpToPixels(convertPixelToDp(113 * 2));
+//        int height = convertDpToPixels(convertPixelToDp(152 * 2));
+//        return createBitmap(rankView, width, height);
+//    }
+    //label level 끝
+
+
+//    //trackingmode ON/OFF
+//    public void setTrackingMode(boolean isTrackingMode) {
+//        TrackingManager trackingManager = kakaoMap.getTrackingManager();
+//        if(isTrackingMode==true)
+//            if (centerLabel != null)   //centerlabel이 없다면 추적 안하게
+//                trackingManager.startTracking(centerLabel);
+//             else
+//                Toast.makeText(getActivity(), "내 위치 핀이 없습니다.", Toast.LENGTH_SHORT).show();
+//        else
+//            trackingManager.stopTracking();
+//    }
+//    //
+
+
 }
 
 
