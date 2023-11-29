@@ -6,13 +6,15 @@
     tools:context=".NoticeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/alarm_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="notice"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/brown"/>
+        android:background="@android:color/background_light">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
 
 
 </FrameLayout>

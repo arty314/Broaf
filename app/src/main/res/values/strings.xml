@@ -25,5 +25,21 @@
     <string name="admin_reported_posts">신고함</string>
     <string name="admin_banned_users">정지 이용자 관리</string>
     <string name="email">이메일</string>
+    <string name="title_activity_alarm_settings">AlarmSettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="like_header">좋아요</string>
+    <string name="friends_header">친구</string>
+
+    <!-- Messages Preferences -->
+    <string name="like_title">좋아요 알림</string>
+    <string name="like_summary_on">좋아요 알림을 받습니다.</string>
+    <string name="like_summary_off">좋아요 알림을 받지 않습니다.</string>
+
+    <!-- friends Preferences -->
+    <string name="friends_title">친구 알림</string>
+    <string name="friends_summary_on">친구 알림을 받습니다.</string>
+    <string name="friends_summary_off">친구 알림을 받지 않습니다.</string>
+
 
 </resources>

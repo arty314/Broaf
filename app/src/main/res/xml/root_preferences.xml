@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/like_header">
+
+        <SwitchPreferenceCompat
+            app:key="like"
+            app:title="@string/like_title"
+            app:summaryOff="@string/like_summary_off"
+            app:summaryOn="@string/like_summary_on" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/friends_header">
+
+        <SwitchPreferenceCompat
+            app:key="friend"
+            app:title="@string/friends_title"
+            app:summaryOff="@string/friends_summary_off"
+            app:summaryOn="@string/friends_summary_on" />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
