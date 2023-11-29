@@ -4,52 +4,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/oat"
+    android:background="@color/white_2"
     tools:context=".HomeFragment">
 
 
-    <!--카카오맵 화면 (전 멤버의 키해시 얻을때까지 안 띄움-->
+
+
+
+    <!--카카오맵 화면 -->
     <com.kakao.vectormap.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <!--여기까지카카오맵-->
 
+
+    <!--여기부터 도려내면 됨-->
+
+
+
     <!-- 게시글 검색창. -->
     <LinearLayout
-        android:id="@+id/search_bar_main"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="40dp"
-        android:layout_gravity="center|top"
-        android:padding="10dp"
-        android:paddingBottom="20dp"
-        android:background="@drawable/search_btn_background"
-        android:elevation="4dp"
         >
-        <EditText
-            android:id="@+id/input_text_search"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="10dp"
-            android:hint="게시글 검색"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
+        <LinearLayout
+            android:id="@+id/search_bar_main"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center|top"
+            android:padding="10dp"
+            android:paddingBottom="20dp"
+            android:background="@drawable/search_btn_background"
+            android:elevation="4dp"
+            >
+            <EditText
+                android:id="@+id/input_text_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="10dp"
+                android:hint="게시글 검색"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
 
-            android:inputType="text"
-            android:maxLines="1"
-            />
-        <ImageButton
-            android:id="@+id/btn_search"
-            android:layout_width="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                />
+            <ImageButton
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search"
+                android:layout_gravity="center"
+                android:backgroundTint="@android:color/transparent"
+                />
+
+        </LinearLayout>
+        <!--여기까지 게시글 검색창-->
+        <TextView
+            android:id="@+id/txtResult"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/search"
-            android:layout_gravity="center"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:text="새로고침을 눌러 현재 위치의 좌표를 알아보아요.\n화면 이동 후 과녁을 누르면 위치 핀이 중심으로 돌아와요."
+            android:textColor="@color/top_nav_text"
+            android:gravity="center_horizontal"
             />
     </LinearLayout>
-    <!--여기까지 게시글 검색창-->
 
     <!--임시 버튼 리스트-->
     <LinearLayout
@@ -59,14 +85,7 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home"
-            android:gravity="center"
-            android:layout_marginBottom="100dp"
-            android:textSize="30sp"
-            android:textColor="@color/brown"/>
+
 
         <Button
             android:id="@+id/viewpost_map_other"
@@ -75,26 +94,130 @@
             android:layout_gravity="center"
             android:text="임시 게시글 열람 버튼\n(게시글 뷰어 frag 생성)"
             />
-        <Button
-            android:id="@+id/editpost_normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="임시 게시글 작성 버튼\n(게시글 에디터 acti [normal]로 이동)"
-            />
 
         <!--필요하시면 밑에 임시 버튼 더 다셔도 돼요-->
 
     </LinearLayout>
     <!--여기까지 임시 버튼들-->
 
-    <!-- post viewer가 올라올 프레임 -->
+    <!--여기부터 필터 버튼-->
     <FrameLayout
-        android:id="@+id/frame_layout_post_viewer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="100dp"
+        android:paddingHorizontal="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:clipToPadding="false"
+        >
+        <ImageButton
+            android:id="@+id/btn_fit"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/icon_follow_my_pos"
+            android:background="@drawable/post_viewer_background"
+            android:backgroundTint="@color/cream"
+            android:layout_gravity="top"
+            android:elevation="2dp"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_new"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/icon_new"
+            android:background="@drawable/post_viewer_background"
+            android:backgroundTint="@color/cream"
+            android:layout_gravity="top|end"
+            android:elevation="2dp"
+            />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="168dp"
+        android:orientation="vertical"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="153dp"
+        android:paddingHorizontal="5dp"
+        android:layout_marginHorizontal="18dp"
+        android:clipToPadding="false"
+        >
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@android:color/transparent"
+            android:background="@drawable/filterglobal"
+            android:backgroundTint="#3E616161"
+            android:layout_gravity="top"
+            />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@android:color/transparent"
+            android:background="@drawable/filterglobal"
+            android:backgroundTint="#3E616161"
+            android:layout_gravity="center_vertical"
+            />
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@android:color/transparent"
+            android:background="@drawable/filterglobal"
+            android:backgroundTint="#3E616161"
+            android:layout_gravity="bottom"
+            />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="170dp"
+        android:orientation="vertical"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="150dp"
+        android:paddingHorizontal="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:clipToPadding="false"
+        >
+        <ImageButton
+            android:id="@+id/btn_filter_global"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/filterglobal"
+            android:background="@android:color/transparent"
+            android:layout_gravity="top"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_filter_friend"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/filterfriend"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_vertical"
+            />
+        <ImageButton
+            android:id="@+id/btn_filter_me"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/filterme"
+            android:background="@android:color/transparent"
+            android:layout_gravity="bottom"
+            />
+    </FrameLayout>
+
+    <!--여기까지 필터버튼-->
+
+
+
+    <!--/////////-->
+    <!--게시글 뷰어 frame-->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="5dp"
+        android:id="@+id/frame_layout_post_viewer"
         />
-    <!--게시글 뷰어 창:근데 조금 문제있어서 조정 필요(검색창이 뷰어 위에 뜸..)-->
-
 </FrameLayout>

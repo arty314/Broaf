@@ -41,5 +41,9 @@
     <string name="friends_summary_on">친구 알림을 받습니다.</string>
     <string name="friends_summary_off">친구 알림을 받지 않습니다.</string>
 
+    <string-array name="attach_img">
+        <item>갤러리</item>
+        <item>카메라</item>
+    </string-array>
 
 </resources>

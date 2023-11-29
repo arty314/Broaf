@@ -4,8 +4,23 @@
     package="com.example.broaf">
     <!-- 인터넷 권한임. 지도 불러올 때 필요. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 갤러리 권한(Android 13+, 사진추가시 필요 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- 갤러리 권한(Android 12-) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <!--위치 권한 : 사용자가 앱을 사용중일때 위치 수신 받도록-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!--android:usesCleartextTraffic="true"는 네트워크 설정. http 연결도 가능하도록.-->
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -48,10 +63,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 카카오 native app key 추가 -->
+        </activity> <!-- 카카오 native app key 추가-->
         <meta-data
             android:name="com.kakao.vectormap.APP_KEY"
             android:value="d9bbdb5b3184a4b3466a916346b9d2ae" />
+        <!-- 카메라로 찍은 사진 저장경로 설정 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.mydomain.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/camera_picture_paths" />
+        </provider>
     </application>
 
 </manifest>

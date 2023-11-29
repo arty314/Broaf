@@ -3,55 +3,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment">
+    tools:context=".SearchFragment"
+    android:orientation="vertical">
 
-    <!--임시 뒤로가기 버튼-->
-    <ImageButton
-        android:id="@+id/btn_back_search_to_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="?attr/actionModeCloseDrawable"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:padding="20dp"
-        />
 
-    <!--임시 검색어 확인 뷰-->
-    <TextView
-        android:id="@+id/searchKeyword_textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="search"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/brown"/>
-
+    <!--게시글 검색창-->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:id="@+id/search_bar_main"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_margin="40dp"
+        android:layout_gravity="center|top"
+        android:padding="10dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/search_btn_background"
+        android:elevation="4dp"
+        >
+        <EditText
+            android:id="@+id/input_text_search_Result"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="10dp"
+            android:hint="게시글 검색"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
 
-        <TextView
+            android:inputType="text"
+            android:maxLines="1"
+            />
+        <ImageButton
+            android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="uid는 "
-            android:gravity="center_horizontal"
-            android:textSize="20dp"
-            android:textColor="@color/brown"
+            android:src="@drawable/search"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/transparent"
             />
-        <TextView
-            android:id="@+id/search_uid_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00000"
-            android:gravity="center_horizontal"
-            android:textSize="20dp"
-            android:textColor="@color/orange"
-            />
-
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="140dp"
+        android:layout_marginHorizontal="20dp">
+
+
+        <!-- 전체 id 정리
+        search_input : 사용자가 입력한 검색어
+        search_result_count : 검색 결과의 개수
+
+        recyclerview는 아직 못만들었는데 대충 틀 잡아두시면 디자인 들어갈게요
+        -->
+
+
+
+        <!--입력한 검색어 및 결과 갯수 표시 영역-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/search_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosanskrbold"
+                android:text="(입력한 검색어는 여기에 띄워주세요) "
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="의 검색 결과"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="("
+                />
+            <TextView
+                android:id="@+id/search_result_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nn "
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray"/>
+
+
+
+        <!--검색 결과영역-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="검색 결과 recyclerview는 이쪽 layout 안에 표시하시면 됩니다.\n\n \n뒤로가기 버튼은 휴대폰 뒤로가기나 하단 버튼으로도 가능하니 삭제했습니다!"
+            />
+
+    </LinearLayout>
 </FrameLayout>

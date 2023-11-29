@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,13 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import android.widget.Button;
+import android.widget.ImageButton;
 
-//그냥 빈 frag 만드니까 이렇게 떴음. 알아서 수정해주세요
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NoticeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+
 public class NoticeFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -85,6 +86,7 @@ public class NoticeFragment extends Fragment {
 
     }
 
+    private ImageButton toolbar_notice_back;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,6 +122,33 @@ public class NoticeFragment extends Fragment {
 
         adapter = new CustomAdapter(arrayList, getActivity());
         recyclerView.setAdapter(adapter); // 어뎁터 연결
+
+        //중앙 버튼 이미지 설정
+        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
+        fab.setImageResource(R.drawable.back_to_map);
+        //
+
+
+
+
+
+
+
+
+        //뒤로가기 버튼
+        toolbar_notice_back = (ImageButton) view.findViewById(R.id.toolbar_notice_back);
+        toolbar_notice_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment homeFragment=new HomeFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.frame_layout, homeFragment);
+                fragmentTransaction.commit();
+            }
+        });
+        //여기까지 뒤로가기
+
 
         return view;
 

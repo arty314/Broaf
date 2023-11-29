@@ -40,6 +40,7 @@
                 />
 
             <Button
+                android:id="@+id/btnDupl"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="중복 확인"
@@ -47,7 +48,7 @@
                 android:layout_marginTop="-3dp"
                 android:background="@drawable/rectangle_3"
                 android:elevation="1dp"
-            />
+                />
         </LinearLayout>
 
         <EditText
