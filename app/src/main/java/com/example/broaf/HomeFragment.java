@@ -267,6 +267,46 @@ public class HomeFragment extends Fragment {
                 35.828979, 128.677078, 0,0,"2080123140042",
                 "캔따개","10007","202312010052");
 
+        //수동 db... 짐싸기..
+        Bundle postBundle = new Bundle();
+        postBundle.putSerializable("postLabel0",postLabel0);
+        postBundle.putSerializable("postLabel1",postLabel1);
+        postBundle.putSerializable("postLabel2",postLabel2);
+        postBundle.putSerializable("postLabel3",postLabel3);
+        postBundle.putSerializable("postLabel4",postLabel4);
+        postBundle.putSerializable("postLabel5",postLabel5);
+        postBundle.putSerializable("postLabel6",postLabel6);
+        postBundle.putSerializable("postLabel7",postLabel7);
+        postBundle.putSerializable("postLabel8",postLabel8);
+        postBundle.putSerializable("postLabel9",postLabel9);
+        postBundle.putSerializable("postLabel0",postLabel0);
+
+        postBundle.putSerializable("postLabel10",postLabel10);
+        postBundle.putSerializable("postLabel11",postLabel11);
+        postBundle.putSerializable("postLabel12",postLabel12);
+        postBundle.putSerializable("postLabel13",postLabel13);
+        postBundle.putSerializable("postLabel14",postLabel14);
+        postBundle.putSerializable("postLabel15",postLabel15);
+        postBundle.putSerializable("postLabel16",postLabel16);
+        postBundle.putSerializable("postLabel17",postLabel17);
+        postBundle.putSerializable("postLabel18",postLabel18);
+        postBundle.putSerializable("postLabel19",postLabel19);
+        postBundle.putSerializable("postLabel20",postLabel20);
+
+        postBundle.putSerializable("postLabel20",postLabel20);
+        postBundle.putSerializable("postLabel21",postLabel21);
+        postBundle.putSerializable("postLabel22",postLabel22);
+        postBundle.putSerializable("postLabel23",postLabel23);
+        postBundle.putSerializable("postLabel24",postLabel24);
+        postBundle.putSerializable("postLabel25",postLabel25);
+        postBundle.putSerializable("postLabel26",postLabel26);
+        postBundle.putSerializable("postLabel27",postLabel27);
+        postBundle.putSerializable("postLabel28",postLabel28);
+        postBundle.putSerializable("postLabel29",postLabel29);
+        postBundle.putSerializable("postLabel30",postLabel30);
+        postBundle.putSerializable("postLabel31",postLabel31);
+
+
         //여기부터 카카오맵
         MapView mapView = view.findViewById(R.id.map_view);
         mapView.start(new KakaoMapReadyCallback() {
