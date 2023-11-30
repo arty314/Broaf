@@ -283,37 +283,37 @@ public class HomeFragment extends Fragment {
 
 
     //PostClass를 하나 보내면, 지정한 label로 변환해주는 함수.
-    public void createPostLabel(PostClass post,Label label){
+    public Label createPostLabel(PostLabel postLabel,Label label){
         //라벨 좌표 입력
-        label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(post.latitude,post.longitude)));
+        label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
 
         //라벨 icon 설정
-        if(post.icon_no==1)            label.setStyles(R.drawable.posticon1);
-        else if (post.icon_no==2)            label.setStyles(R.drawable.posticon2);
-        else if (post.icon_no==3)            label.setStyles(R.drawable.posticon3);
-        else if (post.icon_no==4)            label.setStyles(R.drawable.posticon4);
-        else if (post.icon_no==5)            label.setStyles(R.drawable.posticon5);
-        else if (post.icon_no==6)            label.setStyles(R.drawable.posticon6);
-        else if (post.icon_no==7)            label.setStyles(R.drawable.posticon7);
-        else if (post.icon_no==8)            label.setStyles(R.drawable.posticon8);
-        else if (post.icon_no==9)            label.setStyles(R.drawable.posticon9);
-        else if (post.icon_no==10)            label.setStyles(R.drawable.posticon10);
-        else if (post.icon_no==11)            label.setStyles(R.drawable.posticon11);
-        else if (post.icon_no==12)            label.setStyles(R.drawable.posticon12);
-        else if (post.icon_no==13)            label.setStyles(R.drawable.posticon13);
-        else if (post.icon_no==14)            label.setStyles(R.drawable.posticon14);
+        if(postLabel.icon_no==1)            label.setStyles(R.drawable.posticon1);
+        else if (postLabel.icon_no==2)            label.setStyles(R.drawable.posticon2);
+        else if (postLabel.icon_no==3)            label.setStyles(R.drawable.posticon3);
+        else if (postLabel.icon_no==4)            label.setStyles(R.drawable.posticon4);
+        else if (postLabel.icon_no==5)            label.setStyles(R.drawable.posticon5);
+        else if (postLabel.icon_no==6)            label.setStyles(R.drawable.posticon6);
+        else if (postLabel.icon_no==7)            label.setStyles(R.drawable.posticon7);
+        else if (postLabel.icon_no==8)            label.setStyles(R.drawable.posticon8);
+        else if (postLabel.icon_no==9)            label.setStyles(R.drawable.posticon9);
+        else if (postLabel.icon_no==10)            label.setStyles(R.drawable.posticon10);
+        else if (postLabel.icon_no==11)            label.setStyles(R.drawable.posticon11);
+        else if (postLabel.icon_no==12)            label.setStyles(R.drawable.posticon12);
+        else if (postLabel.icon_no==13)            label.setStyles(R.drawable.posticon13);
+        else if (postLabel.icon_no==14)            label.setStyles(R.drawable.posticon14);
 
         //badge 달기
         Badge[] badges = new Badge[0];
-        if (post.writerUID.equals(myUID)){//case1: 내 게시글
-            if(post.attachImageURL!=null)
+        if (postLabel.writerUID.equals(myUID)){//case1: 내 게시글
+            if(postLabel.attachImageURL!=null)
                 badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.2f),
                         BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.9f, 0.8f));
             else
                 badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.8f));
         }
         else{   //case2: 내 게시글 아님.
-            if(post.attachImageURL!=null)
+            if(postLabel.attachImageURL!=null)
                 badges = label.addBadge(BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.9f, 0.8f));
             //else 내 게시글도 아니고 image도 없음 -> 아무것도 안함
         }
@@ -327,7 +327,7 @@ public class HomeFragment extends Fragment {
         label.getLabelId();
         label.setClickable(true);
         //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
-
+        return label;
     }
 
 
