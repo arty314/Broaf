@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -111,22 +112,6 @@ public class HomeFragment extends Fragment {
         //여기까지 검색버튼
 
 
-        //viewpost 버튼을 누르면 postviewer frag를 add
-        viewpost_map_other = (Button) view.findViewById(R.id.viewpost_map_other);
-        viewpost_map_other.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //포스트 뷰어 add (아직 구현 덜함)
-                Fragment newPostViewerFragment = new PostViewerFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-        //여기까지 포스트 뷰어 add
-
 
         //GPS 불러오기!!
         btn_new = (ImageButton)view.findViewById(R.id.btn_new);   //새로고침 버튼 누르면 됨.
@@ -219,6 +204,43 @@ public class HomeFragment extends Fragment {
                 createPostLabel(postLabel3,label3,"label3");
                 createPostLabel(postLabel4,label4,"label4");
 
+
+                //postlabel 클릭 리스너들
+
+                kakaoMap.setOnLabelClickListener(new KakaoMap.OnLabelClickListener() {
+                    @Override
+                    public void onLabelClicked(KakaoMap kakaoMap, LabelLayer layer, Label label) {
+                        String labelID = label.getLabelId();
+
+                        if(labelID=="centerLabel"){
+                            kakaoMap.moveCamera(CameraUpdateFactory.fitMapPoints(getSelectedPoints(), 20),
+                                    CameraAnimation.from(500, true, true));
+                        }
+                        else if(labelID=="label0"){
+                            Toast.makeText(getActivity(), "label0 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel0);
+                        }
+                        else if(labelID=="label1"){
+                            Toast.makeText(getActivity(), "label1 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel1);
+                        }
+                        else if(labelID=="label2"){
+                            Toast.makeText(getActivity(), "label2 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel2);
+                        }
+                        else if(labelID=="label3"){
+                            Toast.makeText(getActivity(), "label3 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel3);
+                        }
+                        else if(labelID=="label4"){
+                            Toast.makeText(getActivity(), "label4 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel4);
+                        }
+
+
+                    }
+                });
+
             }
         });
         /**여기까지 카카오맵**/
@@ -247,13 +269,11 @@ public class HomeFragment extends Fragment {
 
     private void createLabels(LatLng pos) {
         // 중심 라벨 생성
-        centerLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
+        centerLabel = labelLayer.addLabel(LabelOptions.from("centerLabel", pos)
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng2).setAnchorPoint(0.5f, 0.5f))
                 .setRank(1));
         selectedList.add(centerLabel);
-
-
-    }
+        }
 
     private LatLng[] getSelectedPoints() {
         int count = selectedList.size();
@@ -340,6 +360,16 @@ public class HomeFragment extends Fragment {
         label.setClickable(true);
         //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
         return label;
+    }
+
+
+    void showPostViewer(PostLabel postLabel){
+        Fragment newPostViewerFragment = new PostViewerFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 
