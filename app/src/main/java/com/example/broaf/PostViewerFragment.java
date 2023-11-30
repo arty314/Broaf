@@ -21,6 +21,8 @@ public class PostViewerFragment extends Fragment {
 
     PostLabel postLabel;
     boolean isLikeClicked=false;
+    int likeCount=0;
+    String likeCount_str="0";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,11 +34,6 @@ public class PostViewerFragment extends Fragment {
             myUID = getArguments().getString("myUID");
             postLabel = (PostLabel) getArguments().getSerializable("postLabel");
         }
-
-//        btn_fit = (ImageButton)view.findViewById(R.id.btn_fit);
-//        btn_fit.setOnClickListener(new View.OnClickListener()
-//        txtResult = (TextView)view.findViewById(R.id.txtResult);
-//        txtResult.setText(provider + " Lat," + latitude + " Lng," + longitude);
 
 
         /*불러온 정보 붙여넣기*/
@@ -71,37 +68,49 @@ public class PostViewerFragment extends Fragment {
 
         TextView viewer_writtenDateTime = (TextView) view.findViewById(R.id.viewer_writtenDateTime);
         //e.g. 202311300042 -> 2023.11.30. 오전 00:42
-        String year = postLabel.writtenDateTime.substring(0,4)+".";
-        String month = postLabel.writtenDateTime.substring(4,6)+".";
-        String date = postLabel.writtenDateTime.substring(6,8)+". ";
-        String hour = postLabel.writtenDateTime.substring(8,10)+":";
-        String minute = postLabel.writtenDateTime.substring(10);
+
+        String year = postLabel.writtenDateTime.substring(0, 4);
+        String month = postLabel.writtenDateTime.substring(4, 6);
+        String date = postLabel.writtenDateTime.substring(6, 8);
+        String hour = postLabel.writtenDateTime.substring(8, 10);
+        String minute = postLabel.writtenDateTime.substring(10, 12);
         int hour_num=Integer.parseInt(hour);
-        if(hour_num<12)
-            viewer_writtenDateTime.setText(year+month+date+"오전 "+hour+minute);
-        else {
-            viewer_writtenDateTime.setText(year + month + date + "오후 " + (hour_num-12) + minute);
+        String formattedDateTime = year + "." + month + "." + date + ". " + hour + ":" + minute;
+
+        if(hour_num<12){
+            formattedDateTime = year + "." + month + "." + date + ". 오전 " + hour + ":" + minute;
         }
+        else if (hour_num>=12){
+            formattedDateTime = year + "." + month + "." + date + ". 오후 " + hour + ":" + minute;
+        }
+        viewer_writtenDateTime.setText(formattedDateTime);
 
 
+        //좋아요: 미구현이므로 ui 형태만 구현. 버튼 누르면 count+1 그리고 image 변경
         ImageButton viewer_btn_heart = (ImageButton) view.findViewById(R.id.viewer_btn_heart);
         TextView viewer_likeCount = (TextView) view.findViewById(R.id.viewer_likeCount);
-        viewer_likeCount.setText(postLabel.likeCount);
-        //미구현이므로 ui 형태만 구현. 버튼 누르면 count+1 그리고 image 변경
+
+        likeCount_str=String.valueOf(postLabel.likeCount);
+        viewer_likeCount.setText(likeCount_str);
+
+
         viewer_btn_heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isLikeClicked==false){
                     viewer_btn_heart.setImageResource(R.drawable.heart_clicked);
-                    viewer_likeCount.setText(postLabel.likeCount+1);
+                    likeCount_str=String.valueOf(postLabel.likeCount+1);
+                    viewer_likeCount.setText(likeCount_str);
                     isLikeClicked=true;
                 } else if (isLikeClicked==true) {
                     viewer_btn_heart.setImageResource(R.drawable.heart_unclicked);
-                    viewer_likeCount.setText(postLabel.likeCount);
+                    likeCount_str=String.valueOf(postLabel.likeCount);
+                    viewer_likeCount.setText(likeCount_str);
                     isLikeClicked=false;
                 }
             }
         });
+
 
 
 

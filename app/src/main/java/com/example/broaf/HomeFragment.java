@@ -61,7 +61,6 @@ public class HomeFragment extends Fragment {
     ImageButton btn_search;
     EditText input_text_search;   //검색 내용(edittext)을 끌어오기 위해서.
     String searchKeyword_input;
-    Button viewpost_map_other;
 
 
     ImageButton btn_fit, btn_new;
@@ -162,19 +161,19 @@ public class HomeFragment extends Fragment {
 
         //일단 db 대신 쓸 post 객체 생성.
         PostLabel postLabel0=new PostLabel(10001,1, null,"Post 내용물입니당",false,
-                35.831272, 128.755840, 0,1,"2080123140042",
+                35.831272, 128.755840, 0,6,"2080123140042",
                 "닉네임","10001","202311300042");
         PostLabel postLabel1=new PostLabel(10002,8, "qwerty","Post 내용물입니당2",false,
-                35.832645, 128.757779, 0,1,"2080123140042",
+                35.832645, 128.757779, 0,43,"2080123140042",
                 "닉네임2","10002","202311300042");;
         PostLabel postLabel2=new PostLabel(10003,13, null,"Post 내용물입니당3",false,
-                35.829907, 128.755500, 0,1,"2080123140042",
+                35.829907, 128.755500, 0,2,"2080123140042",
                 "닉네임3","B8EeoxiR4Ihi6c4MVCgTfgMfG0j1","202311300042");
         PostLabel postLabel3=new PostLabel(10004,4, null,"Post 내용물입니당4",false,
-                35.832735, 128.753172, 0,1,"2080123140042",
+                35.832735, 128.753172, 0,11,"2080123140042",
                 "닉네임4","10004","202311300042");
         PostLabel postLabel4=new PostLabel(10005,9, "있다고 가정","Post 내용물입니당5",false,
-                35.828979, 128.754296, 0,1,"2080123140042",
+                35.828979, 128.754296, 0,0,"2080123140042",
                 "닉네임5","B8EeoxiR4Ihi6c4MVCgTfgMfG0j1","202311300042");
 
 
