@@ -28,8 +28,10 @@ public class AnnouncementViewerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_announcement_viewer, container, false);
         TextView title = (TextView)view.findViewById(R.id.real_title);
         title.setText(alarm.getTitle());
-        TextView content = (TextView)view.findViewById(R.id.real_content);
-        content.setText(alarm.getContent());
+        TextView rcontent = (TextView)view.findViewById(R.id.real_content);
+        rcontent.setText(alarm.getRcontent().replace("\\n","\n"));
+        TextView date = (TextView)view.findViewById(R.id.notice_date);
+        date.setText(alarm.getDate());
 
         //뒤로가기 버튼
         toolbar_announcement_back = (ImageButton) view.findViewById(R.id.toolbar_announcement_back);

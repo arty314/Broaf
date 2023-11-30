@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFF(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.frame_layout, fragment).commit();
     }
 
