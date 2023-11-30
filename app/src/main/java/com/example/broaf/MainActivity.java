@@ -29,10 +29,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.broaf.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    private DatabaseReference database;
 
     private Button button1;
     private TextView txtResult;
@@ -42,12 +45,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        database = FirebaseDatabase.getInstance().getReference();
 
         try { //인텐트로 PostBody객체가 도착하지 않으면 무시함
             Intent recivepostbody = getIntent();
             NormalPost normalPost = new NormalPost((CreatePostFragment.PostBody)
-                    recivepostbody.getSerializableExtra("postbody"));
+                    recivepostbody.getSerializableExtra("newpostbody"));
             Toast.makeText(this, "Normalpost 생성 완료", Toast.LENGTH_SHORT).show();
+            final LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            if ( Build.VERSION.SDK_INT >= 23 &&
+                    ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions( this, new String[] {
+                        android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
+            }
+            else {
+                // 가장최근 위치정보 가져오기
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location != null) {
+                    normalPost.setpLatitude(location.getLatitude());
+                    normalPost.setpLongitude(location.getLongitude());
+                }
+            }
+            normalPost.setPID("testpid");
+            normalPost.setWriterName("테스트닉네임");
+            database.child("Post").child("NormalPost").child(normalPost.getPID()).setValue(normalPost);
+
         }
         catch (Exception e){ }
 

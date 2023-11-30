@@ -40,6 +40,7 @@ public class PostLabel {
         this.postID=postID; this.icon_no=icon_no; this.attachImageURL=attachImageURL; this.content=content; this.isHide=isHide;
         this.latitude=latitude; this.longitude=longitude; this.openRange=openRange; this.likeCount=likeCount; this.openToDateTime=openToDateTime;
         this.writerName=writerName; this.writerUID=writerUID; this.writtenDateTime=writtenDateTime;
+        return null;
     }
     public PostLabel[] MakePosts() {
         PostLabel[] postLabel = new PostLabel[5];
