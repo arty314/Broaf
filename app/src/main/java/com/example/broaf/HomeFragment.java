@@ -76,7 +76,6 @@ public class HomeFragment extends Fragment {
     private LabelLayer labelLayer;
     private Label centerLabel;
     private List<Label> selectedList = new ArrayList<>();
-    private List<Label> postLabelList = new ArrayList<>();
 
     ///////
 
@@ -89,7 +88,7 @@ public class HomeFragment extends Fragment {
         fab.setImageResource(R.drawable.re_writepost);
         //
 
-        PostLabel[] postLabel = new PostLabel[5];   //일단 db 대신 쓸 post 객체 생성.
+
 
         //여기부터 search & post viewer
         btn_search = (ImageButton) view.findViewById(R.id.btn_search);
@@ -176,6 +175,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //일단 db 대신 쓸 post 객체 생성.
+        PostLabel postLabel0=new PostLabel(10001,1, null,"Post 내용물입니당",false,
+                35.831272, 128.755840, 0,1,"2080123140042",
+                "닉네임","10001","202311300042");
+        PostLabel postLabel1=new PostLabel(10002,8, "qwerty","Post 내용물입니당2",false,
+                35.832645, 128.757779, 0,1,"2080123140042",
+                "닉네임2","10002","202311300042");;
+        PostLabel postLabel2=new PostLabel(10003,13, null,"Post 내용물입니당3",false,
+                35.829907, 128.755500, 0,1,"2080123140042",
+                "닉네임3","B8EeoxiR4Ihi6c4MVCgTfgMfG0j1","202311300042");
+        PostLabel postLabel3=new PostLabel(10004,4, null,"Post 내용물입니당4",false,
+                35.832735, 128.753172, 0,1,"2080123140042",
+                "닉네임4","10004","202311300042");
+        PostLabel postLabel4=new PostLabel(10005,9, "있다고 가정","Post 내용물입니당5",false,
+                35.828979, 128.754296, 0,1,"2080123140042",
+                "닉네임5","B8EeoxiR4Ihi6c4MVCgTfgMfG0j1","202311300042");
 
 
 
@@ -195,6 +210,13 @@ public class HomeFragment extends Fragment {
                 labelLayer = kakaoMap.getLabelManager().getLayer();
                 LatLng pos = kakaoMap.getCameraPosition().getPosition();
                 createLabels(pos);
+
+                createPostLabel(postLabel0);
+                createPostLabel(postLabel1);
+                createPostLabel(postLabel2);
+                createPostLabel(postLabel3);
+                createPostLabel(postLabel4);
+
             }
         });
         /**여기까지 카카오맵**/
@@ -221,37 +243,14 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    //label level 설정
-//    private Bitmap getRankBitmap(float rank, int bgResId) {
-//        View rankView = LayoutInflater.from(getBaseContext()).inflate(R.layout.layout_rank_label, null);
-//        rankView.setBackgroundResource(bgResId);
-//        ((TextView) rankView.findViewById(R.id.tv_rank)).setText("Rank\n" + (int)rank);
-//
-//        int width = convertDpToPixels(convertPixelToDp(113 * 2));
-//        int height = convertDpToPixels(convertPixelToDp(152 * 2));
-//        return createBitmap(rankView, width, height);
-//    }
-    //label level 끝
-//    //trackingmode ON/OFF
-//    public void setTrackingMode(boolean isTrackingMode) {
-//        TrackingManager trackingManager = kakaoMap.getTrackingManager();
-//        if(isTrackingMode==true)
-//            if (centerLabel != null)   //centerlabel이 없다면 추적 안하게
-//                trackingManager.startTracking(centerLabel);
-//             else
-//                Toast.makeText(getActivity(), "내 위치 핀이 없습니다.", Toast.LENGTH_SHORT).show();
-//        else
-//            trackingManager.stopTracking();
-//    }
-//    //
-
-
     private void createLabels(LatLng pos) {
         // 중심 라벨 생성
         centerLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng2).setAnchorPoint(0.5f, 0.5f))
                 .setRank(1));
         selectedList.add(centerLabel);
+
+
     }
 
     private LatLng[] getSelectedPoints() {
@@ -262,8 +261,6 @@ public class HomeFragment extends Fragment {
         }
         return points;
     }
-
-
 
     //PostClass를 하나 보내면, 지정한 label로 변환해주는 함수.
     public Label createPostLabel(PostLabel postLabel){
@@ -314,32 +311,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public PostLabel MakePosts(PostLabel postLabel,int preset_no_zero_to_4) {
 
-        if (preset_no_zero_to_4==0)
-            postLabel.setPostLabel(10001,1, null,"Post 내용물입니당",false,
-                35.831272, 128.755840, 0,1,"2080123140042",
-                "닉네임","10001","202311300042");
-        else if (preset_no_zero_to_4==1)
-            postLabel.setPostLabel(10002,8, null,"Post 내용물입니당2",false,
-                35.832645, 128.757779, 0,1,"2080123140042",
-                "닉네임2","10002","202311300042");
-        else if (preset_no_zero_to_4==2)
-            postLabel.setPostLabel(10003,13, null,"Post 내용물입니당3",false,
-                35.829907, 128.755500, 0,1,"2080123140042",
-                "닉네임3","10003","202311300042");
-        else if (preset_no_zero_to_4==3)
-            postLabel.setPostLabel(10004,4, null,"Post 내용물입니당4",false,
-                35.832735, 128.753172, 0,1,"2080123140042",
-                "닉네임4","10004","202311300042");
-        else if (preset_no_zero_to_4==4)
-            postLabel.setPostLabel(10005,9, null,"Post 내용물입니당5",false,
-                35.828979, 128.754296, 0,1,"2080123140042",
-                "닉네임5","10005","202311300042");
-
-
-        return postLabel;
-    }
 
 
 }
