@@ -13,10 +13,23 @@ import android.widget.Button;
 
 public class PostViewerFragment extends Fragment {
 
+    String myUID;
+
+    PostLabel postLabel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_viewer, container, false);
+
+        //홈에서 정보 끌어오기!!!
+        if(getArguments() != null) {
+            myUID = getArguments().getString("myUID");
+            postLabel = (PostLabel) getArguments().getSerializable("postLabel");
+        }
+
+
+
 
         return view;
     }

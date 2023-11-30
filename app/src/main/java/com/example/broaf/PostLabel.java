@@ -2,7 +2,9 @@ package com.example.broaf;
 
 import com.kakao.vectormap.label.Label;
 
-public class PostLabel {
+import java.io.Serializable;
+
+public class PostLabel implements Serializable {
 
     public int postID;
     public int icon_no;    //아이콘 번호
@@ -42,6 +44,9 @@ public class PostLabel {
         this.latitude=latitude; this.longitude=longitude; this.openRange=openRange; this.likeCount=likeCount; this.openToDateTime=openToDateTime;
         this.writerName=writerName; this.writerUID=writerUID; this.writtenDateTime=writtenDateTime;
     }
+//    public void addLikeCount()
+
+
 
 //    public void MakePostLabel(int preset_no_zero_to_4) {
 //

@@ -61,7 +61,6 @@ public class HomeFragment extends Fragment {
     ImageButton btn_search;
     EditText input_text_search;   //검색 내용(edittext)을 끌어오기 위해서.
     String searchKeyword_input;
-    //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
 
 
@@ -364,10 +363,23 @@ public class HomeFragment extends Fragment {
 
 
     void showPostViewer(PostLabel postLabel){
-        Fragment newPostViewerFragment = new PostViewerFragment();
+        //지도 상의 버튼을 누르면 해당 postlabel의 정보와 uid를 들고 postViewerFragment를 add한다.
+
+        //번들에 짐 싸기
+        Bundle postBundle = new Bundle();
+
+        //userID
+        postBundle.putString("myUID",myUID);
+        postBundle.putSerializable("postLabel",postLabel);
+
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
+        PostViewerFragment postViewerFragment = new PostViewerFragment();
+
+        postViewerFragment.setArguments(postBundle);    //내용물을 viewer로 보내기
+
+        fragmentTransaction.add(R.id.frame_layout_post_viewer, postViewerFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

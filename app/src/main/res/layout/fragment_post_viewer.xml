@@ -8,86 +8,116 @@
     android:clickable="true"
     android:orientation="vertical"
     >
-    <!--이쪽은 뒷배경 흐리게 만들기용.... 그리고 이 상태에선 home-frag를 터치할 수 없게 해야되는데 어쩐지 조종이 가능함;-->
 
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:id="@+id/frame_layout_post_viewer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="400dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/post_viewer_background"
         android:elevation="10dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="40dp"
+            android:layout_marginHorizontal="30dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#F7F7F7"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/viewer_profimg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="17dp"
-                    android:src="@drawable/myinfo" />
+                    android:src="@android:color/transparent"
+                    android:background="@drawable/profimg_default"
+                    />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/viewer_nickname"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp"
-                    android:text="그레텔"
-                    android:textSize="16dp" />
+                    android:layout_marginHorizontal="30dp"
+                    android:text="닉네임"
+                    android:fontFamily="@font/notosanskrbold"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <ImageButton
+                    android:id="@+id/viewer_btn_more"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="230dp"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="#F7F7F7"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@android:color/transparent"
                     android:src="@drawable/morebutton" />
             </LinearLayout>
-            <EditText
+            <TextView
+                android:id="@+id/viewer_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="이도 앞에서 쌀이랑 30분 동안 놀았다.\n겨우 정신차리고 열람실 자리 잡으려고 클리커를 켜니 모두 만석ㅠㅠ\n그래도 행복했으니 만족!\n공부는 정문 카페에서 하기로~"/>
-            <EditText
+                android:minHeight="150dp"
+                android:gravity="top|start"
+                android:layout_marginVertical="20dp"
+                android:text="게시글의 내용이 표시될 창입니다."
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/viewer_writtenDateTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2023.10.9. 오후 4:50"
                 />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#F7F7F7"
-                    android:src="@drawable/heart_clicked" />
-                <TextView
-                    android:layout_width="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="10dp"
+                android:background="@color/light_gray"
+                />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="53"
-                    android:textSize="16dp"
-                    android:layout_marginTop="-1dp"/>
+                    android:gravity="center_vertical"
+                    >
+                    <ImageButton
+                        android:id="@+id/viewer_btn_heart"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:src="@drawable/heart_unclicked" />
+                    <TextView
+                        android:id="@+id/viewer_likeCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="53"
+                        android:textSize="16dp"
+                        android:layout_marginTop="-1dp"/>
+
+                </LinearLayout>
                 <Button
-                    android:id="@+id/btn_close_viewer"
+                    android:id="@+id/viewer_btn_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="230dp"
-                    android:layout_marginTop="0dp"
-                    android:text="뷰어 닫기"
+                    android:layout_gravity="center_vertical|end"
+                    android:text="닫기"
+                    android:textColor="@color/top_nav_text"
+                    android:backgroundTint="@color/oat"
                     />
-            </LinearLayout>
+            </FrameLayout>
 
 
         </LinearLayout>
