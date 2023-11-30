@@ -1,3 +1,4 @@
+//FriendList recyclerview를 위한 Adapter
 package com.example.broaf;
 
 import android.app.FragmentManager;
