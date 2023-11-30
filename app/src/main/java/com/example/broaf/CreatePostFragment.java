@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -150,6 +151,168 @@ public class CreatePostFragment extends Fragment {
             }
         });// -------여기까지 하단 취소버튼 지정
 
+        ImageView icon = view.findViewById(R.id.icon_view); // 아이콘 뷰
+        GridLayout icon_box = view.findViewById(R.id.icon_box); // 아이콘 박스
+        ImageButton close_box = view.findViewById(R.id.close_icon_box_btn); // 아이콘 박스 닫는버튼
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon_box.setVisibility(View.VISIBLE);
+                close_box.setVisibility(View.VISIBLE);
+            }
+        }); // 아이콘 뷰 클릭시 아이콘 박스 표시
+
+        close_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        }); // 닫기버튼 클릭시 닫기
+
+        ImageView[] icon_set = new ImageView[14];
+        icon_set[0] = view.findViewById(R.id.icon1);
+        icon_set[1] = view.findViewById(R.id.icon2);
+        icon_set[2] = view.findViewById(R.id.icon3);
+        icon_set[3] = view.findViewById(R.id.icon4);
+        icon_set[4] = view.findViewById(R.id.icon5);
+        icon_set[5] = view.findViewById(R.id.icon6);
+        icon_set[6] = view.findViewById(R.id.icon7);
+        icon_set[7] = view.findViewById(R.id.icon8);
+        icon_set[8] = view.findViewById(R.id.icon9);
+        icon_set[9] = view.findViewById(R.id.icon10);
+        icon_set[10] = view.findViewById(R.id.icon11);
+        icon_set[11] = view.findViewById(R.id.icon12);
+        icon_set[12] = view.findViewById(R.id.icon13);
+        icon_set[13] = view.findViewById(R.id.icon14); // 아이콘 세트 배열 정의
+
+        icon_set[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon1);
+                postBody.setIcon(0);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon2);
+                postBody.setIcon(1);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon3);
+                postBody.setIcon(2);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon4);
+                postBody.setIcon(3);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon5);
+                postBody.setIcon(4);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon6);
+                postBody.setIcon(5);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon7);
+                postBody.setIcon(6);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon8);
+                postBody.setIcon(7);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon8);
+                postBody.setIcon(8);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[9].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon10);
+                postBody.setIcon(9);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[10].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon11);
+                postBody.setIcon(10);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[11].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon12);
+                postBody.setIcon(11);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[12].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon13);
+                postBody.setIcon(12);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[13].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon14);
+                postBody.setIcon(13);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+
         del_img_btn = view.findViewById(R.id.delete_img_btn);
         del_img_btn.setVisibility(View.GONE); // 처음에는 숨겨져있음
         del_img_btn.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +356,7 @@ public class CreatePostFragment extends Fragment {
                                                     "com.example.broaf.fileprovider", pictureFile);
                                                 cameraintent.putExtra(MediaStore.EXTRA_OUTPUT, pictureUri);
                                                 startActivityForResult(cameraintent, TAKE_PICTURE_OK);
-                                            }catch(Exception e){Toast.makeText(getActivity(), "URI ㅕㄴ동 구동실패",Toast.LENGTH_SHORT).show();}
+                                            }catch(Exception e){Toast.makeText(getActivity(), "URI 구동 구동실패",Toast.LENGTH_SHORT).show();}
                                         }
                                     }
 
@@ -264,20 +427,35 @@ public class CreatePostFragment extends Fragment {
             public void onClick(View view) {
                 postBody.setText(String.valueOf(content.getText()));
                 if (!postBody.getText().trim().isEmpty()){
-                    if (postBody.getOpenRange() == 3 && open_time_ratio.getProgress() == 18){
-                        Calendar c = Calendar.getInstance();
-                        c.add(Calendar.YEAR, 100); // 무제한일 시 100년동안 열람가능
-                        Date dt = new Date(c.getTimeInMillis());
-                        postBody.setOpentilldate(dt);
-                    } else {
-                        Calendar cal = Calendar.getInstance();
-                        cal.add(Calendar.DATE, postBody.getOpenratio());
-                        Date d = new Date(cal.getTimeInMillis());
-                        postBody.setOpentilldate(d);
-                    }
-                    Intent intent = new Intent(view.getContext(), MainActivity.class); // 또는 getActivity()사용
-                    intent.putExtra("newpostbody", postBody);
-                    startActivity(intent);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("등록");
+                    builder.setMessage("작성하신 내용을 등록하시겠습니까?");
+                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (postBody.getOpenRange() == 3 && open_time_ratio.getProgress() == 18){
+                                Calendar c = Calendar.getInstance();
+                                c.add(Calendar.YEAR, 100); // 무제한일 시 100년동안 열람가능
+                                Date dt = new Date(c.getTimeInMillis());
+                                postBody.setOpentilldate(dt);
+                            } else {
+                                Calendar cal = Calendar.getInstance();
+                                cal.add(Calendar.DATE, postBody.getOpenratio());
+                                Date d = new Date(cal.getTimeInMillis());
+                                postBody.setOpentilldate(d);
+                            }
+                            Intent intent = new Intent(view.getContext(), MainActivity.class); // 또는 getActivity()사용
+                            intent.putExtra("newpostbody", postBody);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    builder.show();
                 }
                 else{
                     Toast.makeText(view.getContext(), "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
@@ -406,16 +584,7 @@ public class CreatePostFragment extends Fragment {
         dialog.show();
     }
 
-    public int openrangeis(ToggleButton[] t){
-        for (int i = 0; i < 3; i++){
-            if (t[i].isChecked())
-                return i;
-        }
-        return -1;
-    }
-
     public static class PostBody implements Serializable {
-        private int code;
         private String text;
         private Date writeTime;
         private int icon; // 아이콘 구분자는 뭘로할지 몰라서 일단 주석처리

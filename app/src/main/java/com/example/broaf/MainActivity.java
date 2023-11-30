@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance().getReference();
 
         try { //인텐트로 PostBody객체가 도착하지 않으면 무시함
-            Intent recivepostbody = getIntent();
+            Intent receivepostbody = getIntent();
             NormalPost normalPost = new NormalPost((CreatePostFragment.PostBody)
-                    recivepostbody.getSerializableExtra("newpostbody"));
+                    receivepostbody.getSerializableExtra("newpostbody"));
             Toast.makeText(this, "Normalpost 생성 완료", Toast.LENGTH_SHORT).show();
             final LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             if ( Build.VERSION.SDK_INT >= 23 &&

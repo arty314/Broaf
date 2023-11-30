@@ -1,27 +1,340 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".PostEditerActivity">
+    tools:context=".CreatePostFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="post editer Activity"
-        android:textSize="30sp"
-        android:textColor="@color/brown"
-        />
+        android:background="@color/white">
 
-    <Button
-        android:id="@+id/btn_postEditerActi_to_mainActi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="메인 화면으로\n(근데 버그있음: home에서 알림/내정보 frag를 누른 후 다시 home으로 돌아와서 포스트에디터에 들어왔을 경우 이 버튼이나 뒤로가기가 안먹힘.)"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:src="@drawable/icon_back"
+                android:background="@android:color/transparent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp">
+            </ImageButton>
+
+
+            <!-- 이모티콘 폴더에서 이모티콘 id에 따라 변경되도록 하기  -->
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginStart="50dp"
+                android:background="@drawable/round_rectangle_top_btn">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/badge_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/posticon1">
+            </ImageView>
+
+            <!-- <android.widget.Button
+                android:id="@+id/badge_list"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginStart="50dp"
+                android:background="@drawable/round_rectangle_top_btn">
+            </android.widget.Button> -->
+
+            <android.widget.Button
+                android:id="@+id/delete_img_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="170dp"
+                android:background="@drawable/round_rectangle_top_btn"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="21sp">
+            </android.widget.Button>
+
+            <ImageView
+                android:id="@+id/add_img_btn"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/round_rectangle_top_btn">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="95dp"
+                android:layout_alignParentEnd="true"
+                android:text="사 진\n첨 부"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textAlignment="center">
+            </TextView>
+
+            <!--<android.widget.Button
+                android:id="@+id/add_img_btn"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/round_rectangle_top_btn"
+                android:text="사 진 \n첨 부"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:paddingEnd="70dp"
+                android:paddingStart="0dp">
+            </android.widget.Button> -->
+            <!-- 이것도 사용자의 사진에 따라 표시되도록 기본값은 배경색-->
+
+            <ImageView
+                android:id="@+id/attach_img_view"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="45dp"
+                android:background="@color/white">
+
+            </ImageView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="150dp"
+                android:background="@color/text_bg_color">
+
+                <EditText
+                    android:id="@+id/post_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="5dp"
+                    android:inputType="textMultiLine"
+                    android:textSize="20sp"
+                    android:hint="내용을 입력하세요."
+                    android:gravity="start|top"
+                    android:background="@android:color/transparent">
+                </EditText>
+
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/open_range_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="520dp"
+                android:layout_marginStart="30dp"
+                android:text="공개범위"
+                android:textSize="18sp">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/open_range_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="550dp">
+
+                <ToggleButton
+                    android:id="@+id/toggle_open_range_public"
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+                    android:background="@drawable/toggle_bg_open_range_public"
+                    android:layout_marginStart="0dp"
+                    android:textOff=""
+                    android:textOn=""
+                    android:checked="false">
+
+                </ToggleButton>
+
+                <ToggleButton
+                    android:id="@+id/toggle_open_range_friends"
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/toggle_bg_open_range_friend"
+                    android:textOff=""
+                    android:textOn=""
+                    android:checked="false">
+
+                </ToggleButton>
+
+                <ToggleButton
+                    android:id="@+id/toggle_open_range_onlyme"
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/toggle_bg_open_range_onlyme"
+                    android:textOff=""
+                    android:textOn=""
+                    android:checked="false">
+
+                </ToggleButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전체공개"
+                    android:textSize="12sp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginStart="5dp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/open_friends_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="친구공개"
+                    android:textSize="12sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비공개"
+                    android:layout_marginEnd="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="12sp"
+                    android:layout_marginTop="50dp">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/open_time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/open_range_layout"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp">
+
+                <TextView
+                    android:id="@+id/open_time_view"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="0dp"
+                    android:layout_alignParentEnd="true"
+                    android:text="4 일"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:background="@drawable/round_rectangle_top_btn">
+                </TextView>
+
+                <SeekBar
+                    android:id="@+id/open_time_ratio"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="30dp"
+                    android:max="18"
+                    android:progress="9">
+
+                </SeekBar>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="0dp"
+                    android:text="공개시간"
+                    android:textSize="18sp">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/open_time_ratio"
+                    android:text="짧게">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/open_time_ratio"
+                    android:layout_centerHorizontal="true"
+                    android:text="보통">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/open_time_ratio"
+                    android:layout_marginEnd="0dp"
+                    android:layout_alignParentEnd="true"
+                    android:text="길게">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@+id/open_time_layout"
+                android:layout_marginTop="10dp">
+
+                <android.widget.Button
+                    android:id="@+id/cancel_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_ractangle_cancel_btn"
+                    android:text="취소"
+                    android:textSize="23sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp">
+                </android.widget.Button>
+
+                <android.widget.Button
+                    android:id="@+id/save_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/round_rectangle_save_btn"
+                    android:text="등록"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="20dp"
+                    android:layout_alignParentEnd="true">
+                </android.widget.Button>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</FrameLayout>

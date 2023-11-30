@@ -24,4 +24,6 @@
     <color name="_save_btn_color">#DB8447</color>
     <color name="cancel_btn_color">#DEDEDE</color>
     <color name="top_nav_text">#494949</color>
+    <color name="post_frag_bg_color">#FAF7F1</color>
+
 </resources>
