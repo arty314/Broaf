@@ -9,6 +9,14 @@
     tools:context=".FriendListActivity">
 
     <!-- 본 컨텐츠가 올라올 프레임 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendlist_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/oat"
+        android:layout_marginTop="130dp">
+    </androidx.recyclerview.widget.RecyclerView>
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
