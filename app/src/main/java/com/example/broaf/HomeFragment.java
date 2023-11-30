@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment {
     //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
 
+
     ImageButton btn_fit, btn_new;
 
     //현재 GPS 위치
@@ -88,6 +89,7 @@ public class HomeFragment extends Fragment {
         fab.setImageResource(R.drawable.re_writepost);
         //
 
+        PostLabel[] postLabel = new PostLabel[5];   //일단 db 대신 쓸 post 객체 생성.
 
         //여기부터 search & post viewer
         btn_search = (ImageButton) view.findViewById(R.id.btn_search);
@@ -262,30 +264,11 @@ public class HomeFragment extends Fragment {
     }
 
 
-//    private void createPostLabels() {
-//        // 게시글 라벨 생성
-//          // 이건 LabelOverviewActivity 내    ck_with_badge 파트랑 showBadgeLabel 보며 추가할 것.
-//        Label postLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
-//                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0, 0))
-//                .setRank(1));
-//        selectedList.add(centerLabel);
-//    }
-
-    //가설: 이걸 그냥 Label로 내보내버린다면?
-
-//    public Label createPostLabel(PostClass post){
-//        //설명: Post Class 즉, 게시글 클래스를 뱃지가 있는 Label 클래스로 변환해주는 메소드
-//        Label label = new Label;
-//        Label label
-//        return
-//    }
-
-
 
     //PostClass를 하나 보내면, 지정한 label로 변환해주는 함수.
-    public Label createPostLabel(PostLabel postLabel,Label label){
+    public Label createPostLabel(PostLabel postLabel){
         //라벨 좌표 입력
-        label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
+        Label label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
 
         //라벨 icon 설정
         if(postLabel.icon_no==1)            label.setStyles(R.drawable.posticon1);
@@ -328,6 +311,34 @@ public class HomeFragment extends Fragment {
         label.setClickable(true);
         //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
         return label;
+    }
+
+
+    public PostLabel MakePosts(PostLabel postLabel,int preset_no_zero_to_4) {
+
+        if (preset_no_zero_to_4==0)
+            postLabel.setPostLabel(10001,1, null,"Post 내용물입니당",false,
+                35.831272, 128.755840, 0,1,"2080123140042",
+                "닉네임","10001","202311300042");
+        else if (preset_no_zero_to_4==1)
+            postLabel.setPostLabel(10002,8, null,"Post 내용물입니당2",false,
+                35.832645, 128.757779, 0,1,"2080123140042",
+                "닉네임2","10002","202311300042");
+        else if (preset_no_zero_to_4==2)
+            postLabel.setPostLabel(10003,13, null,"Post 내용물입니당3",false,
+                35.829907, 128.755500, 0,1,"2080123140042",
+                "닉네임3","10003","202311300042");
+        else if (preset_no_zero_to_4==3)
+            postLabel.setPostLabel(10004,4, null,"Post 내용물입니당4",false,
+                35.832735, 128.753172, 0,1,"2080123140042",
+                "닉네임4","10004","202311300042");
+        else if (preset_no_zero_to_4==4)
+            postLabel.setPostLabel(10005,9, null,"Post 내용물입니당5",false,
+                35.828979, 128.754296, 0,1,"2080123140042",
+                "닉네임5","10005","202311300042");
+
+
+        return postLabel;
     }
 
 
