@@ -76,6 +76,7 @@ public class HomeFragment extends Fragment {
     private LabelLayer labelLayer;
     private Label centerLabel;
     private List<Label> selectedList = new ArrayList<>();
+    Label label0, label1, label2, label3, label4;
 
     ///////
 
@@ -211,11 +212,12 @@ public class HomeFragment extends Fragment {
                 LatLng pos = kakaoMap.getCameraPosition().getPosition();
                 createLabels(pos);
 
-                createPostLabel(postLabel0);
-                createPostLabel(postLabel1);
-                createPostLabel(postLabel2);
-                createPostLabel(postLabel3);
-                createPostLabel(postLabel4);
+                //postlabel 달기
+                createPostLabel(postLabel0,label0,"label0");
+                createPostLabel(postLabel1,label1,"label1");
+                createPostLabel(postLabel2,label2,"label2");
+                createPostLabel(postLabel3,label3,"label3");
+                createPostLabel(postLabel4,label4,"label4");
 
             }
         });
@@ -263,38 +265,68 @@ public class HomeFragment extends Fragment {
     }
 
     //PostClass를 하나 보내면, 지정한 label로 변환해주는 함수.
-    public Label createPostLabel(PostLabel postLabel){
+    public Label createPostLabel(PostLabel postLabel, Label label,String label_ID){
         //라벨 좌표 입력
-        Label label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
+//        Label label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
+
+
 
         //라벨 icon 설정
-        if(postLabel.icon_no==1)            label.setStyles(R.drawable.posticon1);
-        else if (postLabel.icon_no==2)            label.setStyles(R.drawable.posticon2);
-        else if (postLabel.icon_no==3)            label.setStyles(R.drawable.posticon3);
-        else if (postLabel.icon_no==4)            label.setStyles(R.drawable.posticon4);
-        else if (postLabel.icon_no==5)            label.setStyles(R.drawable.posticon5);
-        else if (postLabel.icon_no==6)            label.setStyles(R.drawable.posticon6);
-        else if (postLabel.icon_no==7)            label.setStyles(R.drawable.posticon7);
-        else if (postLabel.icon_no==8)            label.setStyles(R.drawable.posticon8);
-        else if (postLabel.icon_no==9)            label.setStyles(R.drawable.posticon9);
-        else if (postLabel.icon_no==10)            label.setStyles(R.drawable.posticon10);
-        else if (postLabel.icon_no==11)            label.setStyles(R.drawable.posticon11);
-        else if (postLabel.icon_no==12)            label.setStyles(R.drawable.posticon12);
-        else if (postLabel.icon_no==13)            label.setStyles(R.drawable.posticon13);
-        else if (postLabel.icon_no==14)            label.setStyles(R.drawable.posticon14);
+        if(postLabel.icon_no==1)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==2)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon2).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==3)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon3).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==4)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon4).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==5)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon5).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==6)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon6).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==7)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon7).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==8)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon8).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==9)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon9).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==10)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon10).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==11)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon11).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==12)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon12).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==13)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon13).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==14)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon14).setAnchorPoint(0.5f, 0.5f)).setRank(1));
 
         //badge 달기
         Badge[] badges = new Badge[0];
         if (postLabel.writerUID.equals(myUID)){//case1: 내 게시글
             if(postLabel.attachImageURL!=null)
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.2f),
-                        BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.9f, 0.8f));
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f),
+                        BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.1f, 0.1f));
             else
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.8f));
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
         }
         else{   //case2: 내 게시글 아님.
             if(postLabel.attachImageURL!=null)
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.9f, 0.8f));
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.1f, 0.1f));
             //else 내 게시글도 아니고 image도 없음 -> 아무것도 안함
         }
         //writer의 id = 친구목록에 있다면 friend 뱃지 달기   <- 친구 목록 구현 성공시 else if로 달 것
