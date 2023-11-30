@@ -69,6 +69,12 @@
                 android:text="게시글의 내용이 표시될 창입니다."
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
+            <ImageView
+                android:id="@+id/viewer_postImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_follow_my_pos"
+                />
             <TextView
                 android:id="@+id/viewer_writtenDateTime"
                 android:layout_width="match_parent"
