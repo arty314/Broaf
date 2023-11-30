@@ -1,5 +1,7 @@
 package com.example.broaf;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
+
     private ArrayList<Alarm> arrayList;
     private Context context;
 
@@ -25,6 +28,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     @NonNull
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
         return holder;
@@ -53,6 +57,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             this.notice_image = itemView.findViewById(R.id.notice_image);
             this.notice_title = (TextView) itemView.findViewById(R.id.notice_title);
             this.notice_context = (TextView) itemView.findViewById(R.id.notice_context);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        Alarm alarm = arrayList.get(pos);
+                        MainActivity activity = (MainActivity)context;
+                        activity.replaceFF(new AnnouncementViewerFragment(alarm));
+                    }
+                }
+            });
         }
     }
 }

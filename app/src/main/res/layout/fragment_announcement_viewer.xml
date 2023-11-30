@@ -6,16 +6,52 @@
     tools:context=".AnnouncementViewerFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
+        android:orientation="vertical">
 
-        android:gravity="center"
-        android:text="공지 뷰어" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="제목"
+                android:id="@+id/real_title"
+                >
+
+            </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="날짜"
+                android:textSize="5dp"
+                android:id="@+id/notice_date">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="내용"
+                android:id="@+id/real_content">
+
+            </TextView>
+
+        </LinearLayout>
 
 
-
+    </LinearLayout>
 
     <!--커스텀 상단바(xml 최하단에 둘 것)-->
     <androidx.appcompat.widget.Toolbar

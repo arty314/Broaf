@@ -77,28 +77,6 @@
             />
     </LinearLayout>
 
-    <!--임시 버튼 리스트-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
-
-
-
-        <Button
-            android:id="@+id/viewpost_map_other"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="임시 게시글 열람 버튼\n(게시글 뷰어 frag 생성)"
-            />
-
-        <!--필요하시면 밑에 임시 버튼 더 다셔도 돼요-->
-
-    </LinearLayout>
-    <!--여기까지 임시 버튼들-->
 
     <!--여기부터 필터 버튼-->
     <FrameLayout

@@ -10,18 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 public class AnnouncementViewerFragment extends Fragment {
 
     private ImageButton toolbar_announcement_back;
+    private Alarm alarm;
+
+    public AnnouncementViewerFragment(Alarm alarm){
+        this.alarm = alarm;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_announcement_viewer, container, false);
-
-
+        TextView title = (TextView)view.findViewById(R.id.real_title);
+        title.setText(alarm.getTitle());
+        TextView content = (TextView)view.findViewById(R.id.real_content);
+        content.setText(alarm.getContent());
 
         //뒤로가기 버튼
         toolbar_announcement_back = (ImageButton) view.findViewById(R.id.toolbar_announcement_back);

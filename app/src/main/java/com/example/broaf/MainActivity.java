@@ -111,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    public void replaceFF(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment).commit();
+    }
 
     //선택한 메뉴 아이템에 따라 replaceFragment(선택 flagment) 호출
     private boolean onNavigationItemSelected(MenuItem item) {

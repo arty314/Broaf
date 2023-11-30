@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -63,6 +64,7 @@ public class HomeFragment extends Fragment {
     //Bundle search_bundle;       //끌어온 검색 내용(input_text_search)를 search frag로 내보내기 위하여
     Button viewpost_map_other;
 
+
     ImageButton btn_fit, btn_new;
 
     //현재 GPS 위치
@@ -75,7 +77,7 @@ public class HomeFragment extends Fragment {
     private LabelLayer labelLayer;
     private Label centerLabel;
     private List<Label> selectedList = new ArrayList<>();
-    private List<Label> postLabelList = new ArrayList<>();
+    Label label0, label1, label2, label3, label4;
 
     ///////
 
@@ -87,6 +89,7 @@ public class HomeFragment extends Fragment {
         FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
         fab.setImageResource(R.drawable.re_writepost);
         //
+
 
 
         //여기부터 search & post viewer
@@ -108,22 +111,6 @@ public class HomeFragment extends Fragment {
         });
         //여기까지 검색버튼
 
-
-        //viewpost 버튼을 누르면 postviewer frag를 add
-        viewpost_map_other = (Button) view.findViewById(R.id.viewpost_map_other);
-        viewpost_map_other.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //포스트 뷰어 add (아직 구현 덜함)
-                Fragment newPostViewerFragment = new PostViewerFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-        //여기까지 포스트 뷰어 add
 
 
         //GPS 불러오기!!
@@ -174,6 +161,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //일단 db 대신 쓸 post 객체 생성.
+        PostLabel postLabel0=new PostLabel(10001,1, null,"Post 내용물입니당",false,
+                35.831272, 128.755840, 0,1,"2080123140042",
+                "닉네임","10001","202311300042");
+        PostLabel postLabel1=new PostLabel(10002,8, "qwerty","Post 내용물입니당2",false,
+                35.832645, 128.757779, 0,1,"2080123140042",
+                "닉네임2","10002","202311300042");;
+        PostLabel postLabel2=new PostLabel(10003,13, null,"Post 내용물입니당3",false,
+                35.829907, 128.755500, 0,1,"2080123140042",
+                "닉네임3","B8EeoxiR4Ihi6c4MVCgTfgMfG0j1","202311300042");
+        PostLabel postLabel3=new PostLabel(10004,4, null,"Post 내용물입니당4",false,
+                35.832735, 128.753172, 0,1,"2080123140042",
+                "닉네임4","10004","202311300042");
+        PostLabel postLabel4=new PostLabel(10005,9, "있다고 가정","Post 내용물입니당5",false,
+                35.828979, 128.754296, 0,1,"2080123140042",
+                "닉네임5","B8EeoxiR4Ihi6c4MVCgTfgMfG0j1","202311300042");
 
 
 
@@ -193,6 +196,51 @@ public class HomeFragment extends Fragment {
                 labelLayer = kakaoMap.getLabelManager().getLayer();
                 LatLng pos = kakaoMap.getCameraPosition().getPosition();
                 createLabels(pos);
+
+                //postlabel 달기
+                createPostLabel(postLabel0,label0,"label0");
+                createPostLabel(postLabel1,label1,"label1");
+                createPostLabel(postLabel2,label2,"label2");
+                createPostLabel(postLabel3,label3,"label3");
+                createPostLabel(postLabel4,label4,"label4");
+
+
+                //postlabel 클릭 리스너들
+
+                kakaoMap.setOnLabelClickListener(new KakaoMap.OnLabelClickListener() {
+                    @Override
+                    public void onLabelClicked(KakaoMap kakaoMap, LabelLayer layer, Label label) {
+                        String labelID = label.getLabelId();
+
+                        if(labelID=="centerLabel"){
+                            kakaoMap.moveCamera(CameraUpdateFactory.fitMapPoints(getSelectedPoints(), 20),
+                                    CameraAnimation.from(500, true, true));
+                        }
+                        else if(labelID=="label0"){
+                            Toast.makeText(getActivity(), "label0 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel0);
+                        }
+                        else if(labelID=="label1"){
+                            Toast.makeText(getActivity(), "label1 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel1);
+                        }
+                        else if(labelID=="label2"){
+                            Toast.makeText(getActivity(), "label2 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel2);
+                        }
+                        else if(labelID=="label3"){
+                            Toast.makeText(getActivity(), "label3 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel3);
+                        }
+                        else if(labelID=="label4"){
+                            Toast.makeText(getActivity(), "label4 clicked",Toast.LENGTH_SHORT).show();
+                            showPostViewer(postLabel4);
+                        }
+
+
+                    }
+                });
+
             }
         });
         /**여기까지 카카오맵**/
@@ -219,38 +267,13 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    //label level 설정
-//    private Bitmap getRankBitmap(float rank, int bgResId) {
-//        View rankView = LayoutInflater.from(getBaseContext()).inflate(R.layout.layout_rank_label, null);
-//        rankView.setBackgroundResource(bgResId);
-//        ((TextView) rankView.findViewById(R.id.tv_rank)).setText("Rank\n" + (int)rank);
-//
-//        int width = convertDpToPixels(convertPixelToDp(113 * 2));
-//        int height = convertDpToPixels(convertPixelToDp(152 * 2));
-//        return createBitmap(rankView, width, height);
-//    }
-    //label level 끝
-//    //trackingmode ON/OFF
-//    public void setTrackingMode(boolean isTrackingMode) {
-//        TrackingManager trackingManager = kakaoMap.getTrackingManager();
-//        if(isTrackingMode==true)
-//            if (centerLabel != null)   //centerlabel이 없다면 추적 안하게
-//                trackingManager.startTracking(centerLabel);
-//             else
-//                Toast.makeText(getActivity(), "내 위치 핀이 없습니다.", Toast.LENGTH_SHORT).show();
-//        else
-//            trackingManager.stopTracking();
-//    }
-//    //
-
-
     private void createLabels(LatLng pos) {
         // 중심 라벨 생성
-        centerLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
+        centerLabel = labelLayer.addLabel(LabelOptions.from("centerLabel", pos)
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng2).setAnchorPoint(0.5f, 0.5f))
                 .setRank(1));
         selectedList.add(centerLabel);
-    }
+        }
 
     private LatLng[] getSelectedPoints() {
         int count = selectedList.size();
@@ -261,60 +284,69 @@ public class HomeFragment extends Fragment {
         return points;
     }
 
-
-//    private void createPostLabels() {
-//        // 게시글 라벨 생성
-//          // 이건 LabelOverviewActivity 내    ck_with_badge 파트랑 showBadgeLabel 보며 추가할 것.
-//        Label postLabel = labelLayer.addLabel(LabelOptions.from("dotLabel", pos)
-//                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0, 0))
-//                .setRank(1));
-//        selectedList.add(centerLabel);
-//    }
-
-    //가설: 이걸 그냥 Label로 내보내버린다면?
-
-//    public Label createPostLabel(PostClass post){
-//        //설명: Post Class 즉, 게시글 클래스를 뱃지가 있는 Label 클래스로 변환해주는 메소드
-//        Label label = new Label;
-//        Label label
-//        return
-//    }
-
-
-
     //PostClass를 하나 보내면, 지정한 label로 변환해주는 함수.
-    public Label createPostLabel(PostLabel postLabel,Label label){
+    public Label createPostLabel(PostLabel postLabel, Label label,String label_ID){
         //라벨 좌표 입력
-        label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
+//        Label label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
+
+
 
         //라벨 icon 설정
-        if(postLabel.icon_no==1)            label.setStyles(R.drawable.posticon1);
-        else if (postLabel.icon_no==2)            label.setStyles(R.drawable.posticon2);
-        else if (postLabel.icon_no==3)            label.setStyles(R.drawable.posticon3);
-        else if (postLabel.icon_no==4)            label.setStyles(R.drawable.posticon4);
-        else if (postLabel.icon_no==5)            label.setStyles(R.drawable.posticon5);
-        else if (postLabel.icon_no==6)            label.setStyles(R.drawable.posticon6);
-        else if (postLabel.icon_no==7)            label.setStyles(R.drawable.posticon7);
-        else if (postLabel.icon_no==8)            label.setStyles(R.drawable.posticon8);
-        else if (postLabel.icon_no==9)            label.setStyles(R.drawable.posticon9);
-        else if (postLabel.icon_no==10)            label.setStyles(R.drawable.posticon10);
-        else if (postLabel.icon_no==11)            label.setStyles(R.drawable.posticon11);
-        else if (postLabel.icon_no==12)            label.setStyles(R.drawable.posticon12);
-        else if (postLabel.icon_no==13)            label.setStyles(R.drawable.posticon13);
-        else if (postLabel.icon_no==14)            label.setStyles(R.drawable.posticon14);
+        if(postLabel.icon_no==1)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==2)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon2).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==3)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon3).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==4)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon4).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==5)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon5).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==6)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon6).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==7)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon7).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==8)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon8).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==9)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon9).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==10)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon10).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==11)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon11).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==12)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon12).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==13)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon13).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+        else if (postLabel.icon_no==14)
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+                    .setStyles(LabelStyle.from(R.drawable.posticon14).setAnchorPoint(0.5f, 0.5f)).setRank(1));
 
         //badge 달기
         Badge[] badges = new Badge[0];
         if (postLabel.writerUID.equals(myUID)){//case1: 내 게시글
             if(postLabel.attachImageURL!=null)
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.2f),
-                        BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.9f, 0.8f));
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f),
+                        BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.1f, 0.1f));
             else
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.8f));
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
         }
         else{   //case2: 내 게시글 아님.
             if(postLabel.attachImageURL!=null)
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.9f, 0.8f));
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.1f, 0.1f));
             //else 내 게시글도 아니고 image도 없음 -> 아무것도 안함
         }
         //writer의 id = 친구목록에 있다면 friend 뱃지 달기   <- 친구 목록 구현 성공시 else if로 달 것
@@ -329,6 +361,19 @@ public class HomeFragment extends Fragment {
         //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
         return label;
     }
+
+
+    void showPostViewer(PostLabel postLabel){
+        Fragment newPostViewerFragment = new PostViewerFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frame_layout_post_viewer, newPostViewerFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+
+
 
 
 }
