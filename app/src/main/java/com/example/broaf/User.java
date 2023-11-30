@@ -14,6 +14,14 @@ public class User {
 
     private List<String> receiveRequestList;
 
+    public User() {
+    }
+
+    public User(String email, String nickname, String pw) {
+        Email = email;
+        Nickname = nickname;
+        Pw = pw;
+    }
     public User(String email, String nickname, String pw, List<String> user_friendlist, List<String> user_sendRequestList, List<String> user_receiveRequestList) {
         Email = email;
         Nickname = nickname;
