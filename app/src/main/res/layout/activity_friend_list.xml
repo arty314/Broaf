@@ -51,7 +51,7 @@
             android:id="@+id/getFriendNickname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="닉네임"
+            android:hint="닉네임 입력 후 추가/삭제"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="30dp"
             android:background="@drawable/search_btn_background"/>
