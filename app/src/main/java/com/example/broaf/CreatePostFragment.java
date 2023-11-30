@@ -264,12 +264,19 @@ public class CreatePostFragment extends Fragment {
             public void onClick(View view) {
                 postBody.setText(String.valueOf(content.getText()));
                 if (!postBody.getText().trim().isEmpty()){
-                    Calendar cal = Calendar.getInstance();
-                    cal.add(Calendar.DATE, postBody.getOpenratio());
-                    Date d = new Date(cal.getTimeInMillis());
-                    postBody.setOpentilldate(d);
+                    if (postBody.getOpenRange() == 3 && open_time_ratio.getProgress() == 18){
+                        Calendar c = Calendar.getInstance();
+                        c.add(Calendar.YEAR, 100); // 무제한일 시 100년동안 열람가능
+                        Date dt = new Date(c.getTimeInMillis());
+                        postBody.setOpentilldate(dt);
+                    } else {
+                        Calendar cal = Calendar.getInstance();
+                        cal.add(Calendar.DATE, postBody.getOpenratio());
+                        Date d = new Date(cal.getTimeInMillis());
+                        postBody.setOpentilldate(d);
+                    }
                     Intent intent = new Intent(view.getContext(), MainActivity.class); // 또는 getActivity()사용
-                    intent.putExtra("postbody", postBody);
+                    intent.putExtra("newpostbody", postBody);
                     startActivity(intent);
                 }
                 else{
@@ -408,6 +415,7 @@ public class CreatePostFragment extends Fragment {
     }
 
     public static class PostBody implements Serializable {
+        private int code;
         private String text;
         private Date writeTime;
         private int icon; // 아이콘 구분자는 뭘로할지 몰라서 일단 주석처리
@@ -419,7 +427,7 @@ public class CreatePostFragment extends Fragment {
         PostBody(){
             this.text = "";
             this.writeTime = new Date();
-            this.imguri = null;
+            this.imguri = "";
             this.openRange = 1;
             this.opentilldate = new Date();
             this.openratio = 9;

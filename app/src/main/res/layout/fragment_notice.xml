@@ -10,7 +10,6 @@
         android:id="@+id/alarm_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light"
         android:layout_marginTop="60dp">
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -66,14 +66,11 @@
                 android:text="친구 목록" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="작성한 게시글 (32)"
-            android:textColor="#000000"
-            android:textSize="12dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"/>
+            android:id="@+id/myPostView"/>
     </LinearLayout>
 
 

@@ -1,8 +1,8 @@
 package com.example.broaf;
 
-import com.kakao.vectormap.label.Label;
+import java.io.Serializable;
 
-public class PostLabel {
+public class PostLabel implements Serializable {
 
     public int postID;
     public int icon_no;    //아이콘 번호
@@ -11,8 +11,8 @@ public class PostLabel {
     public Boolean isHide;
     public  double latitude;
     public  double longitude;
-    int openRange;
-    int likeCount;
+    public int openRange;
+    public int likeCount;
     public String openToDateTime;
     public String writerName;
     public String writerUID;
@@ -34,13 +34,13 @@ public class PostLabel {
         writerUID = "10001";
     }
 
-    public void setPostLabel(int postID, int icon_no, String attachImageURL, String content, Boolean isHide,
+    public PostLabel(int postID, int icon_no, String attachImageURL, String content, Boolean isHide,
                      double latitude, double longitude, int openRange, int likeCount, String openToDateTime,
                      String writerName, String writerUID, String writtenDateTime){
 
         this.postID=postID; this.icon_no=icon_no; this.attachImageURL=attachImageURL; this.content=content; this.isHide=isHide;
         this.latitude=latitude; this.longitude=longitude; this.openRange=openRange; this.likeCount=likeCount; this.openToDateTime=openToDateTime;
         this.writerName=writerName; this.writerUID=writerUID; this.writtenDateTime=writtenDateTime;
-    }
 
+    }
 }
