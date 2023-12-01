@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,8 +23,7 @@ public class ViewPostFragment extends Fragment {
     ImageView view_post_profile_image,view_post_Button,view_post_heart;
     TextView view_post_Nickname,view_post_likeCount;
     EditText view_post_text, writtenDateTime;
-
-
+    Button viewer_btn_close;
 
 
     //이거 추가하면
@@ -69,7 +71,7 @@ public class ViewPostFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-//여기가 fragment 부분
+    //여기가 fragment 부분
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +87,22 @@ public class ViewPostFragment extends Fragment {
         writtenDateTime.setText(receiveNormalPost.getWriteTime());
         TextView view_post_likeCount = (TextView) view.findViewById(R.id.viewer_likeCount);
         view_post_likeCount.setText(receiveNormalPost.getLikeCount());
+
+
+        //버튼 구현
+        Button viewer_btn_close = (Button) view.findViewById(R.id.viewer_btn_close);
+        viewer_btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack();
+                } else {
+                    //onBackPressed();
+                }
+            }
+        });
+        //여기까지 계정정보 frag
+
         // ImageView = (ImageView)view.findViewById(R.id.view_post_profile_image)
         return view;
     }
