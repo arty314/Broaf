@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         btnAutoInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "test1@test.com";
-                String pw = "test1password";
+                String email = "goodman@good.com";
+                String pw = "asdf123";
                 firebaseAuth.signInWithEmailAndPassword(email, pw)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
