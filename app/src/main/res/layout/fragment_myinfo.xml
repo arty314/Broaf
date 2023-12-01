@@ -14,42 +14,46 @@
         android:layout_height="match_parent"
         android:elevation="10dp"
         android:orientation="vertical"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="100dp"
         >
         <!--post_viewer_background.xml는 포스트 뷰어의 테두리를 둥글게 하기 위한것. 컬러나 radius 값 조절해서 쓰면 됨.-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/profile_image"
-                android:layout_width="44dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="26dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:backgroundTint="#F7F7F7"
                 android:src="@drawable/profimg_default"
                 android:text="친구목록" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/myinfo_nickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="26dp"
-                    android:text="헨젤"
+                    android:text="     "
                     android:textColor="#000000"
+                    android:fontFamily="@font/notosanskrbold"
                     android:textSize="20dp" />
                 <TextView
                     android:id="@+id/myinfo_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:text="    "
+                    android:textColor="@color/top_nav_text"
+                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -61,19 +65,19 @@
 
             <Button
                 android:id="@+id/btn_to_account_info"
-                android:layout_width="180dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:text="계정 정보" />
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="계정 정보"
+                />
 
             <Button
                 android:id="@+id/FriendListButton"
-                android:layout_width="180dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
                 android:text="친구 목록" />
         </LinearLayout>
         <TextView
@@ -85,6 +89,12 @@
             android:textSize="12dp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray"
+            android:layout_marginVertical="10dp"
+            />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -121,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:text="내 정보 보기"
+            android:text="내 정보"
             android:fontFamily="@font/notosanskrbold"
             android:textColor="@color/top_nav_text"
             />

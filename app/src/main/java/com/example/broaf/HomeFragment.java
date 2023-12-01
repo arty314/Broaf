@@ -70,8 +70,11 @@ public class HomeFragment extends Fragment {
     private LabelLayer labelLayer;
     private Label centerLabel;
     private List<Label> selectedList = new ArrayList<>();
+    Label label0, label1, label2, label3, label4, label5, label6, label7, label8, label9, label10,
+            label11, label12, label13, label14, label15, label16, label17, label18, label19, label20,
+            label21, label22, label23, label24, label25, label26, label27, label28, label29, label30, label31;
 
-    Label label[] = new Label[32];
+
 
 
 
@@ -543,38 +546,38 @@ public class HomeFragment extends Fragment {
     }
 
     void createALLlabels(){
-        createPostLabel(postLabel0, label[0],"label[0]", filterStatus);
-        createPostLabel(postLabel1, label[1],"label[1]", filterStatus);
-        createPostLabel(postLabel2, label[2],"label[2]", filterStatus);
-        createPostLabel(postLabel3, label[3],"label[3]", filterStatus);
-        createPostLabel(postLabel4, label[4],"label[4]", filterStatus);
-        createPostLabel(postLabel5, label[5],"label[5]", filterStatus);
-        createPostLabel(postLabel6, label[6],"label[6]", filterStatus);
-        createPostLabel(postLabel7, label[7],"label[7]", filterStatus);
-        createPostLabel(postLabel8, label[8],"label[8]", filterStatus);
-        createPostLabel(postLabel9, label[9],"label[9]", filterStatus);
-        createPostLabel(postLabel10, label[10],"label[10]", filterStatus);
-        createPostLabel(postLabel11, label[11],"label[11]", filterStatus);
-        createPostLabel(postLabel12, label[12],"label[12]", filterStatus);
-        createPostLabel(postLabel13, label[13],"label[13]", filterStatus);
-        createPostLabel(postLabel14, label[14],"label[14]", filterStatus);
-        createPostLabel(postLabel15, label[15],"label[15]", filterStatus);
-        createPostLabel(postLabel16, label[16],"label[16]", filterStatus);
-        createPostLabel(postLabel17, label[17],"label[17]", filterStatus);
-        createPostLabel(postLabel18, label[18],"label[18]", filterStatus);
-        createPostLabel(postLabel19, label[19],"label[19]", filterStatus);
-        createPostLabel(postLabel20, label[20],"label[20]", filterStatus);
-        createPostLabel(postLabel21, label[21],"label[21]", filterStatus);
-        createPostLabel(postLabel22, label[22],"label[22]", filterStatus);
-        createPostLabel(postLabel23, label[23],"label[23]", filterStatus);
-        createPostLabel(postLabel24, label[24],"label[24]", filterStatus);
-        createPostLabel(postLabel25, label[25],"label[25]", filterStatus);
-        createPostLabel(postLabel26, label[26],"label[26]", filterStatus);
-        createPostLabel(postLabel27, label[27],"label[27]", filterStatus);
-        createPostLabel(postLabel28, label[28],"label[28]", filterStatus);
-        createPostLabel(postLabel29, label[29],"label[29]", filterStatus);
-        createPostLabel(postLabel30, label[30],"label[30]", filterStatus);
-        createPostLabel(postLabel31, label[31],"label[31]", filterStatus);
+        createPostLabel(postLabel0,label0,"label0", filterStatus);
+        createPostLabel(postLabel1,label1,"label1", filterStatus);
+        createPostLabel(postLabel2,label2,"label2", filterStatus);
+        createPostLabel(postLabel3,label3,"label3", filterStatus);
+        createPostLabel(postLabel4,label4,"label4", filterStatus);
+        createPostLabel(postLabel5,label5,"label5", filterStatus);
+        createPostLabel(postLabel6,label6,"label6", filterStatus);
+        createPostLabel(postLabel7,label7,"label7", filterStatus);
+        createPostLabel(postLabel8,label8,"label8", filterStatus);
+        createPostLabel(postLabel9,label9,"label9", filterStatus);
+        createPostLabel(postLabel10,label10,"label10", filterStatus);
+        createPostLabel(postLabel11,label11,"label11", filterStatus);
+        createPostLabel(postLabel12,label12,"label12", filterStatus);
+        createPostLabel(postLabel13,label13,"label13", filterStatus);
+        createPostLabel(postLabel14,label14,"label14", filterStatus);
+        createPostLabel(postLabel15,label15,"label15", filterStatus);
+        createPostLabel(postLabel16,label16,"label16", filterStatus);
+        createPostLabel(postLabel17,label17,"label17", filterStatus);
+        createPostLabel(postLabel18,label18,"label18", filterStatus);
+        createPostLabel(postLabel19,label19,"label19", filterStatus);
+        createPostLabel(postLabel20,label20,"label20", filterStatus);
+        createPostLabel(postLabel21,label21,"label21", filterStatus);
+        createPostLabel(postLabel22,label22,"label22", filterStatus);
+        createPostLabel(postLabel23,label23,"label23", filterStatus);
+        createPostLabel(postLabel24,label24,"label24", filterStatus);
+        createPostLabel(postLabel25,label25,"label25", filterStatus);
+        createPostLabel(postLabel26,label26,"label26", filterStatus);
+        createPostLabel(postLabel27,label27,"label27", filterStatus);
+        createPostLabel(postLabel28,label28,"label28", filterStatus);
+        createPostLabel(postLabel29,label29,"label29", filterStatus);
+        createPostLabel(postLabel30,label30,"label30", filterStatus);
+        createPostLabel(postLabel31,label31,"label31", filterStatus);
     }
 
 
