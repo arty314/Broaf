@@ -10,8 +10,10 @@
         android:id="@+id/alarm_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
-
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="100dp"
+        >
     </androidx.recyclerview.widget.RecyclerView>
 
 
@@ -42,7 +44,7 @@
             android:text="알림"
             android:fontFamily="@font/notosanskrbold"
             android:textColor="@color/top_nav_text"
-            />
+            /><!--
         <ImageButton
             android:id="@+id/toolbar_notice_to_setting"
             android:layout_width="wrap_content"
@@ -50,7 +52,7 @@
             android:layout_gravity="right"
             android:layout_marginEnd="20dp"
             android:background="@drawable/icon_setting"
-            />
+            />-->
     </androidx.appcompat.widget.Toolbar>
     <!--여기까지 상단바: 알림-->
 
