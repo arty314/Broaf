@@ -41,19 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//홈 frag 구현 방향
-//1. 검색창이 켜져있다 => 검색 창은 edittext.
-//      edittext에서 엔터를 입력하거나, imagebutton인 검색 버튼을 누르면 search frag로 입력된 문자열 전달
-//
-//2. 지도가 켜져있다 => mapview
-//      gps로 현재 위치 받아와서 표시
-//      firebase에서 열람 가능 기간 내의 인근 게시글 목록 따옴 (후보 게시글 목록: 일단 엄청 적은 양의 data만 불러옴)
-//      login acti에서 받아온 계정 정보와 후보 게시글의 id 정보를 이용하여 게시글 필터링 수행
-//      후보 게시글 목록 중에 열람 가능한 게시글만 visible
-//                  //Idea: 어케 잘 캐싱하면 게시글 재로드 속도 향상?
-//      열람 가능 여부 테스트 하고 나면 어케저게 잘 게시글 label 별로 icon 변경 및 badge 달아주기
-//                  //Idea: 이 또한 어케 잘 캐싱하면 게시글 재로드 속도 향상? 친구 프사, 미리보기 등
-
 public class HomeFragment extends Fragment {
 
 
@@ -98,95 +85,100 @@ public class HomeFragment extends Fragment {
             35.832645, 128.757779, 0,43,"2080123140042",
             "나주","10001","202311260213");;
     PostLabel postLabel2=new PostLabel(10003,13, null,"Post내용물입니당3",false,
-            35.829907, 128.755500, 0,2,"2080123140042",
+            35.839907, 128.755500, 0,2,"2080123140042",
             "헨젤","-NkVlvAINDhIXRBZ1hHL","202311261147");
     PostLabel postLabel3=new PostLabel(10004,4, null,"Post내용물입니당4",false,
             35.832735, 128.753172, 0,11,"2080123140042",
             "오리너구리","10004","202311261922");
     PostLabel postLabel4=new PostLabel(10005,3, null,"Post내용물입니당5",false,
-            35.828979, 128.754296, 0,0,"2080123140042",
+            35.838979, 128.754296, 0,0,"2080123140042",
             "헨젤","-NkVlvAINDhIXRBZ1hHL","202311270136");
     PostLabel postLabel5=new PostLabel(10001,7, null,"Post내용물입니당",false,
-            35.831272, 128.669159, 0,6,"2080123140042",
+            35.831272, 128.759159, 0,6,"2080123140042",
             "David","10005","202311270851");
     PostLabel postLabel6=new PostLabel(10002,8, "qwerty","Post내용물입니당2",false,
-            35.816150, 128.535304, 0,43,"2080123140042",
+            35.826150, 128.755304, 0,43,"2080123140042",
             "치즈","10006","202311271605");;
     PostLabel postLabel7=new PostLabel(10003,13, null,"Post내용물입니당3",false,
-            35.816756, 128.519264, 0,2,"2080123140042",
+            35.826756, 128.759264, 0,2,"2080123140042",
             "캔따개","10007","202311280019");
     PostLabel postLabel8=new PostLabel(10004,1, null,"Post내용물입니당4",false,
-            35.817336, 128.509925, 0,11,"2080123140042",
+            35.827336, 128.759925, 0,11,"2080123140042",
             "wowo","-NkCD1GOweVWBk7mhJJ9","202311280733");
     PostLabel postLabel9=new PostLabel(10005,1, null,"Post내용물입니당5",false,
-            35.820263,128.690771 , 0,0,"2080123140042",
+            35.830263,128.750771 , 0,0,"2080123140042",
             "wowo","-NkCD1GOweVWBk7mhJJ9","202311281448");
     PostLabel postLabel10=new PostLabel(10002,10, "qwerty","Post내용물입니당2",false,
-            35.831140, 128.613568, 0,43,"2080123140042",
+            35.831140, 128.753568, 0,43,"2080123140042",
             "wowo","-NkCD1GOweVWBk7mhJJ9","202311282202");;
     PostLabel postLabel11=new PostLabel(10003,13, null,"Post내용물입니당3",false,
-            35.834808, 128.545337, 0,2,"2080123140042",
+            35.834808, 128.755337, 0,2,"2080123140042",
             "good","-Nk5C6FKxdEHbn5hxDo0","202311290516");
     PostLabel postLabel12=new PostLabel(10004,4, null,"Post내용물입니당4",false,
-            35.838494, 128.769727, 0,11,"2080123140042",
+            35.838494, 128.759727, 0,11,"2080123140042",
             "good","-Nk5C6FKxdEHbn5hxDo0","202311291231");
     PostLabel postLabel13=new PostLabel(10005,9, null,"Post내용물입니당5",false,
-            35.846276, 128.688904, 0,0,"2080123140042",
+            35.826276, 128.758904, 0,0,"2080123140042",
             "리치","-NkVnLvZ0TdAMTwY0w96","202311291945");
     PostLabel postLabel14=new PostLabel(10002,6, "qwerty","Post내용물입니당2",false,
-            35.864563, 128.592793, 0,43,"2080123140042",
+            35.834563, 128.752793, 0,43,"2080123140042",
             "리치","-NkVnLvZ0TdAMTwY0w96","202311300259");;
     PostLabel postLabel15=new PostLabel(10003,1, null,"Post내용물입니당3",false,
-            35.865961, 755500, 0,2,"2080123140042",
+            35.835961, 755500, 0,2,"2080123140042",
             "리치","-NkVnLvZ0TdAMTwY0w96","202311301014");
     PostLabel postLabel16=new PostLabel(10004,2, null,"Post내용물입니당4",false,
-            35.872753, 128.588879, 0,11,"2080123140042",
+            35.822753, 128.758879, 0,11,"2080123140042",
             "리치","-NkVnLvZ0TdAMTwY0w96","202311301728");
     PostLabel postLabel17=new PostLabel(10005,3, null,"Post내용물입니당5",false,
-            35.867781, 128.704831, 0,0,"2080123140042",
+            35.837781, 128.754831, 0,0,"2080123140042",
             "나주","10001","202311302342");
     PostLabel postLabel18=new PostLabel(10003,4, null,"Post내용물입니당3",false,
-            35.873499, 128.614017, 0,2,"2080123140042",
+            35.823499, 128.754017, 0,2,"2080123140042",
             "나주","10001","202312010657");
     PostLabel postLabel19=new PostLabel(10004,5, null,"Post내용물입니당4",false,
-            35.876888, 128.592606, 0,11,"2080123140042",
+            35.826888, 128.752606, 0,11,"2080123140042",
             "나주","10001","202312011411");
     PostLabel postLabel20=new PostLabel(10005,6, null,"Post내용물입니당5",false,
-            35.901330, 128.610808, 0,0,"2080123140042",
+            35.831330, 128.750808, 0,0,"2080123140042",
             "감귤","10002","202312012125");
     PostLabel postLabel21=new PostLabel(10002,7, "qwerty","Post내용물입니당2",false,
-            35.909653, 128.543539, 0,43,"2080123140042",
+            35.839653, 128.753539, 0,43,"2080123140042",
             "감귤","10002","202311260528");;
     PostLabel postLabel22=new PostLabel(10003,8, null,"Post내용물입니당3",false,
-            35.912492, 128.667284, 0,2,"2080123140042",
+            35.822492, 128.757284, 0,2,"2080123140042",
             "감귤","10002","202311261342");
     PostLabel postLabel23=new PostLabel(10004,9, null,"Post내용물입니당4",false,
-            35.913360, 128.593468, 0,11,"2080123140042",
+            35.823360, 128.753468, 0,11,"2080123140042",
             "영석","10003","202311262157");
     PostLabel postLabel24=new PostLabel(10005,10, null,"Post내용물입니당5",false,
-            35.918453, 128.524673, 0,0,"2080123140042",
+            35.828453, 128.754673, 0,0,"2080123140042",
             "영석","10003","202311270611");
     PostLabel postLabel25=new PostLabel(10003,11, null,"Post내용물입니당3",false,
-            35.923135, 128.759240, 0,2,"2080123140042",
+            35.833135, 128.759240, 0,2,"2080123140042",
             "오리너구리","10004","202311271425");
     PostLabel postLabel26=new PostLabel(10004,12, null,"Post내용물입니당4",false,
-            35.924984, 128.532745, 0,11,"2080123140042",
+            35.834984, 128.752745, 0,11,"2080123140042",
             "오리너구리","10004","202311272240");
     PostLabel postLabel27=new PostLabel(10005,3, null,"Post내용물입니당5",false,
-            35.927526, 128.628078, 0,0,"2080123140042",
+            35.837526, 128.758078, 0,0,"2080123140042",
             "오리너구리","10004","202311281508");
     PostLabel postLabel28=new PostLabel(10002,14, "qwerty","Post내용물입니당2",false,
-            35.933029, 128.729484, 0,43,"2080123140042",
+            35.833029, 128.759484, 0,43,"2080123140042",
             "David","10005","202311282323");;
     PostLabel postLabel29=new PostLabel(10003,2, null,"Post내용물입니당3",false,
-            35.939327, 128.574154, 0,2,"2080123140042",
+            35.839327, 128.754154, 0,2,"2080123140042",
             "치즈","10006","202311300042");
     PostLabel postLabel30=new PostLabel(10004,14, null,"Post내용물입니당4",false,
-            35.832735, 128.762636, 0,11,"2080123140042",
+            35.832735, 128.752636, 0,11,"2080123140042",
             "캔따개","10007","202311290737");
     PostLabel postLabel31=new PostLabel(10005,1, null,"Post내용물입니당5",false,
-            35.828979, 128.677078, 0,0,"2080123140042",
+            35.838979, 128.757078, 0,0,"2080123140042",
             "캔따개","10007","202312010052");
+
+
+
+
+
 
 
     ///////
@@ -330,43 +322,6 @@ public class HomeFragment extends Fragment {
                 //여기서 만약.. filterStatus를 준다면?
                 //postlabel 달기
                 createALLlabels();
-//                createPostLabel(postLabel0,label0,"label0", filterStatus);
-//                createPostLabel(postLabel1,label1,"label1", filterStatus);
-//                createPostLabel(postLabel2,label2,"label2", filterStatus);
-//                createPostLabel(postLabel3,label3,"label3", filterStatus);
-//                createPostLabel(postLabel4,label4,"label4", filterStatus);
-//                createPostLabel(postLabel5,label5,"label5", filterStatus);
-//                createPostLabel(postLabel6,label6,"label6", filterStatus);
-//                createPostLabel(postLabel7,label7,"label7", filterStatus);
-//                createPostLabel(postLabel8,label8,"label8", filterStatus);
-//                createPostLabel(postLabel9,label9,"label9", filterStatus);
-//                createPostLabel(postLabel10,label10,"label10", filterStatus);
-//                createPostLabel(postLabel11,label11,"label11", filterStatus);
-//                createPostLabel(postLabel12,label12,"label12", filterStatus);
-//                createPostLabel(postLabel13,label13,"label13", filterStatus);
-//                createPostLabel(postLabel14,label14,"label14", filterStatus);
-//                createPostLabel(postLabel15,label15,"label15", filterStatus);
-//                createPostLabel(postLabel16,label16,"label16", filterStatus);
-//                createPostLabel(postLabel17,label17,"label17", filterStatus);
-//                createPostLabel(postLabel18,label18,"label18", filterStatus);
-//                createPostLabel(postLabel19,label19,"label19", filterStatus);
-//                createPostLabel(postLabel20,label20,"label20", filterStatus);
-//                createPostLabel(postLabel21,label21,"label21", filterStatus);
-//                createPostLabel(postLabel22,label22,"label22", filterStatus);
-//                createPostLabel(postLabel23,label23,"label23", filterStatus);
-//                createPostLabel(postLabel24,label24,"label24", filterStatus);
-//                createPostLabel(postLabel25,label25,"label25", filterStatus);
-//                createPostLabel(postLabel26,label26,"label26", filterStatus);
-//                createPostLabel(postLabel27,label27,"label27", filterStatus);
-//                createPostLabel(postLabel28,label28,"label28", filterStatus);
-//                createPostLabel(postLabel29,label29,"label29", filterStatus);
-//                createPostLabel(postLabel30,label30,"label30", filterStatus);
-//                createPostLabel(postLabel31,label31,"label31", filterStatus);
-
-
-
-
-
 
 
                 //postlabel 클릭 리스너들
@@ -462,10 +417,6 @@ public class HomeFragment extends Fragment {
 
     //PostClass를 하나 보내면, 지정한 label로 변환해주는 함수.
     public Label createPostLabel(PostLabel postLabel, Label label,String label_ID,int filterStatus){
-        //라벨 좌표 입력
-//        Label label = kakaoMap.getLabelManager().getLayer().addLabel(LabelOptions.from(LatLng.from(postLabel.latitude,postLabel.longitude)));
-
-
 
         //라벨 icon 설정
         if(postLabel.icon_no==1)
