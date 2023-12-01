@@ -41,19 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//홈 frag 구현 방향
-//1. 검색창이 켜져있다 => 검색 창은 edittext.
-//      edittext에서 엔터를 입력하거나, imagebutton인 검색 버튼을 누르면 search frag로 입력된 문자열 전달
-//
-//2. 지도가 켜져있다 => mapview
-//      gps로 현재 위치 받아와서 표시
-//      firebase에서 열람 가능 기간 내의 인근 게시글 목록 따옴 (후보 게시글 목록: 일단 엄청 적은 양의 data만 불러옴)
-//      login acti에서 받아온 계정 정보와 후보 게시글의 id 정보를 이용하여 게시글 필터링 수행
-//      후보 게시글 목록 중에 열람 가능한 게시글만 visible
-//                  //Idea: 어케 잘 캐싱하면 게시글 재로드 속도 향상?
-//      열람 가능 여부 테스트 하고 나면 어케저게 잘 게시글 label 별로 icon 변경 및 badge 달아주기
-//                  //Idea: 이 또한 어케 잘 캐싱하면 게시글 재로드 속도 향상? 친구 프사, 미리보기 등
-
 public class HomeFragment extends Fragment {
 
 
@@ -330,43 +317,6 @@ public class HomeFragment extends Fragment {
                 //여기서 만약.. filterStatus를 준다면?
                 //postlabel 달기
                 createALLlabels();
-//                createPostLabel(postLabel0,label0,"label0", filterStatus);
-//                createPostLabel(postLabel1,label1,"label1", filterStatus);
-//                createPostLabel(postLabel2,label2,"label2", filterStatus);
-//                createPostLabel(postLabel3,label3,"label3", filterStatus);
-//                createPostLabel(postLabel4,label4,"label4", filterStatus);
-//                createPostLabel(postLabel5,label5,"label5", filterStatus);
-//                createPostLabel(postLabel6,label6,"label6", filterStatus);
-//                createPostLabel(postLabel7,label7,"label7", filterStatus);
-//                createPostLabel(postLabel8,label8,"label8", filterStatus);
-//                createPostLabel(postLabel9,label9,"label9", filterStatus);
-//                createPostLabel(postLabel10,label10,"label10", filterStatus);
-//                createPostLabel(postLabel11,label11,"label11", filterStatus);
-//                createPostLabel(postLabel12,label12,"label12", filterStatus);
-//                createPostLabel(postLabel13,label13,"label13", filterStatus);
-//                createPostLabel(postLabel14,label14,"label14", filterStatus);
-//                createPostLabel(postLabel15,label15,"label15", filterStatus);
-//                createPostLabel(postLabel16,label16,"label16", filterStatus);
-//                createPostLabel(postLabel17,label17,"label17", filterStatus);
-//                createPostLabel(postLabel18,label18,"label18", filterStatus);
-//                createPostLabel(postLabel19,label19,"label19", filterStatus);
-//                createPostLabel(postLabel20,label20,"label20", filterStatus);
-//                createPostLabel(postLabel21,label21,"label21", filterStatus);
-//                createPostLabel(postLabel22,label22,"label22", filterStatus);
-//                createPostLabel(postLabel23,label23,"label23", filterStatus);
-//                createPostLabel(postLabel24,label24,"label24", filterStatus);
-//                createPostLabel(postLabel25,label25,"label25", filterStatus);
-//                createPostLabel(postLabel26,label26,"label26", filterStatus);
-//                createPostLabel(postLabel27,label27,"label27", filterStatus);
-//                createPostLabel(postLabel28,label28,"label28", filterStatus);
-//                createPostLabel(postLabel29,label29,"label29", filterStatus);
-//                createPostLabel(postLabel30,label30,"label30", filterStatus);
-//                createPostLabel(postLabel31,label31,"label31", filterStatus);
-
-
-
-
-
 
 
                 //postlabel 클릭 리스너들

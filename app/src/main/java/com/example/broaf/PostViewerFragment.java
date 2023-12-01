@@ -63,7 +63,7 @@ public class PostViewerFragment extends Fragment {
         //이미지 저장소 미구현으로 if문으로 대체
         String postImage = postLabel.attachImageURL;
         if(postImage!=null){
-            viewer_postImage.setImageResource(R.drawable.broaf_logo_round);
+            viewer_postImage.setImageResource(R.drawable.img_forpost);
         }
 
         TextView viewer_writtenDateTime = (TextView) view.findViewById(R.id.viewer_writtenDateTime);
