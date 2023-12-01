@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -124,6 +125,180 @@ public class PostEditerActivity extends AppCompatActivity {
                 }
             }
         });// -------여기까지 하단 취소버튼 지정
+
+        ImageView icon = findViewById(R.id.icon_view); // 아이콘 뷰
+        GridLayout icon_box = findViewById(R.id.icon_box); // 아이콘 박스
+        ImageButton close_box = findViewById(R.id.close_icon_box_btn); // 아이콘 박스 닫는버튼
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon_box.setVisibility(View.VISIBLE);
+                close_box.setVisibility(View.VISIBLE);
+            }
+        }); // 아이콘 뷰 클릭시 아이콘 박스 표시
+
+        close_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        }); // 닫기버튼 클릭시 닫기
+
+        ImageView[] icon_set = new ImageView[14];
+        icon_set[0] = findViewById(R.id.icon1);
+        icon_set[1] = findViewById(R.id.icon2);
+        icon_set[2] = findViewById(R.id.icon3);
+        icon_set[3] = findViewById(R.id.icon4);
+        icon_set[4] = findViewById(R.id.icon5);
+        icon_set[5] = findViewById(R.id.icon6);
+        icon_set[6] = findViewById(R.id.icon7);
+        icon_set[7] = findViewById(R.id.icon8);
+        icon_set[8] = findViewById(R.id.icon9);
+        icon_set[9] = findViewById(R.id.icon10);
+        icon_set[10] = findViewById(R.id.icon11);
+        icon_set[11] = findViewById(R.id.icon12);
+        icon_set[12] = findViewById(R.id.icon13);
+        icon_set[13] = findViewById(R.id.icon14); // 아이콘 세트 배열 정의
+
+        icon_set[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon1);
+                editedPost.setIcon(0);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon2);
+                editedPost.setIcon(1);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon3);
+                editedPost.setIcon(2);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon4);
+                editedPost.setIcon(3);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon5);
+                editedPost.setIcon(4);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon6);
+                editedPost.setIcon(5);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon7);
+                editedPost.setIcon(6);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon8);
+                editedPost.setIcon(7);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon8);
+                editedPost.setIcon(8);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[9].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon10);
+                editedPost.setIcon(9);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[10].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon11);
+                editedPost.setIcon(10);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[11].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon12);
+                editedPost.setIcon(11);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[12].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon13);
+                editedPost.setIcon(12);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+        icon_set[13].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icon.setImageResource(R.drawable.posticon14);
+                editedPost.setIcon(13);
+                icon_box.setVisibility(View.GONE);
+                close_box.setVisibility(View.GONE);
+            }
+        });
+
+        del_img_btn = findViewById(R.id.delete_img_btn);
+        del_img_btn.setVisibility(View.GONE); // 처음에는 숨겨져있음
+        del_img_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //첨부된 이미지를 지우는 코드
+                del_img_btn.setVisibility(View.GONE);
+                editedPost.setImgurl("");
+                attach_img_view.setImageURI(Uri.parse(""));
+            }
+        });
 
         del_img_btn = findViewById(R.id.delete_img_btn);
         del_img_btn.setVisibility(View.GONE); // 처음에는 숨겨져있음
