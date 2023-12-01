@@ -9,6 +9,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,29 +30,37 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.broaf.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    private DatabaseReference database;
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     private Button button1;
     private TextView txtResult;
+
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser curuser = auth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = FirebaseDatabase.getInstance().getReference();
+        //database = FirebaseDatabase.getInstance().getReference();
 
         try { //인텐트로 PostBody객체가 도착하지 않으면 무시함
             Intent receivepostbody = getIntent();
             NormalPost normalPost = new NormalPost((CreatePostFragment.PostBody)
                     receivepostbody.getSerializableExtra("newpostbody"));
-            Toast.makeText(this, "Normalpost 생성 완료", Toast.LENGTH_SHORT).show();
             final LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             if ( Build.VERSION.SDK_INT >= 23 &&
                     ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
@@ -66,12 +75,37 @@ public class MainActivity extends AppCompatActivity {
                     normalPost.setpLongitude(location.getLongitude());
                 }
             }
-            normalPost.setPID("testpid");
-            normalPost.setWriterName("테스트닉네임");
+            String uemail = curuser.getEmail(); // 로그인한 유저이메일을 갖고와서
+            normalPost.setPID("PID");
+            Thread dataTh = new Thread(){ // 파이어베이스 쿼리가 비동기.... 근데 스레드 조인도 안먹어?
+                @Override
+                public void run() {
+                    super.run();
+                    searchname(uemail, new searchCallback() {
+                        @Override
+                        public void onSearchResult(String nickname) {
+                            normalPost.setWriterName(nickname);
+                            //Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+            dataTh.start();
+            try{
+                dataTh.join();
+            } catch (Exception e){}
+            /*searchname(uemail, new searchCallback() {
+                @Override
+                public void onSearchResult(String nickname) {
+                    normalPost.setWriterName(nickname);
+                    //Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
+                }
+            });*/
+            if (normalPost.getWriterName().isEmpty()) {Toast.makeText(getApplicationContext(), "아직 비었음", Toast.LENGTH_SHORT).show();}
             database.child("Post").child("NormalPost").child(normalPost.getPID()).setValue(normalPost);
-
+            //Toast.makeText(this, "저장완료", Toast.LENGTH_SHORT).show();
         }
-        catch (Exception e){ }
+        catch (Exception e) { }
 
         //처음엔 HomeFragment가 표시됨
         replaceFragment(new HomeFragment());
@@ -144,4 +178,25 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.navi_to_home);
     }
 
+    public interface searchCallback{
+        void onSearchResult(String nickname);
+    }
+
+    public void searchname(String uemail, searchCallback callback){
+        Query qy = database.child("User").orderByChild("email").equalTo(uemail);
+        qy.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try{for (DataSnapshot ds : snapshot.getChildren()) {
+                    //Toast.makeText(getApplicationContext(), "닉네임을 찾음 " + name, Toast.LENGTH_SHORT).show();
+                    String name =  ds.child("nickname").getValue(String.class);
+                    callback.onSearchResult(name);
+                }} catch (Exception e) {}
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "닉네임 찾기 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
