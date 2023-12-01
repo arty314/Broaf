@@ -40,6 +40,7 @@ public class MyinfoFragment extends Fragment {
     private ImageButton toolbar_myInfo_back;
     private Button btn_to_account_info;
     //
+    private TextView myinfo_email;
     //recyclerView
     private RecyclerView recyclerview;
     private RecyclerView.Adapter adapter;
@@ -114,6 +115,9 @@ public class MyinfoFragment extends Fragment {
         });
         //여기까지 뒤로가기
 
+//이메일 가져오지
+        myinfo_email = view.findViewById(R.id.myinfo_email);
+        myinfo_email.setText(currentUser.getEmail());
 
 //recyclerview를 위한 추가
         recyclerview = view.findViewById(R.id.myinfo_recyclerview);

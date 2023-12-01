@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -111,7 +113,47 @@ public class SearchFragment extends Fragment {
                 }
                 //arrayListSearched.addAll(arrayList);
                 arrayList.addAll(arrayListSearched);
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
+
+                if(TextUtils.isEmpty(searchKeyword)) {
+                    Toast.makeText(getActivity().getApplicationContext(), "검색어를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    arrayListSearched.clear();
+                    adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+                    recyclerview.setAdapter(adapter);
+                    search_input.setText("검색어를 입력해주세요");
+                    adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+
+                }
+                else if (searchKeyword.length()<2) {
+                    Toast.makeText(getActivity().getApplicationContext(), "최소 2글자 이상 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    arrayListSearched.clear();
+                    adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+                    recyclerview.setAdapter(adapter);
+                    search_input.setText("두 글자 이상 검색해 주세요");
+                    adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+
+                }
+                else {
+                    /// 리스트에 불러온 후에 검색할 수 있도록 한다.(따로두면 ArrayList에 담기전에 먼저 실행된다.)앞에거 검색
+                    String searchText = getArguments().getString("fromHomeFrag").toString().toLowerCase();
+                    //arrayList.clear(); // 검색 결과 리스트 초기화
+                    arrayListSearched.clear();
+
+                    //for (Post post : arrayListSearched) {
+                    for (ReceiveNormalPost receiveNormalPost : arrayList) {
+                        if (receiveNormalPost.getContents().toLowerCase().contains(searchText)) {
+                            // arrayList.add(post); // 검색된 데이터를 arrayListSearched에 추가
+                            arrayListSearched.add(receiveNormalPost);
+                        }
+                    }
+
+                    //arrayList.clear(); // 기존 arrayList 비우기
+                    //arrayList.addAll(arrayListSearched); // 필터링된 데이터로 arrayList 업데이트
+                    adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+                    recyclerview.setAdapter(adapter);
+                    search_input.setText("'" + searchText + "'의 검색 결과(" + arrayListSearched.size() + ")");
+                    adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+                }
             }
 
             @Override
@@ -125,42 +167,63 @@ public class SearchFragment extends Fragment {
         //myRef.child("NormalPost").addValueEventListener(postListener);
         FirebaseDatabase.getInstance("https://broaf-72e4c-default-rtdb.firebaseio.com/").getReference("Post").child("NormalPost").addValueEventListener(postListener);
         //adapter = new PostAdapter(arrayList);
-        adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
-        recyclerview.setAdapter(adapter);
+        //adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+        //recyclerview.setAdapter(adapter);
         ///여기까지 data받아오기
 
         //arrayList.clear(); // 기존 arrayList 비우기
         //arrayList.addAll(arrayListSearched); // 필터링된 데이터로 arrayList 업데이트
-        adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+        //adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
 
-        ///
 
         //한번만 검색 되는 것
 
         //adapter = new PostAdapter(arrayList);
-        adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
-        recyclerview.setAdapter(adapter);
+
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String searchText = input_text_search_Result.getText().toString().toLowerCase();
                 //arrayList.clear(); // 검색 결과 리스트 초기화
-                arrayListSearched.clear();
+                if(TextUtils.isEmpty(searchText)) { //아무것ㅅ도 없이 검색하면
+                    Toast.makeText(getActivity().getApplicationContext(), "검색어를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    arrayListSearched.clear();
+                    adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+                    recyclerview.setAdapter(adapter);
+                    search_input.setText("검색어를 입력해주세요");
+                    adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
 
-                //for (Post post : arrayListSearched) {
-                for (ReceiveNormalPost receiveNormalPost : arrayList) {
-                    if (receiveNormalPost.getContents().toLowerCase().contains(searchText)) {
-                        // arrayList.add(post); // 검색된 데이터를 arrayListSearched에 추가
-                        arrayListSearched.add(receiveNormalPost);
+                }
+                else if (searchText.length()<2) {
+                    Toast.makeText(getActivity().getApplicationContext(), "최소 2글자 이상 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    arrayListSearched.clear();
+                    adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+                    recyclerview.setAdapter(adapter);
+                    search_input.setText("두 글자 이상 검색해주세요");
+                    adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+
+                }
+                else {
+                    arrayListSearched.clear();
+                    //for (Post post : arrayListSearched) {
+                    for (ReceiveNormalPost receiveNormalPost : arrayList) {
+                        if (receiveNormalPost.getContents().toLowerCase().contains(searchText)) {
+                            // arrayList.add(post); // 검색된 데이터를 arrayListSearched에 추가
+                            arrayListSearched.add(receiveNormalPost);
+
+                        }
                     }
+                    //arrayList.clear(); // 기존 arrayList 비우기
+                    //arrayList.addAll(arrayListSearched); // 필터링된 데이터로 arrayList 업데이트
+                    adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+                    recyclerview.setAdapter(adapter);
+                    search_input.setText("'" + searchText + "'의 검색 결과(" + arrayListSearched.size() + ")");
+                    adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+
                 }
 
-                //arrayList.clear(); // 기존 arrayList 비우기
-                //arrayList.addAll(arrayListSearched); // 필터링된 데이터로 arrayList 업데이트
 
-                search_input.setText("'" + searchText + "'의 검색 결과(" + arrayListSearched.size() + ")");
-                adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
             }
         });
         return view;

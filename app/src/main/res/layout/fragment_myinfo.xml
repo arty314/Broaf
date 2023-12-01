@@ -31,17 +31,26 @@
                 android:backgroundTint="#F7F7F7"
                 android:src="@drawable/profimg_default"
                 android:text="친구목록" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/myinfo_nickName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="26dp"
-                android:text="헨젤"
-                android:textColor="#000000"
-                android:textSize="20dp" />
-
+                <TextView
+                    android:id="@+id/myinfo_nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="26dp"
+                    android:text="헨젤"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
+                <TextView
+                    android:id="@+id/myinfo_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"/>
+            </LinearLayout>
 
         </LinearLayout>
 
