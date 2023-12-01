@@ -127,6 +127,18 @@ public class FriendListActivity extends AppCompatActivity {
                 String FNickname = getNickname.getText().toString(); // 입력한 닉네임 저장
 
 
+                //중복 추가를 방지하기 위한 조건
+                boolean isAlreadyFriend = false;
+
+                for (User user : arrayList) {
+                    if (user.getNickname().equals(FNickname)) {
+                        Toast.makeText(FriendListActivity.this, "이미 친구로 등록된 사용자입니다.", Toast.LENGTH_SHORT).show();
+                        isAlreadyFriend = true;
+                        return;
+                    }
+                }
+                //
+
                 if (currentUser != null) {
                     String currentEmail = currentUser.getEmail();
 
@@ -143,6 +155,7 @@ public class FriendListActivity extends AppCompatActivity {
 
                                 // 검색창에 입력한 닉네임을 가진 사용자의 UID 찾기
                                 usersRef.orderByChild("nickname").equalTo(FNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.getChildrenCount() > 0) {
