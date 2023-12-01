@@ -50,6 +50,8 @@ public class IntroActivity extends AppCompatActivity {
         }
         //*키해시얻기:여기까지
 
+
+
         // 로그인 버튼을 눌렀을 때
         Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {

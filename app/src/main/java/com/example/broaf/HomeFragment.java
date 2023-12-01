@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kakao.vectormap.KakaoMap;
 import com.kakao.vectormap.KakaoMapReadyCallback;
 import com.kakao.vectormap.LatLng;
+import com.kakao.vectormap.MapGravity;
 import com.kakao.vectormap.MapView;
 import com.kakao.vectormap.camera.CameraAnimation;
 import com.kakao.vectormap.camera.CameraUpdateFactory;
@@ -320,6 +321,8 @@ public class HomeFragment extends Fragment {
                 LatLng pos = kakaoMap.getCameraPosition().getPosition();
                 createLabels(pos);
 
+
+                kakaoMap.getLogo().setPosition(MapGravity.BOTTOM|MapGravity.RIGHT,50, 200 );
 
                 //여기서 만약.. filterStatus를 준다면?
                 //postlabel 달기

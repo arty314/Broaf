@@ -37,10 +37,7 @@
                 android:text="이메일 변경"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/white_2"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray"/>
+
             <Button
                 android:id="@+id/acInfo_password_change"
                 android:layout_width="match_parent"
@@ -48,10 +45,7 @@
                 android:text="비밀번호 변경"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/white_2"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray"/>
+
 
 
             <TextView
@@ -74,10 +68,6 @@
                 android:text="어플리케이션 버전"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/white_2"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray"/>
 
 
             <TextView
@@ -88,10 +78,7 @@
                 android:fontFamily="@font/notosanskrbold"
                 android:textColor="@color/black"
                 />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray"/>
+
             <Button
                 android:id="@+id/acInfo_logout"
                 android:layout_width="match_parent"
@@ -99,10 +86,7 @@
                 android:text="로그아웃"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/white_2"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_gray"/>
+
             <Button
                 android:id="@+id/acInfo_deleteAccount"
                 android:layout_width="match_parent"
