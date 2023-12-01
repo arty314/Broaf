@@ -9,14 +9,24 @@
     tools:context=".FriendListActivity">
 
     <!-- 본 컨텐츠가 올라올 프레임 -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friendlist_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="150dp"
+        android:orientation="vertical"
         >
-    </androidx.recyclerview.widget.RecyclerView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/friendlist_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -53,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="20dp"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/search_btn_background"
             android:hint="닉네임 입력 후 추가(+) 혹은 삭제(-)를 눌러주세요."
             android:textSize="14sp"
