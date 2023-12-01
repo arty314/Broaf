@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -48,6 +52,8 @@ public class FriendListActivity extends AppCompatActivity {
     private ImageButton add;
     private ImageButton rm;
 
+    private ImageButton back_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,7 @@ public class FriendListActivity extends AppCompatActivity {
         getNickname = findViewById(R.id.getFriendNickname);
         add = findViewById(R.id.Iaddfriend);
         rm = findViewById(R.id.Irmfriend);
+        back_button = findViewById(R.id.toolbar_friend_back);
 
         recyclerView = (RecyclerView)findViewById(R.id.friendlist_view); // 뷰가져오기
         recyclerView.setHasFixedSize(true); // 리사이클러뷰 성능항상
@@ -254,6 +261,13 @@ public class FriendListActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+        //뒤로가기 구현
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // 현재 Activity를 종료하여 이전 Activity 또는 Fragment로 돌아감
             }
         });
     }
