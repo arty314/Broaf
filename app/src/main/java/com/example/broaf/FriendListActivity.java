@@ -183,10 +183,10 @@ public class FriendListActivity extends AppCompatActivity {
                                             arrayList.add(new User(fEmail, fNickname, fPw));
                                             adapter.notifyDataSetChanged();
 
-                                            Toast.makeText(FriendListActivity.this, "친구가 추가되었습니다.", Toast.LENGTH_SHORT).show(); //버튼 클릭 확인용. 나중에 지울꺼임
+                                            Toast.makeText(FriendListActivity.this, "친구가 추가되었습니다.", Toast.LENGTH_SHORT).show();
                                             }
                                         } else {
-                                            Toast.makeText(FriendListActivity.this, "해당하는 닉네임의 사용자가 없습니다.", Toast.LENGTH_SHORT).show(); //버튼 클릭 확인용. 나중에 지울꺼임
+                                            Toast.makeText(FriendListActivity.this, "해당하는 닉네임의 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
