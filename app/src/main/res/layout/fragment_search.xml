@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SearchFragment"
     android:orientation="vertical">
 
@@ -72,29 +73,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosanskrbold"
-                android:text="(입력한 검색어는 여기에 띄워주세요) "
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="의 검색 결과"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="("
-                />
-            <TextView
-                android:id="@+id/search_result_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="nn "
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=")"
-                />
+                android:text="(입력한 검색어는 여기에 띄워주세요) "/>
+            <!--
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="의 검색 결과"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="("
+            />
+        <TextView
+            android:id="@+id/search_result_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nn "
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=")"
+            />
+        -->
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -104,12 +107,10 @@
 
 
         <!--검색 결과영역-->
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:text="검색 결과 recyclerview는 이쪽 layout 안에 표시하시면 됩니다.\n\n \n뒤로가기 버튼은 휴대폰 뒤로가기나 하단 버튼으로도 가능하니 삭제했습니다!"
-            />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </FrameLayout>

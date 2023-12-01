@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -23,9 +24,11 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 //알아서 수정해주세요
 //홈에서 내용 끌어오는건 구현함
@@ -41,32 +44,125 @@ public class SearchFragment extends Fragment {
     //검색창 내부로와서 text와 버튼
 
     TextView input_text_search_Result;    //입력된 검색어 띄울 layout 창
-    ImageButton btn_search;
+    ImageButton btn_search, btn_search_inner;
 
 
+////////////////
+//데이터 추가를 위한 것
+
+    //recyclerView
+    private RecyclerView recyclerview;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<ReceiveNormalPost> arrayList;
+    private ArrayList<ReceiveNormalPost> arrayListSearched;
+    //검색(String), 개수
+    private TextView search_input;
+
+
+    //검색을 위한 변수
+    private Button searchButton;//검색어 입력버튼
+    private EditText editTextSearch; //검색어 입력창
+
+    ///////////////////////////
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
         //중앙 버튼 이미지 설정
         FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
         fab.setImageResource(R.drawable.back_to_map);
         //
-
         input_text_search_Result = view.findViewById(R.id.input_text_search_Result);
 
-
-
-        if(getArguments() != null) { //받아온 값이 빈값이 아닐 때 실행해라
+        if (getArguments() != null) { //받아온 값이 빈값이 아닐 때 실행해라
             searchKeyword = getArguments().getString("fromHomeFrag");
             input_text_search_Result.setText(searchKeyword);
         }
 
-        //recyclerview
+
+        btn_search = view.findViewById(R.id.btn_search);
+//recyclerview를 위한 추가
+        recyclerview = view.findViewById(R.id.recyclerView);
+        recyclerview.setHasFixedSize(true);
+        recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        arrayList = new ArrayList<>();
+        arrayListSearched = new ArrayList<>();
+
+        //검색
+        search_input = view.findViewById(R.id.search_input);
+
+
+        // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://broaf-72e4c-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef = database.getReference("Post");
+        //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("message");
 
-        //메인화면으로 돌아가기 버튼 뺐어요. 이유: Searchfragment에서는 휴대폰 뒤로가기가 잘먹힘. 그리고 하단바의 메인 지도 버튼 눌러도 되기에.
 
+        //recyclerView 구현부
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                arrayList.clear();
+                arrayListSearched.clear();
+                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                    ReceiveNormalPost receiveNormalPost = snapshot.getValue(ReceiveNormalPost.class);
+                    //arrayList.add(post);
+                    arrayListSearched.add(receiveNormalPost);
+                }
+                //arrayListSearched.addAll(arrayList);
+                arrayList.addAll(arrayListSearched);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("MainActivity", String.valueOf(databaseError.toException()));
+            }
+
+        };
+
+        //arrayListSearched.addAll(arrayList);
+        //myRef.child("NormalPost").addValueEventListener(postListener);
+        FirebaseDatabase.getInstance("https://broaf-72e4c-default-rtdb.firebaseio.com/").getReference("Post").child("NormalPost").addValueEventListener(postListener);
+        //adapter = new PostAdapter(arrayList);
+        adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+        recyclerview.setAdapter(adapter);
+        ///여기까지 data받아오기
+
+        //arrayList.clear(); // 기존 arrayList 비우기
+        //arrayList.addAll(arrayListSearched); // 필터링된 데이터로 arrayList 업데이트
+        adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+
+        ///
+
+        //한번만 검색 되는 것
+
+        //adapter = new PostAdapter(arrayList);
+        adapter = new ReceiveNormalPostAdapter(getContext(), arrayListSearched);
+        recyclerview.setAdapter(adapter);
+
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchText = input_text_search_Result.getText().toString().toLowerCase();
+                //arrayList.clear(); // 검색 결과 리스트 초기화
+                arrayListSearched.clear();
+
+                //for (Post post : arrayListSearched) {
+                for (ReceiveNormalPost receiveNormalPost : arrayList) {
+                    if (receiveNormalPost.getContents().toLowerCase().contains(searchText)) {
+                        // arrayList.add(post); // 검색된 데이터를 arrayListSearched에 추가
+                        arrayListSearched.add(receiveNormalPost);
+                    }
+                }
+
+                //arrayList.clear(); // 기존 arrayList 비우기
+                //arrayList.addAll(arrayListSearched); // 필터링된 데이터로 arrayList 업데이트
+
+                search_input.setText("'" + searchText + "'의 검색 결과(" + arrayListSearched.size() + ")");
+                adapter.notifyDataSetChanged(); // 변경된 데이터셋을 RecyclerView에 알림
+            }
+        });
         return view;
     }
-
 }
