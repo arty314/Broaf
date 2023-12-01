@@ -24,6 +24,13 @@ com.example.broaf 폴더 안에 있는 Activity/Fragment.java 파일이랑 layou
     : 로그인, 포스트에디터에 사용될 frag를 제외한 주요 fragments들은 여기서 켜고 꺼지고 바뀌고 함(검색frag, 홈frag(지도), 알림frag, 내정보frag)
     기본적으론 지도가 있는 홈 frag가 호출되어있음
 
+-FriendListActivity, FriendListAdapter, activity_friend_list, friend_list_item
+    : 로그인된 사용자의 친구목록을 호출하고 관리할 수 있는 기능을 구현하기 위한 Class 및 xml. 
+        검색창에 친구로 추가하거나 삭제하고자하는 사용자의 닉네임을 타이핑하고 하단의 버튼을 터치하여 기능을 수행한다. 
+
+-User, DBUser
+    : 사용자 정의와 데이터베이스 상호작용에 관련된 Class.
+
 -이후 추가할 fragments (임의)
     (1) postviewer fragment 
         :홈frag의 mapview에서 label 클릭시 add, 검색 결과에서 누르면 add, 
