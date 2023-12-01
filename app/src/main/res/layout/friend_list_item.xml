@@ -4,20 +4,23 @@
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@drawable/list_background1"
         android:layout_height="70dp">
         <TextView
             android:id="@+id/friend_nickname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="100dp"
+            android:textSize="20dp"
+            android:gravity="center"
             android:text="닉네임" />
-        <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="#F7F7F7"
-            android:src="@drawable/deletebutton" />
+<!--        <ImageButton-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:backgroundTint="#F7F7F7"-->
+<!--            android:src="@drawable/deletebutton" />-->
     </RelativeLayout>
 </RelativeLayout>

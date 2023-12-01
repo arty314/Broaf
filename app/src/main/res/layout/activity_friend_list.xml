@@ -30,21 +30,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="115dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@android:color/transparent"
             android:src="@drawable/addfriendbutton"
+            />
 
+        <ImageButton
+            android:id="@+id/Irmfriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/rmfriendbutton"
             />
 
         <EditText
             android:id="@+id/getFriendNickname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="닉네임"
             android:layout_marginTop="10dp"
-            android:paddingHorizontal="30dp"
-            android:background="@drawable/search_btn_background"/>
+            android:background="@drawable/search_btn_background"
+            android:hint="닉네임 입력 후 추가/삭제"
+            android:paddingHorizontal="30dp" />
 
 
     </FrameLayout>

@@ -46,6 +46,7 @@ public class FriendListActivity extends AppCompatActivity {
 
 
     private ImageButton add;
+    private ImageButton rm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class FriendListActivity extends AppCompatActivity {
 
         getNickname = findViewById(R.id.getFriendNickname);
         add = findViewById(R.id.Iaddfriend);
+        rm = findViewById(R.id.Irmfriend);
 
         recyclerView = (RecyclerView)findViewById(R.id.friendlist_view); // 뷰가져오기
         recyclerView.setHasFixedSize(true); // 리사이클러뷰 성능항상
@@ -172,6 +174,75 @@ public class FriendListActivity extends AppCompatActivity {
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
                                         // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
 
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
+                        }
+                    });
+                }
+            }
+        });
+        // 닉네임 기반 사용자 삭제
+        rm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String FNickname = getNickname.getText().toString(); // 입력한 닉네임 저장
+
+                if (currentUser != null) {
+                    String currentEmail = currentUser.getEmail();
+
+                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("User");
+
+                    // 현재 로그인한 사용자의 email을 사용하여 해당 사용자 찾기
+                    usersRef.orderByChild("email").equalTo(currentEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                                String currentUid = userSnapshot.getKey(); // 현재 로그인한 사용자의 UID (A)
+
+                                Log.d("User UID", currentUid);
+
+                                // 현재 로그인한 사용자의 FrindList에서 검색창에 입력한 닉네임을 가진 사용자의 UID 찾기
+                                usersRef.child(currentUid).child("friendlist").orderByChild("nickname").equalTo(FNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getChildrenCount() > 0) {
+
+                                            for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
+                                                String fUid = friendSnapshot.getKey(); // 검색창 닉네임을 가진 사용자의 UID (B)
+
+                                                Log.d("Friend UID", fUid);
+
+                                                String fNickname = friendSnapshot.child("nickname").getValue(String.class);
+
+                                                // A의 friendlist에서 B의 UID 삭제(Realtime-database)
+                                                usersRef.child(currentUid).child("friendlist").child(fUid).removeValue();
+
+                                                // 리스트에서도 제거 후 갱신
+                                                for (User user : arrayList) {
+                                                    if (user.getNickname().equals(fNickname)) {
+                                                        arrayList.remove(user);
+                                                        break;
+                                                    }
+                                                }
+                                                adapter.notifyDataSetChanged();
+
+                                                Toast.makeText(FriendListActivity.this, "친구가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(FriendListActivity.this, "해당하는 닉네임의 친구가 없습니다.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
                                     }
                                 });
                             }
