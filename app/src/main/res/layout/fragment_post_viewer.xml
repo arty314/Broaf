@@ -37,8 +37,8 @@
                     android:id="@+id/viewer_profimg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@android:color/transparent"
-                    android:background="@drawable/profimg_default"
+                    android:src="@drawable/profimg_default"
+                    android:scaleType="centerCrop"
                     />
 
                 <TextView

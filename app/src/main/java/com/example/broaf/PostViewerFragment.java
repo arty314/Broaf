@@ -40,9 +40,15 @@ public class PostViewerFragment extends Fragment {
         ImageView viewer_profimg = (ImageView)view.findViewById(R.id.viewer_profimg);
         //계정 별 프로필 사진 설정 기능 미구현. 고로, 조건문으로 임시처리
         String writerUID=postLabel.writerUID;
-        if(writerUID=="B8EeoxiR4Ihi6c4MVCgTfgMfG0j1"){
-        viewer_profimg.setImageResource(R.drawable.writepost);
-        }else if (writerUID=="10001"){}
+        if(writerUID=="-NkVlvAINDhIXRBZ1hHL"){
+            viewer_profimg.setImageResource(R.drawable.img_prof_me);
+        } else if(writerUID=="-NkCD1GOweVWBk7mhJJ9"){
+            viewer_profimg.setImageResource(R.drawable.img_prof_f1);
+        } else if(writerUID=="-Nk5C6FKxdEHbn5hxDo0"){
+            viewer_profimg.setImageResource(R.drawable.img_prof_f2);
+        } else if(writerUID=="-NkVnLvZ0TdAMTwY0w96"){
+            viewer_profimg.setImageResource(R.drawable.img_prof_f3);
+        }
 
         TextView viewer_nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         viewer_nickname.setText(postLabel.writerName);
