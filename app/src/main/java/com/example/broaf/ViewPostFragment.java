@@ -81,6 +81,10 @@ public class ViewPostFragment extends Fragment {
         nickname.setText(receiveNormalPost.getWriterName());
         TextView context = (TextView) view.findViewById(R.id.viewer_contents);
         context.setText(receiveNormalPost.getContents());
+        TextView writtenDateTime = (TextView) view.findViewById(R.id.viewer_writtenDateTime);
+        writtenDateTime.setText(receiveNormalPost.getWriteTime());
+        TextView view_post_likeCount = (TextView) view.findViewById(R.id.viewer_likeCount);
+        view_post_likeCount.setText(receiveNormalPost.getLikeCount());
         // ImageView = (ImageView)view.findViewById(R.id.view_post_profile_image)
         return view;
     }

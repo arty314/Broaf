@@ -76,8 +76,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             String uemail = curuser.getEmail(); // 로그인한 유저이메일을 갖고와서
-            normalPost.setPID("PID");
-            Thread dataTh = new Thread(){ // 파이어베이스 쿼리가 비동기.... 근데 스레드 조인도 안먹어?
+            Thread pidTh = new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    makePID(new pidCallback() {
+                        @Override
+                        public void onPidResult(int pid) {
+                            ++pid;
+                            String newpid = String.valueOf(pid);
+                            normalPost.setPID(newpid);
+                            Toast.makeText(getApplicationContext(), newpid, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+            pidTh.start();
+            try{ pidTh.join();} catch (Exception e) {}
+            if (normalPost.getPID().isEmpty()) {normalPost.setPID("10001");}
+            Thread dataTh = new Thread(){ // 파이어베이스 쿼리가 비동기 동기화
                 @Override
                 public void run() {
                     super.run();
@@ -85,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSearchResult(String nickname) {
                             normalPost.setWriterName(nickname);
-                            //Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
+                            database.child("Post").child("NormalPost").child(normalPost.getPID()).setValue(normalPost);
+                            //Toast.makeText(getApplicationContext(), "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -94,16 +112,6 @@ public class MainActivity extends AppCompatActivity {
             try{
                 dataTh.join();
             } catch (Exception e){}
-            /*searchname(uemail, new searchCallback() {
-                @Override
-                public void onSearchResult(String nickname) {
-                    normalPost.setWriterName(nickname);
-                    //Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
-                }
-            });*/
-            if (normalPost.getWriterName().isEmpty()) {Toast.makeText(getApplicationContext(), "아직 비었음", Toast.LENGTH_SHORT).show();}
-            database.child("Post").child("NormalPost").child(normalPost.getPID()).setValue(normalPost);
-            //Toast.makeText(this, "저장완료", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) { }
 
@@ -196,6 +204,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "닉네임 찾기 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public interface pidCallback{
+        void onPidResult(int pid);
+    }
+
+    public void makePID(pidCallback callback){
+        database.child("Post").child("NormalPost").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int maxpid = 0;
+                try{
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        String pid = ds.child("pid").getValue(String.class);
+                        int intpid = Integer.parseInt(pid);
+                        if (maxpid < intpid){
+                            maxpid = intpid;
+                            callback.onPidResult(maxpid);
+                        }
+                    }
+                } catch (Exception e) {}
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
