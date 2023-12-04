@@ -1,6 +1,5 @@
 package com.example.broaf;
 
-import com.example.broaf.R;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -8,12 +7,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,14 +22,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kakao.vectormap.KakaoMap;
@@ -56,12 +51,9 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
 
-    String myUID = "-NkVlvAINDhIXRBZ1hHL";  //"henzel@gmail.com", 헨젤, 00001111 계정
-    String[]friendsID={"\n" +
-            "-NkCD1GOweVWBk7mhJJ9",
-            "-Nk5C6FKxdEHbn5hxDo0",
-            "-NkVnLvZ0TdAMTwY0w96",};
-    //strong@naver.com, wowo    //good@good.com, good   //rich@gmail.com, 리치
+//    String myName = "-NkVlvAINDhIXRBZ1hHL";  //"henzel@gmail.com", 헨젤, 00001111 계정
+//    String[]friendNameList;
+//    //strong@naver.com, wowo    //good@good.com, good   //rich@gmail.com, 리치
 
     ImageButton btn_search;
     EditText input_text_search;   //검색 내용(edittext)을 끌어오기 위해서.
@@ -82,124 +74,22 @@ public class HomeFragment extends Fragment {
     private LabelLayer labelLayer;
     private Label centerLabel;
     private List<Label> selectedList = new ArrayList<>();
-    Label label0, label1, label2, label3, label4, label5, label6, label7, label8, label9, label10,
-            label11, label12, label13, label14, label15, label16, label17, label18, label19, label20,
-            label21, label22, label23, label24, label25, label26, label27, label28, label29, label30, label31;
 
-
-
-
-
-    //일단 db 대신 쓸 post 객체 생성. 수정 시 MyinfoFragment에 있는 것도 같이 수정해주세요....
-
-    PostLabel postLabel0=new PostLabel(10001,1, null,"Post내용물입니당",false,
-            35.831272, 128.755840, 0,6,"2080123140042",
-            "헨젤","-NkVlvAINDhIXRBZ1hHL","202311300042");
-    PostLabel postLabel1=new PostLabel(10002,8, "qwerty","Post내용물입니당2",false,
-            35.832645, 128.757779, 0,43,"2080123140042",
-            "나주","10001","202311260213");;
-    PostLabel postLabel2=new PostLabel(10003,13, null,"Post내용물입니당3",false,
-            35.839907, 128.755500, 0,2,"2080123140042",
-            "헨젤","-NkVlvAINDhIXRBZ1hHL","202311261147");
-    PostLabel postLabel3=new PostLabel(10004,4, null,"Post내용물입니당4",false,
-            35.832735, 128.753172, 0,11,"2080123140042",
-            "오리너구리","10004","202311261922");
-    PostLabel postLabel4=new PostLabel(10005,3, null,"Post내용물입니당5",false,
-            35.838979, 128.754296, 0,0,"2080123140042",
-            "헨젤","-NkVlvAINDhIXRBZ1hHL","202311270136");
-    PostLabel postLabel5=new PostLabel(10001,7, null,"Post내용물입니당",false,
-            35.831272, 128.759159, 0,6,"2080123140042",
-            "David","10005","202311270851");
-    PostLabel postLabel6=new PostLabel(10002,8, "qwerty","Post내용물입니당2",false,
-            35.826150, 128.755304, 0,43,"2080123140042",
-            "치즈","10006","202311271605");;
-    PostLabel postLabel7=new PostLabel(10003,13, null,"Post내용물입니당3",false,
-            35.826756, 128.759264, 0,2,"2080123140042",
-            "캔따개","10007","202311280019");
-    PostLabel postLabel8=new PostLabel(10004,1, null,"Post내용물입니당4",false,
-            35.827336, 128.759925, 0,11,"2080123140042",
-            "wowo","-NkCD1GOweVWBk7mhJJ9","202311280733");
-    PostLabel postLabel9=new PostLabel(10005,1, null,"Post내용물입니당5",false,
-            35.830263,128.750771 , 0,0,"2080123140042",
-            "wowo","-NkCD1GOweVWBk7mhJJ9","202311281448");
-    PostLabel postLabel10=new PostLabel(10002,10, "qwerty","Post내용물입니당2",false,
-            35.831140, 128.753568, 0,43,"2080123140042",
-            "wowo","-NkCD1GOweVWBk7mhJJ9","202311282202");;
-    PostLabel postLabel11=new PostLabel(10003,13, null,"Post내용물입니당3",false,
-            35.834808, 128.755337, 0,2,"2080123140042",
-            "good","-Nk5C6FKxdEHbn5hxDo0","202311290516");
-    PostLabel postLabel12=new PostLabel(10004,4, null,"Post내용물입니당4",false,
-            35.838494, 128.759727, 0,11,"2080123140042",
-            "good","-Nk5C6FKxdEHbn5hxDo0","202311291231");
-    PostLabel postLabel13=new PostLabel(10005,9, null,"Post내용물입니당5",false,
-            35.826276, 128.758904, 0,0,"2080123140042",
-            "리치","-NkVnLvZ0TdAMTwY0w96","202311291945");
-    PostLabel postLabel14=new PostLabel(10002,6, "qwerty","Post내용물입니당2",false,
-            35.834563, 128.752793, 0,43,"2080123140042",
-            "리치","-NkVnLvZ0TdAMTwY0w96","202311300259");;
-    PostLabel postLabel15=new PostLabel(10003,1, null,"Post내용물입니당3",false,
-            35.835961, 755500, 0,2,"2080123140042",
-            "리치","-NkVnLvZ0TdAMTwY0w96","202311301014");
-    PostLabel postLabel16=new PostLabel(10004,2, null,"Post내용물입니당4",false,
-            35.822753, 128.758879, 0,11,"2080123140042",
-            "리치","-NkVnLvZ0TdAMTwY0w96","202311301728");
-    PostLabel postLabel17=new PostLabel(10005,3, null,"Post내용물입니당5",false,
-            35.837781, 128.754831, 0,0,"2080123140042",
-            "나주","10001","202311302342");
-    PostLabel postLabel18=new PostLabel(10003,4, null,"Post내용물입니당3",false,
-            35.823499, 128.754017, 0,2,"2080123140042",
-            "나주","10001","202312010657");
-    PostLabel postLabel19=new PostLabel(10004,5, null,"Post내용물입니당4",false,
-            35.826888, 128.752606, 0,11,"2080123140042",
-            "나주","10001","202312011411");
-    PostLabel postLabel20=new PostLabel(10005,6, null,"Post내용물입니당5",false,
-            35.831330, 128.750808, 0,0,"2080123140042",
-            "감귤","10002","202312012125");
-    PostLabel postLabel21=new PostLabel(10002,7, "qwerty","Post내용물입니당2",false,
-            35.839653, 128.753539, 0,43,"2080123140042",
-            "감귤","10002","202311260528");;
-    PostLabel postLabel22=new PostLabel(10003,8, null,"Post내용물입니당3",false,
-            35.822492, 128.757284, 0,2,"2080123140042",
-            "감귤","10002","202311261342");
-    PostLabel postLabel23=new PostLabel(10004,9, null,"Post내용물입니당4",false,
-            35.823360, 128.753468, 0,11,"2080123140042",
-            "영석","10003","202311262157");
-    PostLabel postLabel24=new PostLabel(10005,10, null,"Post내용물입니당5",false,
-            35.828453, 128.754673, 0,0,"2080123140042",
-            "영석","10003","202311270611");
-    PostLabel postLabel25=new PostLabel(10003,11, null,"Post내용물입니당3",false,
-            35.833135, 128.759240, 0,2,"2080123140042",
-            "오리너구리","10004","202311271425");
-    PostLabel postLabel26=new PostLabel(10004,12, null,"Post내용물입니당4",false,
-            35.834984, 128.752745, 0,11,"2080123140042",
-            "오리너구리","10004","202311272240");
-    PostLabel postLabel27=new PostLabel(10005,3, null,"Post내용물입니당5",false,
-            35.837526, 128.758078, 0,0,"2080123140042",
-            "오리너구리","10004","202311281508");
-    PostLabel postLabel28=new PostLabel(10002,14, "qwerty","Post내용물입니당2",false,
-            35.833029, 128.759484, 0,43,"2080123140042",
-            "David","10005","202311282323");;
-    PostLabel postLabel29=new PostLabel(10003,2, null,"Post내용물입니당3",false,
-            35.839327, 128.754154, 0,2,"2080123140042",
-            "치즈","10006","202311300042");
-    PostLabel postLabel30=new PostLabel(10004,14, null,"Post내용물입니당4",false,
-            35.832735, 128.752636, 0,11,"2080123140042",
-            "캔따개","10007","202311290737");
-    PostLabel postLabel31=new PostLabel(10005,1, null,"Post내용물입니당5",false,
-            35.838979, 128.757078, 0,0,"2080123140042",
-            "캔따개","10007","202312010052");
 
     //NormalPost들을 저장하기 위한 ArrayList 선언
 
 
     ArrayList<ReceiveNormalPost> postList; //ReceiveNormalPost형태의 ArrayList
-    ArrayList<String> friendList; //User의 친구 Nickname을 저장하는 String arrayList
-    RecyclerView recyclerview;
-    //RecyclerView.Adapter adapter;
+    ArrayList<Label> labelList;             //postList를 Label 형태로 바꾼 결과를 저장하는 ArrayList
+    Label newlabel; //새로 추가할 라벨
+
+    ArrayList<String> friendNameList; //User의 친구 Nickname을 저장하는 String arrayList
+    //    RecyclerView recyclerview;
+//    //RecyclerView.Adapter adapter;
     //Auth 데이터를 가져오기 위한 변수
     FirebaseAuth mAuth = FirebaseAuth.getInstance(); //FirebaseAuth를 import
     FirebaseUser currentUser = mAuth.getCurrentUser(); //현재로그인한 유저를 저장
-    String currentKey,currentUid,currentEmail,nickname; //찾은 노드의키, 현재 로그인 유저 UID, 현재 로그인 유저 Email, 찾아온 nickname
+    String currentKey,currentUid,currentEmail, myNickname=null; //찾은 노드의키, 현재 로그인 유저 UID, 현재 로그인 유저 Email, 찾아온 nickname
     ///////
 
     @Override
@@ -255,7 +145,6 @@ public class HomeFragment extends Fragment {
                         longitude = location.getLongitude();
 
                         txtResult.setText(provider + " Lat," + latitude + " Lng," + longitude);
-                        createLabels(LatLng.from(latitude,longitude)); //
 
                         //provider: 위치 정보, latitude: 위도, longitude: 경도 (altitude: 고도)
                     }
@@ -288,6 +177,7 @@ public class HomeFragment extends Fragment {
         currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         currentEmail = currentUser.getEmail();
         postList = new ArrayList<>();
+        labelList = new ArrayList<>();
         // 닉네임가져오기
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://broaf-72e4c-default-rtdb.firebaseio.com/");
 
@@ -296,8 +186,8 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     currentKey = userSnapshot.getKey(); // 현재 로그인한 User key
-                    nickname = userSnapshot.child("nickname").getValue(String.class);
-                    Log.e("currentNickName", "content: " + nickname);
+                    myNickname = userSnapshot.child("nickname").getValue(String.class);
+                    Log.e("currentNickName", "content: " + myNickname);
                 }
             }
 
@@ -313,11 +203,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 postList.clear();
+                labelList.clear();
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) {
                     ReceiveNormalPost receiveNormalPost = snapshot.getValue(ReceiveNormalPost.class);
                     Log.e("PostContents", "content: " + receiveNormalPost.getContents());
                     postList.add(receiveNormalPost);
+                    //여기다가 Label로 변환 코드 써야할 각.
+                    labelList.add(createLabel(receiveNormalPost,receiveNormalPost.pid,filterStatus));
                 }
+                //여기에 createALLPost 써야할 각
             }
 
             @Override
@@ -329,7 +223,7 @@ public class HomeFragment extends Fragment {
         //2. 모든 게시글 불러오기(종료)
 
         //3. 접속자의 모든 친구 불러오기
-        friendList = new ArrayList<>();
+        friendNameList = new ArrayList<>();
         if (currentUser != null) {
             database.getReference("User").orderByChild("email").equalTo(currentEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -337,18 +231,18 @@ public class HomeFragment extends Fragment {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         String currentKey = userSnapshot.getKey(); // 현재 로그인한 User key
 
-                        friendList = new ArrayList<>();
+                        friendNameList = new ArrayList<>();
 
                         //가져온 데이터의 child 데이터들을 User 클래스의 정의에 맞게 정리 후 리스트에 추가
                         database.getReference("User").child(currentKey).child("friendlist").orderByChild("email").addListenerForSingleValueEvent(new ValueEventListener() {
                             //현재 로그인한 사용자의 friendlist 데이터 가져오기
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                friendList.clear();
+                                friendNameList.clear();
                                 for(DataSnapshot friendSnapshot : snapshot.getChildren()) {
                                     String nickname = friendSnapshot.child("nickname").getValue(String.class);
                                     Log.e("Friendnickname", "nickname: " + nickname); // 이메일을 로그에 출력
-                                    friendList.add(nickname);
+                                    friendNameList.add(nickname);
                                 }
                                 //원래는 AdapterChange가 선언된다.
                             }
@@ -382,6 +276,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 filterStatus=0;
                 Toast.makeText(getActivity(),"모든 글 표시",Toast.LENGTH_SHORT).show();
+                txtResult.setText("현재 postlist 개수" + postList.size() + "\n현재 labellist 개수" + labelList.size()+"\n 현재 사용자 닉네임: " +myNickname);
                 createALLlabels();
             }});
         btn_filter_friend.setOnClickListener(new View.OnClickListener() {
@@ -416,15 +311,19 @@ public class HomeFragment extends Fragment {
 
             @Override
             public LatLng getPosition() {
-                return LatLng.from(35.832038,128.754193);
+                return LatLng.from(35.832038,128.754193);//이 위치로 고정
             }
+
             //이슈: latitude와 longitude를 GPS값으로 불러와야 하는데 안불러와진다!
             @Override
             public void onMapReady(KakaoMap map) {
+
                 kakaoMap = map;
-                labelLayer = kakaoMap.getLabelManager().getLayer();
-                LatLng pos = getPosition();
-                createLabels(pos);
+                labelLayer = kakaoMap.getLabelManager().getLayer(); //getLayer
+                LatLng pos = kakaoMap.getCameraPosition().getPosition(); //langitude,longitude를 객체형태로 받는다.(위의 좌표가 저장되어있다)
+                //LatLng pos = getPosition();
+                //createLabels(pos); //현재마크를 설정하는 것
+
 
 
                 kakaoMap.getLogo().setPosition(MapGravity.BOTTOM|MapGravity.RIGHT,50, 200 );
@@ -445,38 +344,10 @@ public class HomeFragment extends Fragment {
                             kakaoMap.moveCamera(CameraUpdateFactory.fitMapPoints(getSelectedPoints(), 20),
                                     CameraAnimation.from(500, true, true));
                         }
-                        else if(labelID=="label0")     showPostViewer(postLabel0);
-                        else if(labelID=="label1")     showPostViewer(postLabel1);
-                        else if(labelID=="label2")     showPostViewer(postLabel2);
-                        else if(labelID=="label3")     showPostViewer(postLabel3);
-                        else if(labelID=="label4")     showPostViewer(postLabel4);
-                        else if(labelID.equals("label5"))     showPostViewer(postLabel5);
-                        else if(labelID.equals("label6"))     showPostViewer(postLabel6);
-                        else if(labelID.equals("label7"))     showPostViewer(postLabel7);
-                        else if(labelID.equals("label8"))     showPostViewer(postLabel8);
-                        else if(labelID.equals("label9"))     showPostViewer(postLabel9);
-                        else if(labelID.equals("label10"))     showPostViewer(postLabel10);
-                        else if(labelID.equals("label11"))     showPostViewer(postLabel11);
-                        else if(labelID.equals("label12"))     showPostViewer(postLabel12);
-                        else if(labelID.equals("label13"))     showPostViewer(postLabel13);
-                        else if(labelID.equals("label14"))     showPostViewer(postLabel14);
-                        else if(labelID.equals("label15"))     showPostViewer(postLabel15);
-                        else if(labelID.equals("label16"))     showPostViewer(postLabel16);
-                        else if(labelID.equals("label17"))     showPostViewer(postLabel17);
-                        else if(labelID.equals("label18"))     showPostViewer(postLabel18);
-                        else if(labelID.equals("label19"))     showPostViewer(postLabel19);
-                        else if(labelID.equals("label20"))     showPostViewer(postLabel20);
-                        else if(labelID.equals("label21"))     showPostViewer(postLabel21);
-                        else if(labelID.equals("label22"))     showPostViewer(postLabel22);
-                        else if(labelID.equals("label23"))     showPostViewer(postLabel23);
-                        else if(labelID.equals("label24"))     showPostViewer(postLabel24);
-                        else if(labelID.equals("label25"))     showPostViewer(postLabel25);
-                        else if(labelID.equals("label26"))     showPostViewer(postLabel26);
-                        else if(labelID.equals("label27"))     showPostViewer(postLabel27);
-                        else if(labelID.equals("label28"))     showPostViewer(postLabel28);
-                        else if(labelID.equals("label29"))     showPostViewer(postLabel29);
-                        else if(labelID.equals("label30"))     showPostViewer(postLabel30);
-                        else if(labelID.equals("label31"))     showPostViewer(postLabel31);
+                        else
+                            for(int i=0;i<postList.size();i++) {
+                                if (labelID == postList.get(i).pid) showPostViewer(postList.get(i));
+                            }
 
 
                     }
@@ -499,6 +370,7 @@ public class HomeFragment extends Fragment {
             double longitude = location.getLongitude(); // 위도
             double latitude = location.getLatitude(); // 경도
             txtResult.setText(provider + " Lat," + latitude + " Lng," + longitude);
+            createGPSLabel(LatLng.from(latitude,longitude)); //
         } public void onStatusChanged(String provider, int status, Bundle extras) {
 
         } public void onProviderEnabled(String provider) {
@@ -508,7 +380,7 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    private void createLabels(LatLng pos) {
+    private void createGPSLabel(LatLng pos) {
         // 중심 라벨 생성
         centerLabel = labelLayer.addLabel(LabelOptions.from("centerLabel", pos)
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng2).setAnchorPoint(0.5f, 0.5f))
@@ -527,77 +399,71 @@ public class HomeFragment extends Fragment {
     }
 
     //normal post receiver 하나 보내면, 지정한 label로 변환해주는 함수.
-    public Label createPostLabel(PostLabel postLabel, Label label,String label_ID,int filterStatus){
+    public Label createLabel(ReceiveNormalPost normalPost, String label_ID, int filterStatus){
+        //label_ID는 post_ID로 한다.
 
+
+
+        double pLatitude_Double = Double.parseDouble(normalPost.pLatitude);
+        double pLongitude_Double = Double.parseDouble(normalPost.pLongitude);
+
+        Label label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
         //라벨 icon 설정
-        if(postLabel.icon_no==1)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        if(normalPost.getIcon().equals("1"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==2)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("2"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon2).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==3)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("3"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon3).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==4)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("4"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon4).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==5)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("5"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon5).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==6)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("6"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon6).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==7)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("7"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon7).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==8)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("8"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon8).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==9)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("9"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon9).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==10)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("10"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon10).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==11)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("11"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon11).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==12)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("12"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon12).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==13)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("13"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon13).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (postLabel.icon_no==14)
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
+        else if (normalPost.getIcon().equals("14"))
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon14).setAnchorPoint(0.5f, 0.5f)).setRank(1));
 
         //badge 달기
         Badge[] badges = new Badge[0];
 
 
-        if (postLabel.writerUID.equals(myUID)){//case1: 내 게시글
-            if(postLabel.attachImageURL!=null)
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f),
-                        BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.1f, 0.1f));
-            else
+        if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
                 badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
-        } else{   //case2: 내 게시글 아님.
-            for (String friendID : friendsID) { //case2-1: 그럼 친구게시글인가요?
-                if (postLabel.writerUID.equals(friendID.trim())) {
-                    if(postLabel.attachImageURL!=null)
-                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f),
-                                BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.1f, 0.1f));
-                    else
+         else    //case2: 내 게시글 아님.
+            for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                if (normalPost.writerName.equals(friendNameList.trim()))
                         badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
-                }
             }
-            //case2-2: 친구것도 아닙니다..
-            if(postLabel.attachImageURL!=null)
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_withimg).setOffset(0.1f, 0.1f));
-            //else 내 게시글도 아니고 image도 없음 -> 아무것도 안함
-        }
         //writer의 id = 친구목록에 있다면 friend 뱃지 달기   <- 친구 목록 구현 성공시 else if로 달 것
         //게시글의 attachImageURL이 null이 아니면 image 뱃지 달기
 
@@ -612,35 +478,32 @@ public class HomeFragment extends Fragment {
         //여기서 필터 적용
         switch(filterStatus){
             case 0:
-                label.show();
+                label.show();   //그냥 표시.
                 return label;
             case 1://친구+나만 보기
-                if (postLabel.writerUID.equals(myUID)) {label.show(); return label;}
-                for (String friendID : friendsID) {
-                    if (postLabel.writerUID.equals(friendID.trim())) {label.show(); return label;}
+                if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
                 }
-                label.hide();
+                label.hide();   //내것도, 친구것도 아니라면 hide
+                return label;
             case 2: //나만 보기
-                if (postLabel.writerUID.equals(myUID)) {return label;}
-                label.hide();
+                if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                label.hide();   //내것이 아니라면 hide
         }
-
-
-
-
         return label;
     }
 
 
-    void showPostViewer(PostLabel postLabel){
-        //지도 상의 버튼을 누르면 해당 postlabel의 정보와 uid를 들고 postViewerFragment를 add한다.
+    void showPostViewer(ReceiveNormalPost normalPost){
+        //지도 상의 버튼을 누르면 해당 normalPost의 정보와 myNickname을 들고 postViewerFragment를 add한다.
 
         //번들에 짐 싸기
         Bundle postBundle = new Bundle();
 
         //userID
-        postBundle.putString("myUID",myUID);
-        postBundle.putSerializable("postLabel",postLabel);
+        postBundle.putString("myNickname",myNickname);
+        postBundle.putSerializable("normalPost",normalPost);
 
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -655,38 +518,11 @@ public class HomeFragment extends Fragment {
     }
 
     void createALLlabels(){
-        createPostLabel(postLabel0,label0,"label0", filterStatus);
-        createPostLabel(postLabel1,label1,"label1", filterStatus);
-        createPostLabel(postLabel2,label2,"label2", filterStatus);
-        createPostLabel(postLabel3,label3,"label3", filterStatus);
-        createPostLabel(postLabel4,label4,"label4", filterStatus);
-        createPostLabel(postLabel5,label5,"label5", filterStatus);
-        createPostLabel(postLabel6,label6,"label6", filterStatus);
-        createPostLabel(postLabel7,label7,"label7", filterStatus);
-        createPostLabel(postLabel8,label8,"label8", filterStatus);
-        createPostLabel(postLabel9,label9,"label9", filterStatus);
-        createPostLabel(postLabel10,label10,"label10", filterStatus);
-        createPostLabel(postLabel11,label11,"label11", filterStatus);
-        createPostLabel(postLabel12,label12,"label12", filterStatus);
-        createPostLabel(postLabel13,label13,"label13", filterStatus);
-        createPostLabel(postLabel14,label14,"label14", filterStatus);
-        createPostLabel(postLabel15,label15,"label15", filterStatus);
-        createPostLabel(postLabel16,label16,"label16", filterStatus);
-        createPostLabel(postLabel17,label17,"label17", filterStatus);
-        createPostLabel(postLabel18,label18,"label18", filterStatus);
-        createPostLabel(postLabel19,label19,"label19", filterStatus);
-        createPostLabel(postLabel20,label20,"label20", filterStatus);
-        createPostLabel(postLabel21,label21,"label21", filterStatus);
-        createPostLabel(postLabel22,label22,"label22", filterStatus);
-        createPostLabel(postLabel23,label23,"label23", filterStatus);
-        createPostLabel(postLabel24,label24,"label24", filterStatus);
-        createPostLabel(postLabel25,label25,"label25", filterStatus);
-        createPostLabel(postLabel26,label26,"label26", filterStatus);
-        createPostLabel(postLabel27,label27,"label27", filterStatus);
-        createPostLabel(postLabel28,label28,"label28", filterStatus);
-        createPostLabel(postLabel29,label29,"label29", filterStatus);
-        createPostLabel(postLabel30,label30,"label30", filterStatus);
-        createPostLabel(postLabel31,label31,"label31", filterStatus);
+        labelList.clear();  //현재 라벨 리스트 초기화
+
+        for(int i=0; i<postList.size();i++){
+            labelList.add(createLabel(postList.get(i),postList.get(i).pid,filterStatus));
+        }
     }
 
 

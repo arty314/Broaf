@@ -1,5 +1,8 @@
 package com.example.broaf;
-public class ReceiveNormalPost {
+
+import java.io.Serializable;
+
+public class ReceiveNormalPost implements Serializable {
     String contents;
     String icon;
     String imgurl;

@@ -2,8 +2,6 @@ package com.example.broaf;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,9 +15,9 @@ import android.widget.Toast;
 
 public class PostViewerFragment extends Fragment {
 
-    String myUID;
+    String myNickname;
 
-    PostLabel postLabel;
+    ReceiveNormalPost normalPost;
     boolean isLikeClicked=false;
     int likeCount=0;
     String likeCount_str="0";
@@ -31,27 +29,27 @@ public class PostViewerFragment extends Fragment {
 
         //홈에서 정보 끌어오기!!!
         if(getArguments() != null) {
-            myUID = getArguments().getString("myUID");
-            postLabel = (PostLabel) getArguments().getSerializable("postLabel");
+            myNickname = getArguments().getString("myNickname");
+            normalPost = (ReceiveNormalPost) getArguments().getSerializable("normalPost");
         }
 
 
-        /*불러온 정보 붙여넣기*/
-        ImageView viewer_profimg = (ImageView)view.findViewById(R.id.viewer_profimg);
-        //계정 별 프로필 사진 설정 기능 미구현. 고로, 조건문으로 임시처리
-        String writerUID=postLabel.writerUID;
-        if(writerUID=="-NkVlvAINDhIXRBZ1hHL"){
-            viewer_profimg.setImageResource(R.drawable.img_prof_me);
-        } else if(writerUID=="-NkCD1GOweVWBk7mhJJ9"){
-            viewer_profimg.setImageResource(R.drawable.img_prof_f1);
-        } else if(writerUID=="-Nk5C6FKxdEHbn5hxDo0"){
-            viewer_profimg.setImageResource(R.drawable.img_prof_f2);
-        } else if(writerUID=="-NkVnLvZ0TdAMTwY0w96"){
-            viewer_profimg.setImageResource(R.drawable.img_prof_f3);
-        }
+//        /*불러온 정보 붙여넣기*/
+//        ImageView viewer_profimg = (ImageView)view.findViewById(R.id.viewer_profimg);
+//        //계정 별 프로필 사진 설정 기능 미구현. 고로, 조건문으로 임시처리
+//        String writerName= normalPost.writerName;
+//        if(writerName=="-NkVlvAINDhIXRBZ1hHL"){
+//            viewer_profimg.setImageResource(R.drawable.img_prof_me);
+//        } else if(writerName=="-NkCD1GOweVWBk7mhJJ9"){
+//            viewer_profimg.setImageResource(R.drawable.img_prof_f1);
+//        } else if(writerName=="-Nk5C6FKxdEHbn5hxDo0"){
+//            viewer_profimg.setImageResource(R.drawable.img_prof_f2);
+//        } else if(writerName=="-NkVnLvZ0TdAMTwY0w96"){
+//            viewer_profimg.setImageResource(R.drawable.img_prof_f3);
+//        }
 
         TextView viewer_nickname = (TextView) view.findViewById(R.id.viewer_nickname);
-        viewer_nickname.setText(postLabel.writerName);
+        viewer_nickname.setText(normalPost.getWriterName());
 
         ImageButton viewer_btn_more = (ImageButton) view.findViewById(R.id.viewer_btn_more);
         viewer_btn_more.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +61,11 @@ public class PostViewerFragment extends Fragment {
         });
 
         TextView viewer_contents = (TextView) view.findViewById(R.id.viewer_contents);
-        viewer_contents.setText(postLabel.content);
+        viewer_contents.setText(normalPost.getContents());
 
         ImageView viewer_postImage = (ImageView)view.findViewById(R.id.viewer_postImage);
         //이미지 저장소 미구현으로 if문으로 대체
-        String postImage = postLabel.attachImageURL;
+        String postImage = normalPost.getImgurl();
         if(postImage!=null){
             viewer_postImage.setImageResource(R.drawable.img_forpost);
         }
@@ -75,18 +73,19 @@ public class PostViewerFragment extends Fragment {
         TextView viewer_writtenDateTime = (TextView) view.findViewById(R.id.viewer_writtenDateTime);
         //e.g. 202311300042 -> 2023.11.30. 오전 00:42
 
-        String year = postLabel.writtenDateTime.substring(0, 4);
-        String month = postLabel.writtenDateTime.substring(4, 6);
-        String date = postLabel.writtenDateTime.substring(6, 8);
-        String hour = postLabel.writtenDateTime.substring(8, 10);
-        String minute = postLabel.writtenDateTime.substring(10, 12);
+        String year = normalPost.writeTime.substring(0, 4);
+        String month = normalPost.writeTime.substring(4, 6);
+        String date = normalPost.writeTime.substring(6, 8);
+        String hour = normalPost.writeTime.substring(8, 10);
+        String minute = normalPost.writeTime.substring(10, 12);
         int hour_num=Integer.parseInt(hour);
-        String formattedDateTime = year + "." + month + "." + date + ". " + hour + ":" + minute;
+        String formattedDateTime = "time";
 
         if(hour_num<12){
             formattedDateTime = year + "." + month + "." + date + ". 오전 " + hour + ":" + minute;
         }
         else if (hour_num>=12){
+            hour=String.valueOf(hour_num-12);
             formattedDateTime = year + "." + month + "." + date + ". 오후 " + hour + ":" + minute;
         }
         viewer_writtenDateTime.setText(formattedDateTime);
@@ -96,7 +95,7 @@ public class PostViewerFragment extends Fragment {
         ImageButton viewer_btn_heart = (ImageButton) view.findViewById(R.id.viewer_btn_heart);
         TextView viewer_likeCount = (TextView) view.findViewById(R.id.viewer_likeCount);
 
-        likeCount_str=String.valueOf(postLabel.likeCount);
+        likeCount_str=String.valueOf(normalPost.likeCount);
         viewer_likeCount.setText(likeCount_str);
 
 
@@ -105,12 +104,12 @@ public class PostViewerFragment extends Fragment {
             public void onClick(View v) {
                 if(isLikeClicked==false){
                     viewer_btn_heart.setImageResource(R.drawable.heart_clicked);
-                    likeCount_str=String.valueOf(postLabel.likeCount+1);
+                    likeCount_str=String.valueOf(normalPost.likeCount+1);
                     viewer_likeCount.setText(likeCount_str);
                     isLikeClicked=true;
                 } else if (isLikeClicked==true) {
                     viewer_btn_heart.setImageResource(R.drawable.heart_unclicked);
-                    likeCount_str=String.valueOf(postLabel.likeCount);
+                    likeCount_str=String.valueOf(normalPost.likeCount);
                     viewer_likeCount.setText(likeCount_str);
                     isLikeClicked=false;
                 }
