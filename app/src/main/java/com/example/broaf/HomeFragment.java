@@ -8,6 +8,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +19,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kakao.vectormap.KakaoMap;
 import com.kakao.vectormap.KakaoMapReadyCallback;
 import com.kakao.vectormap.LatLng;
@@ -178,12 +189,17 @@ public class HomeFragment extends Fragment {
             35.838979, 128.757078, 0,0,"2080123140042",
             "캔따개","10007","202312010052");
 
+    //NormalPost들을 저장하기 위한 ArrayList 선언
 
 
-
-
-
-
+    ArrayList<ReceiveNormalPost> postList; //ReceiveNormalPost형태의 ArrayList
+    ArrayList<String> friendList; //User의 친구 Nickname을 저장하는 String arrayList
+    RecyclerView recyclerview;
+    //RecyclerView.Adapter adapter;
+    //Auth 데이터를 가져오기 위한 변수
+    FirebaseAuth mAuth = FirebaseAuth.getInstance(); //FirebaseAuth를 import
+    FirebaseUser currentUser = mAuth.getCurrentUser(); //현재로그인한 유저를 저장
+    String currentKey,currentUid,currentEmail,nickname; //찾은 노드의키, 현재 로그인 유저 UID, 현재 로그인 유저 Email, 찾아온 nickname
     ///////
 
     @Override
@@ -239,6 +255,8 @@ public class HomeFragment extends Fragment {
                         longitude = location.getLongitude();
 
                         txtResult.setText(provider + " Lat," + latitude + " Lng," + longitude);
+                        createLabels(LatLng.from(latitude,longitude)); //
+
                         //provider: 위치 정보, latitude: 위도, longitude: 경도 (altitude: 고도)
                     }
 
@@ -266,9 +284,96 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //1. 현재 사용자의 UID,Email
+        currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        currentEmail = currentUser.getEmail();
+        postList = new ArrayList<>();
+        // 닉네임가져오기
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://broaf-72e4c-default-rtdb.firebaseio.com/");
+
+        database.getReference("User").orderByChild("email").equalTo(currentEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    currentKey = userSnapshot.getKey(); // 현재 로그인한 User key
+                    nickname = userSnapshot.child("nickname").getValue(String.class);
+                    Log.e("currentNickName", "content: " + nickname);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
+            }
+        });
+        //1. 현재 사용자의 UID가져오기(종료)
+
+        //2. 모든 게시글 불러오기
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                postList.clear();
+                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                    ReceiveNormalPost receiveNormalPost = snapshot.getValue(ReceiveNormalPost.class);
+                    Log.e("PostContents", "content: " + receiveNormalPost.getContents());
+                    postList.add(receiveNormalPost);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("MainActivity", String.valueOf(databaseError.toException()));
+            }
+        };
+        database.getReference("Post").child("NormalPost").addValueEventListener(postListener);
+        //2. 모든 게시글 불러오기(종료)
+
+        //3. 접속자의 모든 친구 불러오기
+        friendList = new ArrayList<>();
+        if (currentUser != null) {
+            database.getReference("User").orderByChild("email").equalTo(currentEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        String currentKey = userSnapshot.getKey(); // 현재 로그인한 User key
+
+                        friendList = new ArrayList<>();
+
+                        //가져온 데이터의 child 데이터들을 User 클래스의 정의에 맞게 정리 후 리스트에 추가
+                        database.getReference("User").child(currentKey).child("friendlist").orderByChild("email").addListenerForSingleValueEvent(new ValueEventListener() {
+                            //현재 로그인한 사용자의 friendlist 데이터 가져오기
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                friendList.clear();
+                                for(DataSnapshot friendSnapshot : snapshot.getChildren()) {
+                                    String nickname = friendSnapshot.child("nickname").getValue(String.class);
+                                    Log.e("Friendnickname", "nickname: " + nickname); // 이메일을 로그에 출력
+                                    friendList.add(nickname);
+                                }
+                                //원래는 AdapterChange가 선언된다.
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("FriendListActivity", String.valueOf(error.toException()));
+                            }
+                        });
+                        //원래는 이부분에 Adatper연결을 한다.
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
+                }
+            });
+        }
+        //3. 접속자의 모든 친구 불러오기(종료)
+        // currentEmail: 현재 접속자의 Email
+        // currentUid: 현재 접속자의 Uid
+        // friendList: 현재 접속자의 친구Email목록
 
         //여기부터 필터 버튼
-        //    int filterStatus=0; //0:global, 1: friend, 2: me
+        //int filterStatus=0; //0:global, 1: friend, 2: me
         btn_filter_global=(ImageButton)view.findViewById(R.id.btn_filter_global);
         btn_filter_friend=(ImageButton)view.findViewById(R.id.btn_filter_friend);
         btn_filter_me=(ImageButton)view.findViewById(R.id.btn_filter_me);
@@ -318,7 +423,7 @@ public class HomeFragment extends Fragment {
             public void onMapReady(KakaoMap map) {
                 kakaoMap = map;
                 labelLayer = kakaoMap.getLabelManager().getLayer();
-                LatLng pos = kakaoMap.getCameraPosition().getPosition();
+                LatLng pos = getPosition();
                 createLabels(pos);
 
 
@@ -409,7 +514,8 @@ public class HomeFragment extends Fragment {
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng2).setAnchorPoint(0.5f, 0.5f))
                 .setRank(1));
         selectedList.add(centerLabel);
-        }
+        centerLabel = labelLayer.addLabel(LabelOptions.from("str",pos));
+    }
 
     private LatLng[] getSelectedPoints() {
         int count = selectedList.size();
@@ -420,13 +526,13 @@ public class HomeFragment extends Fragment {
         return points;
     }
 
-    //PostClass를 하나 보내면, 지정한 label로 변환해주는 함수.
+    //normal post receiver 하나 보내면, 지정한 label로 변환해주는 함수.
     public Label createPostLabel(PostLabel postLabel, Label label,String label_ID,int filterStatus){
 
         //라벨 icon 설정
         if(postLabel.icon_no==1)
             label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
-                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+                    .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
         else if (postLabel.icon_no==2)
             label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(postLabel.latitude,postLabel.longitude))
                     .setStyles(LabelStyle.from(R.drawable.posticon2).setAnchorPoint(0.5f, 0.5f)).setRank(1));

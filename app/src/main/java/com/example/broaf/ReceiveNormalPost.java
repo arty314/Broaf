@@ -13,6 +13,7 @@ public class ReceiveNormalPost {
     String writeTime;
     String writerName;
 
+
     public String getContents() {
         return contents;
     }
