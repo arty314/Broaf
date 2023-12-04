@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class PostViewerFragment extends Fragment {
 
     String myNickname;
@@ -65,8 +67,7 @@ public class PostViewerFragment extends Fragment {
 
         ImageView viewer_postImage = (ImageView)view.findViewById(R.id.viewer_postImage);
         //이미지 저장소 미구현으로 if문으로 대체
-        String postImage = normalPost.getImgurl();
-        if(postImage!=null){
+        if(!Objects.equals(normalPost.getImgurl(), "")){
             viewer_postImage.setImageResource(R.drawable.img_forpost);
         }
 
