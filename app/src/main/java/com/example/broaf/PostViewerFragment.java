@@ -96,6 +96,7 @@ public class PostViewerFragment extends Fragment {
         TextView viewer_likeCount = (TextView) view.findViewById(R.id.viewer_likeCount);
 
         likeCount_str=String.valueOf(normalPost.likeCount);
+        likeCount=Integer.parseInt(likeCount_str);
         viewer_likeCount.setText(likeCount_str);
 
 
@@ -104,12 +105,12 @@ public class PostViewerFragment extends Fragment {
             public void onClick(View v) {
                 if(isLikeClicked==false){
                     viewer_btn_heart.setImageResource(R.drawable.heart_clicked);
-                    likeCount_str=String.valueOf(normalPost.likeCount+1);
+                    likeCount_str=String.valueOf(likeCount+1);
                     viewer_likeCount.setText(likeCount_str);
                     isLikeClicked=true;
                 } else if (isLikeClicked==true) {
                     viewer_btn_heart.setImageResource(R.drawable.heart_unclicked);
-                    likeCount_str=String.valueOf(normalPost.likeCount);
+                    likeCount_str=String.valueOf(likeCount);
                     viewer_likeCount.setText(likeCount_str);
                     isLikeClicked=false;
                 }

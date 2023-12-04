@@ -458,11 +458,11 @@ public class HomeFragment extends Fragment {
 
 
         if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
-         else    //case2: 내 게시글 아님.
+            badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+        else    //case2: 내 게시글 아님.
             for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
                 if (normalPost.writerName.equals(friendNameList.trim()))
-                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                    badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
             }
         //writer의 id = 친구목록에 있다면 friend 뱃지 달기   <- 친구 목록 구현 성공시 else if로 달 것
         //게시글의 attachImageURL이 null이 아니면 image 뱃지 달기
