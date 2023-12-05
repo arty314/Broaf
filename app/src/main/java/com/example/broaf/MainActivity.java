@@ -136,7 +136,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-                replaceFragment(new HomeFragment());
+//                replaceFragment(new HomeFragment());
+                onBackPressed();
+
             }
             //여기까지 '지도로 돌아가기 버튼'
         });

@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12sp"
-            android:text="새로고침을 눌러 현재 위치의 좌표를 알아보아요.\n화면 이동 후 과녁을 누르면 위치 핀이 중심으로 돌아와요."
+            android:text="새로고침을 눌러 현재 위치의 좌표를 알아보아요.\n화면 이동 후 과녁을 누르면 위치 핀이 중심으로 돌아와요.\n필터 버튼을 누르면 게시글 작성자가 표시돼요."
             android:textColor="@color/top_nav_text"
             android:gravity="center_horizontal"
             />

@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class AccountInfoFragment extends Fragment {
 
@@ -22,6 +24,9 @@ public class AccountInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_info, container, false);
+        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
+        fab.setImageResource(R.drawable.btn_center_back);
+        //
 
 
 
@@ -31,11 +36,7 @@ public class AccountInfoFragment extends Fragment {
         toolbar_accountInfo_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyinfoFragment myinfoFragment=new MyinfoFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frame_layout, myinfoFragment);
-                fragmentTransaction.commit();
+                getActivity().onBackPressed();
             }
         });
         //여기까지 뒤로가기

@@ -125,9 +125,10 @@ public class HomeFragment extends Fragment {
 
 
         //GPS 불러오기!!
+        //버튼 눌러 GPS 불러오기
+        final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         btn_new = (ImageButton)view.findViewById(R.id.btn_new);   //새로고침 버튼 누르면 됨.
         txtResult = (TextView)view.findViewById(R.id.txtResult);
-        final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,7 +188,7 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     currentKey = userSnapshot.getKey(); // 현재 로그인한 User key
                     myNickname = userSnapshot.child("nickname").getValue(String.class);
-                    Log.e("currentNickName", "content: " + myNickname);
+//                    Log.e("currentNickName", "content: " + myNickname);
                 }
             }
 
@@ -198,29 +199,6 @@ public class HomeFragment extends Fragment {
         });
         //1. 현재 사용자의 UID가져오기(종료)
 
-        //2. 모든 게시글 불러오기
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                postList.clear();
-                labelList.clear();
-                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
-                    ReceiveNormalPost receiveNormalPost = snapshot.getValue(ReceiveNormalPost.class);
-                    Log.e("PostContents", "content: " + receiveNormalPost.getContents());
-                    postList.add(receiveNormalPost);
-                    //여기다가 Label로 변환 코드 써야할 각.
-                    labelList.add(createLabel(receiveNormalPost,receiveNormalPost.pid,filterStatus));
-                }
-                //여기에 createALLPost 써야할 각
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("MainActivity", String.valueOf(databaseError.toException()));
-            }
-        };
-        database.getReference("Post").child("NormalPost").addValueEventListener(postListener);
-        //2. 모든 게시글 불러오기(종료)
 
         //3. 접속자의 모든 친구 불러오기
         friendNameList = new ArrayList<>();
@@ -241,7 +219,7 @@ public class HomeFragment extends Fragment {
                                 friendNameList.clear();
                                 for(DataSnapshot friendSnapshot : snapshot.getChildren()) {
                                     String nickname = friendSnapshot.child("nickname").getValue(String.class);
-                                    Log.e("Friendnickname", "nickname: " + nickname); // 이메일을 로그에 출력
+//                                    Log.e("Friendnickname", "nickname: " + nickname); // 이메일을 로그에 출력
                                     friendNameList.add(nickname);
                                 }
                                 //원래는 AdapterChange가 선언된다.
@@ -249,7 +227,7 @@ public class HomeFragment extends Fragment {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                Log.e("FriendListActivity", String.valueOf(error.toException()));
+//                                Log.e("FriendListActivity", String.valueOf(error.toException()));
                             }
                         });
                         //원래는 이부분에 Adatper연결을 한다.
@@ -262,6 +240,34 @@ public class HomeFragment extends Fragment {
             });
         }
         //3. 접속자의 모든 친구 불러오기(종료)
+
+
+        //2. 모든 게시글 불러오기
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                postList.clear();
+                labelList.clear();
+                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                    ReceiveNormalPost receiveNormalPost = snapshot.getValue(ReceiveNormalPost.class);
+//                    Log.e("PostContents", "content: " + receiveNormalPost.getContents());
+                    postList.add(receiveNormalPost);
+                    //여기다가 Label로 변환 코드 써야할 각.
+                    newlabel=createLabel(receiveNormalPost,receiveNormalPost.pid,filterStatus);
+                    createBadge(receiveNormalPost,newlabel,receiveNormalPost.pid,filterStatus);
+                    labelList.add(newlabel);
+                }
+                //여기에 createALLPost 써야할 각
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e("MainActivity", String.valueOf(databaseError.toException()));
+            }
+        };
+        database.getReference("Post").child("NormalPost").addValueEventListener(postListener);
+        //2. 모든 게시글 불러오기(종료)
+
         // currentEmail: 현재 접속자의 Email
         // currentUid: 현재 접속자의 Uid
         // friendList: 현재 접속자의 친구Email목록
@@ -276,7 +282,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 filterStatus=0;
                 Toast.makeText(getActivity(),"모든 글 표시",Toast.LENGTH_SHORT).show();
-                txtResult.setText("현재 postlist 개수" + postList.size() + "\n현재 labellist 개수" + labelList.size()+"\n 현재 사용자 닉네임: " +myNickname);
                 createALLlabels();
             }});
         btn_filter_friend.setOnClickListener(new View.OnClickListener() {
@@ -407,55 +412,536 @@ public class HomeFragment extends Fragment {
         double pLatitude_Double = Double.parseDouble(normalPost.pLatitude);
         double pLongitude_Double = Double.parseDouble(normalPost.pLongitude);
 
-        Label label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        //라벨 icon 설정
-        if(normalPost.getIcon().equals("1"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("2"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon2).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("3"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon3).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("4"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon4).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("5"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon5).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("6"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon6).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("7"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon7).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("8"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon8).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("9"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon9).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("10"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon10).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("11"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon11).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("12"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon12).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("13"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon13).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-        else if (normalPost.getIcon().equals("14"))
-            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
-                    .setStyles(LabelStyle.from(R.drawable.posticon14).setAnchorPoint(0.5f, 0.5f)).setRank(1));
-
+        Label label;
         //badge 달기
         Badge[] badges = new Badge[0];
 
+        //라벨 icon 설정
+        if(normalPost.getIcon().equals("1")) {
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double, pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("2")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon2).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("3")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon3).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("4")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon4).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("5")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon5).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("6")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon6).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("7")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon7).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("8")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon8).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("9")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon9).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("10")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon10).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("11")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon11).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("12")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon12).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("13")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon13).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+        else if (normalPost.getIcon().equals("14")){
+            label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
+                    .setStyles(LabelStyle.from(R.drawable.posticon14).setAnchorPoint(0.5f, 0.5f)).setRank(1));
+            if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+            else    //case2: 내 게시글 아님.
+                for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
+                    if (normalPost.writerName.equals(friendNameList.trim()))
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                }
+            //뱃지 보이게
+            for (Badge badge : badges) {
+                badge.show();
+            }
+            label.getLabelId();
+            label.setClickable(true);
+            //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //여기서 필터 적용
+            switch(filterStatus){
+                case 0:
+                    label.show();   //그냥 표시.
+                    return label;
+                case 1://친구+나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
+                    for (String friendNameList : friendNameList) {
+                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
+                    }
+                    label.hide();   //내것도, 친구것도 아니라면 hide
+                    return label;
+                case 2: //나만 보기
+                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
+                    label.hide();   //내것이 아니라면 hide
+                    return label;
+            }
+        }
+
+
+
+
+
+        //writer의 id = 친구목록에 있다면 friend 뱃지 달기   <- 친구 목록 구현 성공시 else if로 달 것
+        //게시글의 attachImageURL이 null이 아니면 image 뱃지 달기
+
+
+        return null;
+    }
+
+    public void createBadge(ReceiveNormalPost normalPost, Label label, String label_ID, int filterStatus) {
+        //label_ID는 post_ID로 한다.
+        //초기에 badge가 부착되지 않는 문제로 인해 따로 구현
+
+        double pLatitude_Double = Double.parseDouble(normalPost.pLatitude);
+        double pLongitude_Double = Double.parseDouble(normalPost.pLongitude);
+
+        //badge 달기
+        Badge[] badges = new Badge[0];
 
         if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
             badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
@@ -464,34 +950,6 @@ public class HomeFragment extends Fragment {
                 if (normalPost.writerName.equals(friendNameList.trim()))
                     badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
             }
-        //writer의 id = 친구목록에 있다면 friend 뱃지 달기   <- 친구 목록 구현 성공시 else if로 달 것
-        //게시글의 attachImageURL이 null이 아니면 image 뱃지 달기
-
-        //뱃지 보이게
-        for (Badge badge : badges) {
-            badge.show();
-        }
-        label.getLabelId();
-        label.setClickable(true);
-        //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
-
-        //여기서 필터 적용
-        switch(filterStatus){
-            case 0:
-                label.show();   //그냥 표시.
-                return label;
-            case 1://친구+나만 보기
-                if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
-                for (String friendNameList : friendNameList) {
-                    if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
-                }
-                label.hide();   //내것도, 친구것도 아니라면 hide
-                return label;
-            case 2: //나만 보기
-                if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
-                label.hide();   //내것이 아니라면 hide
-        }
-        return label;
     }
 
 

@@ -140,11 +140,7 @@ public class NoticeFragment extends Fragment {
         toolbar_notice_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeFragment homeFragment=new HomeFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frame_layout, homeFragment);
-                fragmentTransaction.commit();
+                getActivity().onBackPressed();
             }
         });
         //여기까지 뒤로가기

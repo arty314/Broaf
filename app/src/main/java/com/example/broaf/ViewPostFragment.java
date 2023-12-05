@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ViewPostFragment#newInstance} factory method to
@@ -78,6 +80,9 @@ public class ViewPostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_post_viewer, container, false);
         //fragment_view_post에 연결되어있다.
         // Inflate the layout for this fragment
+        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
+        fab.setImageResource(R.drawable.btn_center_back);
+        //
 
         TextView nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         nickname.setText(receiveNormalPost.getWriterName());
