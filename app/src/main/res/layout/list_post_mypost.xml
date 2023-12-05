@@ -63,6 +63,14 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="writerName_And_writtenDateTime" />
+            <ImageButton
+                android:id="@+id/morebutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/morebutton"
+                android:layout_alignParentEnd="true"/>
 
         </RelativeLayout>
         <View

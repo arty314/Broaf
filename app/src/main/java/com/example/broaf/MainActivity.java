@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
                     ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
                 ActivityCompat.requestPermissions( this, new String[] {
                         android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location != null) {
+                    normalPost.setpLatitude(location.getLatitude());
+                    normalPost.setpLongitude(location.getLongitude());
+                }
             }
             else {
                 // 가장최근 위치정보 가져오기
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             ++pid;
                             String newpid = String.valueOf(pid);
                             normalPost.setPID(newpid);
-                            Toast.makeText(getApplicationContext(), newpid, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), newpid, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -103,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onSearchResult(String nickname) {
                             normalPost.setWriterName(nickname);
                             database.child("Post").child("NormalPost").child(normalPost.getPID()).setValue(normalPost);
-                            //Toast.makeText(getApplicationContext(), "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

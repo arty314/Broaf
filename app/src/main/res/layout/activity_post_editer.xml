@@ -462,11 +462,11 @@
                 </android.widget.Button>
 
                 <android.widget.Button
-                    android:id="@+id/save_btn"
+                    android:id="@+id/edit_btn"
                     android:layout_width="150dp"
                     android:layout_height="70dp"
                     android:background="@drawable/round_rectangle_save_btn"
-                    android:text="등록"
+                    android:text="수정"
                     android:textColor="@color/white"
                     android:textSize="23sp"
                     android:textStyle="bold"

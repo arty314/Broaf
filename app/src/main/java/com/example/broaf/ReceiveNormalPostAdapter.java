@@ -46,13 +46,39 @@ public class ReceiveNormalPostAdapter extends RecyclerView.Adapter<ReceiveNormal
         //holder.latitude.setText(arrayList.get(position).getLatitude());
         holder.likeCount.setText(arrayList.get(position).getLikeCount());
         //holder.longitude.setText(arrayList.get(position).getLongitude());
-        holder.openRange.setText(arrayList.get(position).getOpenRange());
+        switch(arrayList.get(position).getOpenRange()) {
+            case "1":
+                holder.openRange.setText("전체 공개");
+                break;
+            case "2":
+                holder.openRange.setText("친구 공개");
+                break;
+            case "3":
+                holder.openRange.setText("비공개");
+                break;
+            default:
+                holder.openRange.setText("시스템 오류입니다.");
+        }
+        //holder.openRange.setText(arrayList.get(position).getOpenRange()); String형태 그대로 받아들일 때
         //holder.openToDateTime.setText(arrayList.get(position).getOpenToDateTime());
         //holder.writerName.setText(arrayList.get(position).getWriterName());
         //holder.writerUID.setText(arrayList.get(position).getWriterUID());
         //holder.writtenDateTime.setText(arrayList.get(position).getWrittenDateTime());
         String exisingText = arrayList.get(position).getWriterName();
-        String newText = arrayList.get(position).getWriteTime();
+        String writetime = arrayList.get(position).getWriteTime();
+        //얻은 시간을 년,월,일,시간,분으로 쪼갠다.
+        String year = writetime.substring(0, 4);
+        String month = writetime.substring(4, 6);
+        String date = writetime.substring(6, 8);
+        String hour = writetime.substring(8, 10);
+        String minute = writetime.substring(10, 12);
+        if(Integer.parseInt(hour)>=0 && Integer.parseInt(hour)<=12) { // 0~12시 사이면
+            hour = "오전"+hour; //오전+시간
+        }
+        else if (Integer.parseInt(hour)>12 && Integer.parseInt(hour)<=23) { //13~23시 사이면
+            hour = "오후"+String.valueOf(Integer.parseInt(hour)-12); //오후(hour-12)
+        }
+        String newText = year + "/" + month + "/" + date + " " + hour + ":" + minute;
         holder.writerName_And_writtenDateTime.setText(exisingText + " | " + newText);
 
 

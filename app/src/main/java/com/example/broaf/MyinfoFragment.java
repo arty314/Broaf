@@ -1,10 +1,13 @@
 package com.example.broaf;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -152,7 +155,7 @@ public class MyinfoFragment extends Fragment {
                                     arrayList.add(receiveNormalPost);
                                 }
                                 myinfo_textView.setText("작성한 게시글 (" + String.valueOf(arrayList.size()) +")");
-                                adapter = new ReceiveNormalPostAdapter(getContext(), arrayList);
+                                adapter = new MyInfoNormalPostAdapter(getContext(), arrayList);
                                 recyclerview.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                                 // RecyclerView에 filteredPosts를 사용하여 데이터를 표시합니다.

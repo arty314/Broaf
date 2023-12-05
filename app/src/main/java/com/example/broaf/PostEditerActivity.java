@@ -52,13 +52,14 @@ public class PostEditerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_editer);
 
-        Intent receiveEditPost = getIntent();
-        editedPost = (NormalPost) receiveEditPost.getSerializableExtra("editpost");
+        Intent receiveEditPost = getIntent(); // ReceiveNormalPost객체를 받아서 NormalPost에 대입하기
+        editedPost = new NormalPost ((ReceiveNormalPost) receiveEditPost.getSerializableExtra("edit_post"));
+        String origintext = editedPost.getContents();
 
-        EditText contents = findViewById(R.id.post_content);
+        EditText contents = findViewById(R.id.post_content); // 글 내용 세팅
         contents.setText(editedPost.getContents());
-        SeekBar seekBar = findViewById(R.id.open_time_ratio);
-        seekBar.setEnabled(false);
+        SeekBar seekBar = findViewById(R.id.open_time_ratio); // 공개시간은 변경 못하도록
+        //seekBar.setEnabled(false);
 
         ToggleButton[] open_range = new ToggleButton[3];
         open_range[0] = findViewById(R.id.toggle_open_range_public);
@@ -96,6 +97,9 @@ public class PostEditerActivity extends AppCompatActivity {
             }
         });
 
+        for (int i = 0; i < 3; i++){
+            open_range[i].setChecked(false);
+        }
         open_range[editedPost.intGetOpenRange()].setChecked(true); // 받은 포스트의 공개범위 선택되어있게
         // 나중에 해당 이모티콘이 표시회어있고 만약에 사진 있으면 사진을 표시하는(구현못할듯)기능도 추가하기
 
@@ -103,11 +107,25 @@ public class PostEditerActivity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = String.valueOf(contents.getText());
-                if (text.trim().isEmpty()) {
-                    //메인액티비티 또는 내 게시글 모아보기로 이동
+                String edittext = String.valueOf(contents.getText()).trim();
+                if (origintext.equals(edittext)) {
+                    // 메인액티비티 또는 내 게시글 모아보기로 이동
+                    finish();
                 } else {
-                    isclosedialog();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                    builder.setTitle("수정 취소");
+                    builder.setMessage("게시글 편집을 취소하겠습니까?");
+                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
                 }
             }
         });// --------여기까지 상단 뒤로가기 버튼 지정
@@ -117,11 +135,24 @@ public class PostEditerActivity extends AppCompatActivity {
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = String.valueOf(contents.getText());
-                if (text.trim().isEmpty()) {
+                String edittext = String.valueOf(contents.getText()).trim();
+                if (origintext.equals(edittext)) {
                     // 메인액티비티 또는 내 게시글 모아보기로 이동
+                    finish();
                 } else {
-                    isclosedialog();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                    builder.setTitle("수정 취소");
+                    builder.setMessage("게시글 편집을 취소하겠습니까?");
+                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {}
+                    });
                 }
             }
         });// -------여기까지 하단 취소버튼 지정
@@ -332,7 +363,7 @@ public class PostEditerActivity extends AppCompatActivity {
                                     pickImageFromGallery();
                                     break; //갤러리 열어서 하는거 추가
                                 case 1:
-                                    Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    /*Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     if(cameraintent.resolveActivity(view.getContext().getPackageManager()) != null){
                                         File pictureFile = null;
                                         try{pictureFile = createImageFile(view.getContext());}
@@ -346,14 +377,14 @@ public class PostEditerActivity extends AppCompatActivity {
                                                 startActivityForResult(cameraintent, TAKE_PICTURE_OK);
                                             }catch(Exception e){Toast.makeText(view.getContext(), "URI 구동 구동실패",Toast.LENGTH_SHORT).show();}
                                         }
-                                    }
+                                    }*/
 
                                     //카메라 열어서 하는거 추가
                             }
                         }
                         else{
                             requestPermissions(new String[]{
-                                    android.Manifest.permission.READ_MEDIA_IMAGES,
+                                    //android.Manifest.permission.READ_MEDIA_IMAGES,
                                     android.Manifest.permission.READ_EXTERNAL_STORAGE,
                                     Manifest.permission.CAMERA }, 10);
                         }
@@ -365,7 +396,13 @@ public class PostEditerActivity extends AppCompatActivity {
             }
         });
 
+    Button edit_btn = findViewById(R.id.edit_btn);
+    edit_btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
 
+        }
+    });
 
 
 
@@ -432,7 +469,7 @@ public class PostEditerActivity extends AppCompatActivity {
         del_img_btn.setVisibility(View.VISIBLE);
     }
 
-    private void handleTakePicture(Bitmap bitmap){
+    /*private void handleTakePicture(Bitmap bitmap){
         if (bitmap != null){
             attach_img_view.setImageBitmap(bitmap);
         }
@@ -449,7 +486,7 @@ public class PostEditerActivity extends AppCompatActivity {
         );
         currentFilePath = image.getAbsolutePath();
         return image;
-    }
+    }*/
 
     public void onStop() {
         super.onStop();
@@ -457,25 +494,6 @@ public class PostEditerActivity extends AppCompatActivity {
         bab.setVisibility(View.VISIBLE);
         FloatingActionButton fab = findViewById(R.id.navi_to_home);
         fab.setVisibility(View.VISIBLE);
-    }
-    public void isclosedialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("수정취소");
-        builder.setMessage("수정을 취소하고 뒤로 돌아가시겠습니까?");
-        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                // 메인액티비티 또는 내 게시글 모아보기로 이동
-            }
-        });
-        builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //아무것도 하지않고 창을 닫음
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 }

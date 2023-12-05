@@ -96,6 +96,7 @@
         </ImageView>
 
         <ScrollView
+            android:id="@+id/content_bg"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_marginStart="30dp"
@@ -287,6 +288,19 @@
             </ImageView>
 
         </GridLayout>
+
+        <TextView
+            android:id="@+id/text_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/content_bg"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="30dp"
+            android:text="0/1000"
+            android:textSize="14sp"
+            android:textColor="@color/top_nav_text">
+        </TextView>
 
         <TextView
             android:id="@+id/open_range_text"

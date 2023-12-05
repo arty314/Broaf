@@ -27,6 +27,8 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +80,28 @@ public class CreatePostFragment extends Fragment {
         open_range[2] = view.findViewById(R.id.toggle_open_range_onlyme);
 
         EditText content = view.findViewById(R.id.post_content);
+        TextView textcnt = view.findViewById(R.id.text_cnt);
+        content.addTextChangedListener(new TextWatcher() {
+            String str;
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                str = content.getText().toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (content.length() > 1000){
+                    content.setText(str);
+                    Toast.makeText(view.getContext(), "최대 1000자까지 입력할 수 있습니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                textcnt.setText(content.length() + " /1000");
+            }
+        });
+
         open_range[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

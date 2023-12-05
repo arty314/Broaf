@@ -36,6 +36,21 @@ public class NormalPost implements Serializable {
         this.openTillDate = postBody.getOpentilldate();
         this.icon = postBody.getIcon();
     }
+    NormalPost(ReceiveNormalPost receiveNormalPost){
+        this.writerName = receiveNormalPost.getWriterName();
+        this.PID = receiveNormalPost.getPid();
+        this.content = receiveNormalPost.getContents();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+        try{this.writeTime = format.parse(receiveNormalPost.getWriteTime());} catch (Exception e) {}
+        try{this.openTillDate = format.parse(receiveNormalPost.getOpentilldate());} catch (Exception e) {}
+        this.isHide = receiveNormalPost.getIsHide();
+        this.likeCount = Integer.parseInt(receiveNormalPost.getLikeCount());
+        this.pLatitude = Double.parseDouble(receiveNormalPost.getpLatitude());
+        this.pLongitude = Double.parseDouble(receiveNormalPost.getpLongitude());
+        this.imgurl = receiveNormalPost.getImgurl();
+        this.openRange = Integer.parseInt(receiveNormalPost.getOpenRange());
+        this.icon = Integer.parseInt(receiveNormalPost.getIcon());
+    }
 
     public String getPID(){return this.PID;}
     public void setPID(String pid){this.PID = pid;}
