@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="12sp"
-            android:text="새로고침을 눌러 현재 위치의 좌표를 알아보아요.\n화면 이동 후 과녁을 누르면 위치 핀이 중심으로 돌아와요.\n필터 버튼을 누르면 게시글 작성자가 표시돼요."
+            android:text="새로고침을 눌러 현재 위치의 좌표를 알아보아요.\n화면 이동 후 과녁을 누르면 위치 핀이 중심으로 돌아와요."
             android:textColor="@color/top_nav_text"
             android:gravity="center_horizontal"
             />
@@ -111,6 +111,9 @@
             android:elevation="2dp"
             />
     </FrameLayout>
+
+
+
 
 
     <FrameLayout
@@ -190,6 +193,25 @@
     <!--여기까지 필터버튼-->
 
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="100dp"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/btn_click"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="화면을 눌러 게시글을 불러오세요"
+            android:textColor="@color/brown"
+            android:background="@android:color/transparent"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:fontFamily="@font/notosanskrbold"
+            />
+    </FrameLayout>
 
     <!--/////////-->
     <!--게시글 뷰어 frame-->

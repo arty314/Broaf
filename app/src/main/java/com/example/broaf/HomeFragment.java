@@ -2,6 +2,7 @@ package com.example.broaf;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.PointF;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ import com.kakao.vectormap.KakaoMapReadyCallback;
 import com.kakao.vectormap.LatLng;
 import com.kakao.vectormap.MapGravity;
 import com.kakao.vectormap.MapView;
+import com.kakao.vectormap.Poi;
 import com.kakao.vectormap.camera.CameraAnimation;
 import com.kakao.vectormap.camera.CameraUpdateFactory;
 import com.kakao.vectormap.label.Badge;
@@ -63,6 +66,7 @@ public class HomeFragment extends Fragment {
 
     ImageButton btn_fit, btn_new;
     ImageButton btn_filter_global, btn_filter_friend, btn_filter_me;
+    Button btn_click;
     int filterStatus=0; //0:global, 1: friend, 2: me
 
     //현재 GPS 위치
@@ -305,10 +309,24 @@ public class HomeFragment extends Fragment {
         //여기부터 필터 버튼
         //int filterStatus=0; //0:global, 1: friend, 2: me
         Log.e("Home_onCreateView", "content: line309");
+
+        btn_click=(Button) view.findViewById(R.id.btn_click);
         btn_filter_global=(ImageButton)view.findViewById(R.id.btn_filter_global);
         btn_filter_friend=(ImageButton)view.findViewById(R.id.btn_filter_friend);
         btn_filter_me=(ImageButton)view.findViewById(R.id.btn_filter_me);
         Log.e("Home_onCreateView", "content: line313");
+
+
+        btn_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Home_onCreateView", "content: line300");
+                filterStatus=0;
+                Log.e("Home_onCreateView", "content: line300");
+                createALLlabels();
+                Log.e("Home_onCreateView", "content: line300");
+                btn_click.setVisibility(View.GONE);
+            }});
         btn_filter_global.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -394,6 +412,7 @@ public class HomeFragment extends Fragment {
         /**여기까지 카카오맵**/
 
 
+
         return view;
     }
 
@@ -419,7 +438,7 @@ public class HomeFragment extends Fragment {
     private void createGPSLabel(LatLng pos) {
         // 중심 라벨 생성
         centerLabel = labelLayer.addLabel(LabelOptions.from("centerLabel", pos)
-                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng2).setAnchorPoint(0.5f, 0.5f))
+                .setStyles(LabelStyle.from(R.drawable.icon_currentpospng3).setAnchorPoint(0.5f, 0.5f))
                 .setRank(1));
         selectedList.add(centerLabel);
         centerLabel = labelLayer.addLabel(LabelOptions.from("str",pos));

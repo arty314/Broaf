@@ -190,7 +190,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon1);
-                postBody.setIcon(0);
+                postBody.setIcon(1);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -199,7 +199,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon2);
-                postBody.setIcon(1);
+                postBody.setIcon(2);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -208,7 +208,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon3);
-                postBody.setIcon(2);
+                postBody.setIcon(3);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -217,7 +217,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon4);
-                postBody.setIcon(3);
+                postBody.setIcon(4);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -226,7 +226,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon5);
-                postBody.setIcon(4);
+                postBody.setIcon(5);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -235,7 +235,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon6);
-                postBody.setIcon(5);
+                postBody.setIcon(6);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -244,7 +244,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon7);
-                postBody.setIcon(6);
+                postBody.setIcon(7);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -253,7 +253,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon8);
-                postBody.setIcon(7);
+                postBody.setIcon(8);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -262,7 +262,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon8);
-                postBody.setIcon(8);
+                postBody.setIcon(9);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -271,7 +271,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon10);
-                postBody.setIcon(9);
+                postBody.setIcon(10);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -280,7 +280,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon11);
-                postBody.setIcon(10);
+                postBody.setIcon(11);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -289,7 +289,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon12);
-                postBody.setIcon(11);
+                postBody.setIcon(12);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -298,7 +298,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon13);
-                postBody.setIcon(12);
+                postBody.setIcon(13);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
@@ -307,7 +307,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 icon.setImageResource(R.drawable.posticon14);
-                postBody.setIcon(13);
+                postBody.setIcon(14);
                 icon_box.setVisibility(View.GONE);
                 close_box.setVisibility(View.GONE);
             }
