@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,12 +96,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e("Home_onCreateView", "content: line98");
         //표시할 xml layout 선택
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
         fab.setImageResource(R.drawable.re_writepost);
         //
 
+
+        Log.e("Home_onCreateView", "content: line106");
 
 
         //여기부터 search & post viewer
@@ -121,6 +125,7 @@ public class HomeFragment extends Fragment {
             }
         });
         //여기까지 검색버튼
+        Log.e("Home_onCreateView", "content: line127");
 
 
 
@@ -132,10 +137,12 @@ public class HomeFragment extends Fragment {
         btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Home_onCreateView", "content: line139");
                 if ( Build.VERSION.SDK_INT >= 23 &&
                         ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
                     ActivityCompat.requestPermissions( getActivity(), new String[] {
                             android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
+                    Log.e("Home_onCreateView", "content: line144");
                 }
                 else{
                     // 가장최근 위치정보 가져오기
@@ -144,6 +151,7 @@ public class HomeFragment extends Fragment {
                         String provider = location.getProvider();
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
+                        Log.e("Home_onCreateView", "content: line153");
 
                         txtResult.setText(provider + " Lat," + latitude + " Lng," + longitude);
 
@@ -155,45 +163,58 @@ public class HomeFragment extends Fragment {
                             1000,
                             1,
                             gpsLocationListener);
+                    Log.e("Home_onCreateView", "content: line165");
                     lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                             1000,
                             1,
                             gpsLocationListener);
+                    Log.e("Home_onCreateView", "content: line170");
                 }
             }
         });
         //여기까지 GPS 불러오기
 
+        Log.e("Home_onCreateView", "content: line176");
         //화면 중심 되돌리기
         btn_fit = (ImageButton)view.findViewById(R.id.btn_fit);
         btn_fit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Home_onCreateView", "content: line182");
                 kakaoMap.moveCamera(CameraUpdateFactory.fitMapPoints(getSelectedPoints(), 20),
                         CameraAnimation.from(500, true, true));
+                Log.e("Home_onCreateView", "content: line185");
             }
         });
 
+
+        Log.e("Home_onCreateView", "content: line190");
         //1. 현재 사용자의 UID,Email
         currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         currentEmail = currentUser.getEmail();
         postList = new ArrayList<>();
         labelList = new ArrayList<>();
+        Log.e("Home_onCreateView", "content: line196");
         // 닉네임가져오기
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://broaf-72e4c-default-rtdb.firebaseio.com/");
+
+        Log.e("Home_onCreateView", "content: line200");
 
         database.getReference("User").orderByChild("email").equalTo(currentEmail).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("Home_onCreateView", "content: line205");
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     currentKey = userSnapshot.getKey(); // 현재 로그인한 User key
                     myNickname = userSnapshot.child("nickname").getValue(String.class);
-//                    Log.e("currentNickName", "content: " + myNickname);
+                    Log.e("currentNickName", "content: " + myNickname);
+                    Log.e("Home_onCreateView", "content: line210");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Home_onCreateView", "content: line216");
                 // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
             }
         });
@@ -203,6 +224,7 @@ public class HomeFragment extends Fragment {
         //3. 접속자의 모든 친구 불러오기
         friendNameList = new ArrayList<>();
         if (currentUser != null) {
+            Log.e("Home_onCreateView", "content: line226");
             database.getReference("User").orderByChild("email").equalTo(currentEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -216,18 +238,22 @@ public class HomeFragment extends Fragment {
                             //현재 로그인한 사용자의 friendlist 데이터 가져오기
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Log.e("Home_onCreateView", "content: line240");
                                 friendNameList.clear();
                                 for(DataSnapshot friendSnapshot : snapshot.getChildren()) {
+                                    Log.e("Home_onCreateView", "content: line243");
                                     String nickname = friendSnapshot.child("nickname").getValue(String.class);
-//                                    Log.e("Friendnickname", "nickname: " + nickname); // 이메일을 로그에 출력
+                                    Log.e("Friendnickname", "nickname: " + nickname); // 이메일을 로그에 출력
                                     friendNameList.add(nickname);
+                                    Log.e("Home_onCreateView", "content: line247");
                                 }
                                 //원래는 AdapterChange가 선언된다.
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-//                                Log.e("FriendListActivity", String.valueOf(error.toException()));
+                                Log.e("FriendListActivity", String.valueOf(error.toException()));
+                                Log.e("Home_onCreateView", "content: line255");
                             }
                         });
                         //원래는 이부분에 Adatper연결을 한다.
@@ -236,6 +262,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
+                    Log.e("Home_onCreateView", "content: line264");
                 }
             });
         }
@@ -248,24 +275,27 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 postList.clear();
                 labelList.clear();
+                Log.e("Home_onCreateView", "content: line277");
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                    Log.e("Home_onCreateView", "content: line279");
                     ReceiveNormalPost receiveNormalPost = snapshot.getValue(ReceiveNormalPost.class);
-//                    Log.e("PostContents", "content: " + receiveNormalPost.getContents());
+                    Log.e("PostContents", "content: " + receiveNormalPost.getContents());
                     postList.add(receiveNormalPost);
-                    //여기다가 Label로 변환 코드 써야할 각.
-                    newlabel=createLabel(receiveNormalPost,receiveNormalPost.pid,filterStatus);
-                    createBadge(receiveNormalPost,newlabel,receiveNormalPost.pid,filterStatus);
-                    labelList.add(newlabel);
+                    //여기 있던 createLabel에서 계속 에러였음.
+                    Log.e("Home_onCreateView", "content: line287");
                 }
                 //여기에 createALLPost 써야할 각
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.e("MainActivity", String.valueOf(databaseError.toException()));
+                Log.e("MainActivity", String.valueOf(databaseError.toException()));
+                Log.e("Home_onCreateView", "content: line295");
             }
         };
+        Log.e("Home_onCreateView", "content: line298");
         database.getReference("Post").child("NormalPost").addValueEventListener(postListener);
+        Log.e("Home_onCreateView", "content: line300");
         //2. 모든 게시글 불러오기(종료)
 
         // currentEmail: 현재 접속자의 Email
@@ -274,15 +304,20 @@ public class HomeFragment extends Fragment {
 
         //여기부터 필터 버튼
         //int filterStatus=0; //0:global, 1: friend, 2: me
+        Log.e("Home_onCreateView", "content: line309");
         btn_filter_global=(ImageButton)view.findViewById(R.id.btn_filter_global);
         btn_filter_friend=(ImageButton)view.findViewById(R.id.btn_filter_friend);
         btn_filter_me=(ImageButton)view.findViewById(R.id.btn_filter_me);
+        Log.e("Home_onCreateView", "content: line313");
         btn_filter_global.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Home_onCreateView", "content: line300");
                 filterStatus=0;
                 Toast.makeText(getActivity(),"모든 글 표시",Toast.LENGTH_SHORT).show();
+                Log.e("Home_onCreateView", "content: line300");
                 createALLlabels();
+                Log.e("Home_onCreateView", "content: line300");
             }});
         btn_filter_friend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,10 +333,6 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(),"내가 작성한 글만 표시",Toast.LENGTH_SHORT).show();
                 createALLlabels();
             }});
-
-
-
-
 
         //여기까지 필터 버튼
 
@@ -933,26 +964,6 @@ public class HomeFragment extends Fragment {
         return null;
     }
 
-    public void createBadge(ReceiveNormalPost normalPost, Label label, String label_ID, int filterStatus) {
-        //label_ID는 post_ID로 한다.
-        //초기에 badge가 부착되지 않는 문제로 인해 따로 구현
-
-        double pLatitude_Double = Double.parseDouble(normalPost.pLatitude);
-        double pLongitude_Double = Double.parseDouble(normalPost.pLongitude);
-
-        //badge 달기
-        Badge[] badges = new Badge[0];
-
-        if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
-            badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
-        else    //case2: 내 게시글 아님.
-            for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
-                if (normalPost.writerName.equals(friendNameList.trim()))
-                    badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
-            }
-    }
-
-
     void showPostViewer(ReceiveNormalPost normalPost){
         //지도 상의 버튼을 누르면 해당 normalPost의 정보와 myNickname을 들고 postViewerFragment를 add한다.
 
@@ -977,6 +988,9 @@ public class HomeFragment extends Fragment {
 
     void createALLlabels(){
         labelList.clear();  //현재 라벨 리스트 초기화
+        for(int i=0; i<postList.size();i++){
+            labelList.add(createLabel(postList.get(i),postList.get(i).pid,filterStatus));
+        }
 
         for(int i=0; i<postList.size();i++){
             labelList.add(createLabel(postList.get(i),postList.get(i).pid,filterStatus));

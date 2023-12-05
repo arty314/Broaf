@@ -136,8 +136,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-//                replaceFragment(new HomeFragment());
-                onBackPressed();
+                replaceFragment(new HomeFragment());
 
             }
             //여기까지 '지도로 돌아가기 버튼'

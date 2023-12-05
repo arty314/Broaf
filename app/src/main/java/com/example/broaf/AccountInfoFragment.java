@@ -24,9 +24,7 @@ public class AccountInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_info, container, false);
-        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
-        fab.setImageResource(R.drawable.btn_center_back);
-        //
+
 
 
 

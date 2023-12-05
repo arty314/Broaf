@@ -28,9 +28,7 @@ public class AnnouncementViewerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_announcement_viewer, container, false);
-        FloatingActionButton fab = getActivity().findViewById(R.id.navi_to_home);
-        fab.setImageResource(R.drawable.btn_center_back);
-        //
+
         TextView title = (TextView)view.findViewById(R.id.real_title);
         title.setText(alarm.getTitle());
         TextView rcontent = (TextView)view.findViewById(R.id.real_content);
