@@ -325,6 +325,8 @@ public class HomeFragment extends Fragment {
                 Log.e("Home_onCreateView", "content: line300");
                 createALLlabels();
                 Log.e("Home_onCreateView", "content: line300");
+
+
                 btn_click.setVisibility(View.GONE);
             }});
         btn_filter_global.setOnClickListener(new View.OnClickListener() {
@@ -440,6 +442,7 @@ public class HomeFragment extends Fragment {
         centerLabel = labelLayer.addLabel(LabelOptions.from("centerLabel", pos)
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng3).setAnchorPoint(0.5f, 0.5f))
                 .setRank(1));
+        selectedList.clear();
         selectedList.add(centerLabel);
         centerLabel = labelLayer.addLabel(LabelOptions.from("str",pos));
     }
