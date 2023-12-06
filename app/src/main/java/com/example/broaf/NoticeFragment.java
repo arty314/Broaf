@@ -150,31 +150,4 @@ public class NoticeFragment extends Fragment {
 
     }
 
-
-    //액션바 가시성
-    @Override
-    public void onResume() {
-        super.onResume();
-        ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            //ab.hide();      //상단바 숨기기
-            ab.show();    //상단바 보이기
-        }
-    }
-    //액션바 가시성 조절 끝
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu,inflater);
-        inflater.inflate(R.menu.alarm_menu,menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        Intent intent = new Intent(getActivity(), AlarmSettingsActivity.class);
-        startActivity(intent);
-        return true;
-    }
-
-
 }

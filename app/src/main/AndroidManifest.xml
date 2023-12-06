@@ -31,12 +31,6 @@
         android:theme="@style/Theme.Broaf"
         tools:targetApi="31">
         <activity
-            android:name=".AlarmSettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_alarm_settings"
-            android:screenOrientation="portrait"
-            />
-        <activity
             android:name=".FriendListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -71,13 +65,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- 카카오 native app key 추가-->
+            /> <!-- 카카오 native app key 추가-->
         <meta-data
             android:name="com.kakao.vectormap.APP_KEY"
             android:value="d9bbdb5b3184a4b3466a916346b9d2ae" />
