@@ -104,12 +104,13 @@ public class IntroActivity extends AppCompatActivity {
         String[] permissions = null;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             permissions = new String[]{android.Manifest.permission.READ_MEDIA_IMAGES,
-                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.CAMERA, android.Manifest.permission.ACCESS_FINE_LOCATION
                     };
         } else {
             permissions = new String[]{android.Manifest.permission.CAMERA,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION};
         }
 
         List<String> denied_permissions = new ArrayList<String>();

@@ -62,24 +62,30 @@ public class MainActivity extends AppCompatActivity {
             NormalPost normalPost = new NormalPost((CreatePostFragment.PostBody)
                     receivepostbody.getSerializableExtra("newpostbody"));
             final LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-            if ( Build.VERSION.SDK_INT >= 23 &&
-                    ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                ActivityCompat.requestPermissions( this, new String[] {
-                        android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
-                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (location != null) {
-                    normalPost.setpLatitude(location.getLatitude());
-                    normalPost.setpLongitude(location.getLongitude());
+            Thread locTh = new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    if ( Build.VERSION.SDK_INT >= 23 &&
+                            ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[] {
+                                android.Manifest.permission.ACCESS_FINE_LOCATION}, 0 );
+                        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        normalPost.setpLatitude(location.getLatitude());
+                        normalPost.setpLongitude(location.getLongitude());
+                    }
+                    else {
+                        // 가장최근 위치정보 가져오기
+                        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if (location != null) {
+                            normalPost.setpLatitude(location.getLatitude());
+                            normalPost.setpLongitude(location.getLongitude());
+                        }
+                    }
                 }
-            }
-            else {
-                // 가장최근 위치정보 가져오기
-                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (location != null) {
-                    normalPost.setpLatitude(location.getLatitude());
-                    normalPost.setpLongitude(location.getLongitude());
-                }
-            }
+            };
+            locTh.start();
+            try{locTh.join();} catch (Exception e) {}
             String uemail = curuser.getEmail(); // 로그인한 유저이메일을 갖고와서
             Thread pidTh = new Thread(){
                 @Override
