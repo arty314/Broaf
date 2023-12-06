@@ -162,7 +162,7 @@ public class FriendListActivity extends AppCompatActivity {
                                         String Mynickname = snapshot.getValue(String.class);
 
                                         if (FNickname.equals(Mynickname)) {
-                                            Toast.makeText(FriendListActivity.this, "자신을 친구로 추가할 수는 없습니다.", Toast.LENGTH_SHORT).show(); //여기까지 현재 사용자의 닉네임 추가 방지, 아닐 경우 친구 추가 코드 실행
+                                            Toast.makeText(FriendListActivity.this, "이미 당신의 가장 소중한 친구입니다.", Toast.LENGTH_SHORT).show(); //여기까지 현재 사용자의 닉네임 추가 방지, 아닐 경우 친구 추가 코드 실행
                                         } else {
                                             usersRef.orderByChild("nickname").equalTo(FNickname).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -196,7 +196,7 @@ public class FriendListActivity extends AppCompatActivity {
                                                             Toast.makeText(FriendListActivity.this, "친구가 추가되었습니다.", Toast.LENGTH_SHORT).show();
                                                         }
                                                     } else {
-                                                        Toast.makeText(FriendListActivity.this, "해당하는 닉네임의 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(FriendListActivity.this, "해당 닉네임의 사용자는 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
 

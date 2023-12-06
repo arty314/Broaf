@@ -461,16 +461,14 @@ public class HomeFragment extends Fragment {
         //label_ID는 post_ID로 한다.
 
         //게시글 작성 시간 따오기
-        int year=Integer.parseInt(normalPost.getOpentilldate().substring(0,4));
-        int day=Integer.parseInt(normalPost.getOpentilldate().substring(4,8));
+        int day=Integer.parseInt(normalPost.getOpentilldate().substring(2,8));
         int time=Integer.parseInt(normalPost.getOpentilldate().substring(8,12));
 
         //현재 시간 따오기
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmm", Locale.KOREA);
         Date date = new Date();
         String strDate = dateFormat.format(date);
-        int nyear=Integer.parseInt(strDate.substring(0,4));
-        int nday=Integer.parseInt(strDate.substring(4,8));
+        int nday=Integer.parseInt(strDate.substring(2,8));
         int ntime=Integer.parseInt(strDate.substring(8,12));
 
 
@@ -501,9 +499,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -567,9 +568,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -621,9 +625,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
 
             int isMyFriend=0;
@@ -677,9 +684,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
 
             int isMyFriend=0;
@@ -733,9 +743,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
 
             int isMyFriend=0;
@@ -789,9 +802,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
 
             int isMyFriend=0;
@@ -845,9 +861,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -900,9 +919,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -955,9 +977,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -1010,9 +1035,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -1065,9 +1093,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -1120,9 +1151,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -1175,9 +1209,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -1230,9 +1267,12 @@ public class HomeFragment extends Fragment {
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
             //게시글의 열람 시간에 따라 hide 여부 판독
-            if(year<nyear) {label.hide(); return label;}
-            if(day<nday) {label.hide(); return label;}
-            if(time<ntime) {label.hide(); return label;}
+            if(day<nday) {
+                label.hide(); return label;
+            }
+            else if((day==nday)&&(time<ntime)) {
+                label.hide(); return label;
+            }
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독

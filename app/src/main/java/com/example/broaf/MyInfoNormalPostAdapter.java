@@ -121,7 +121,7 @@ public class MyInfoNormalPostAdapter extends RecyclerView.Adapter<MyInfoNormalPo
         holder.content.setText(arrayList.get(position).getContents());
         // holder.isHide.setText(arrayList.get(position).getIsHide()); //현재 position에 있는 것을 가져와서
         //holder.latitude.setText(arrayList.get(position).getLatitude());
-        holder.likeCount.setText(arrayList.get(position).getLikeCount());
+//        holder.likeCount.setText(arrayList.get(position).getLikeCount());
         //holder.longitude.setText(arrayList.get(position).getLongitude());
         switch (arrayList.get(position).getOpenRange()) {
             case "1":
@@ -150,12 +150,12 @@ public class MyInfoNormalPostAdapter extends RecyclerView.Adapter<MyInfoNormalPo
         String hour = writetime.substring(8, 10);
         String minute = writetime.substring(10, 12);
         if (Integer.parseInt(hour) >= 0 && Integer.parseInt(hour) <= 12) { // 0~12시 사이면
-            hour = "오전" + hour; //오전+시간
+            hour = "오전 " + hour; //오전+시간
         } else if (Integer.parseInt(hour) > 12 && Integer.parseInt(hour) <= 23) { //13~23시 사이면
-            hour = "오후" + String.valueOf(Integer.parseInt(hour) - 12); //오후(hour-12)
+            hour = "오후 " + String.valueOf(Integer.parseInt(hour) - 12); //오후(hour-12)
         }
-        String newText = year + "/" + month + "/" + date + " " + hour + ":" + minute;
-        holder.writerName_And_writtenDateTime.setText(exisingText + " | " + newText);
+        String newText = year + "." + month + "." + date + ". " + hour + ":" + minute;
+        holder.writerName_And_writtenDateTime.setText(exisingText + "  |  " + newText);
 
 ////////////////////////
         //Add Data to listView
@@ -225,7 +225,7 @@ public class MyInfoNormalPostAdapter extends RecyclerView.Adapter<MyInfoNormalPo
             this.content = itemView.findViewById(R.id.content);
             //this.isHide = itemView.findViewById(R.id.isHide);
             //this.latitude = itemView.findViewById(R.id.latitude);
-            this.likeCount = itemView.findViewById(R.id.likeCount);
+//          //this.likeCount = itemView.findViewById(R.id.likeCount);
             //this.longitude = itemView.findViewById(R.id.longitude);
             this.openRange = itemView.findViewById(R.id.openRange);
             //this.openToDateTime = itemView.findViewById(R.id.openToDateTime);

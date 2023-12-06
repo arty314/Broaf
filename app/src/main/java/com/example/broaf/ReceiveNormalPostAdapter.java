@@ -44,7 +44,7 @@ public class ReceiveNormalPostAdapter extends RecyclerView.Adapter<ReceiveNormal
         holder.content.setText(arrayList.get(position).getContents());
         // holder.isHide.setText(arrayList.get(position).getIsHide()); //현재 position에 있는 것을 가져와서
         //holder.latitude.setText(arrayList.get(position).getLatitude());
-        holder.likeCount.setText(arrayList.get(position).getLikeCount());
+//        holder.likeCount.setText(arrayList.get(position).getLikeCount());
         //holder.longitude.setText(arrayList.get(position).getLongitude());
         switch(arrayList.get(position).getOpenRange()) {
             case "1":
@@ -98,7 +98,7 @@ public class ReceiveNormalPostAdapter extends RecyclerView.Adapter<ReceiveNormal
             this.content = itemView.findViewById(R.id.content);
             //this.isHide = itemView.findViewById(R.id.isHide);
             //this.latitude = itemView.findViewById(R.id.latitude);
-            this.likeCount = itemView.findViewById(R.id.likeCount);
+//            this.likeCount = itemView.findViewById(R.id.likeCount);
             //this.longitude = itemView.findViewById(R.id.longitude);
             this.openRange = itemView.findViewById(R.id.openRange);
             //this.openToDateTime = itemView.findViewById(R.id.openToDateTime);
