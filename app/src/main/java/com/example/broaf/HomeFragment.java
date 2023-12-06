@@ -2,13 +2,11 @@ package com.example.broaf;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.PointF;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +36,6 @@ import com.kakao.vectormap.KakaoMapReadyCallback;
 import com.kakao.vectormap.LatLng;
 import com.kakao.vectormap.MapGravity;
 import com.kakao.vectormap.MapView;
-import com.kakao.vectormap.Poi;
 import com.kakao.vectormap.camera.CameraAnimation;
 import com.kakao.vectormap.camera.CameraUpdateFactory;
 import com.kakao.vectormap.label.Badge;
@@ -48,8 +45,11 @@ import com.kakao.vectormap.label.LabelLayer;
 import com.kakao.vectormap.label.LabelOptions;
 import com.kakao.vectormap.label.LabelStyle;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class HomeFragment extends Fragment {
@@ -461,6 +461,18 @@ public class HomeFragment extends Fragment {
     public Label createLabel(ReceiveNormalPost normalPost, String label_ID, int filterStatus){
         //label_ID는 post_ID로 한다.
 
+        //게시글 작성 시간 따오기
+        int year=Integer.parseInt(normalPost.getOpentilldate().substring(0,4));
+        int day=Integer.parseInt(normalPost.getOpentilldate().substring(4,8));
+        int time=Integer.parseInt(normalPost.getOpentilldate().substring(8,12));
+
+        //현재 시간 따오기
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmm", Locale.KOREA);
+        Date date = new Date();
+        String strDate = dateFormat.format(date);
+        int nyear=Integer.parseInt(strDate.substring(0,4));
+        int nday=Integer.parseInt(strDate.substring(4,8));
+        int ntime=Integer.parseInt(strDate.substring(8,12));
 
 
         double pLatitude_Double = Double.parseDouble(normalPost.pLatitude);
@@ -488,6 +500,11 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -550,6 +567,11 @@ public class HomeFragment extends Fragment {
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -598,6 +620,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -649,6 +677,12 @@ public class HomeFragment extends Fragment {
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -698,6 +732,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
 
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
@@ -749,6 +789,12 @@ public class HomeFragment extends Fragment {
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -798,6 +844,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -847,6 +899,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -896,6 +954,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -945,6 +1009,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -994,6 +1064,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -1043,6 +1119,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -1092,6 +1174,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -1141,6 +1229,12 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            //게시글의 열람 시간에 따라 hide 여부 판독
+            if(year<nyear) {label.hide(); return label;}
+            if(day<nday) {label.hide(); return label;}
+            if(time<ntime) {label.hide(); return label;}
+
             int isMyFriend=0;
             //게시글의 공개 범위에 따라 hide여부 판독
             if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
@@ -1198,11 +1292,11 @@ public class HomeFragment extends Fragment {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PostViewerFragment postViewerFragment = new PostViewerFragment();
+        ViewPostForMapFragment viewPostForMapFragment = new ViewPostForMapFragment();
 
-        postViewerFragment.setArguments(postBundle);    //내용물을 viewer로 보내기
+        viewPostForMapFragment.setArguments(postBundle);    //내용물을 viewer로 보내기
 
-        fragmentTransaction.add(R.id.frame_layout_post_viewer, postViewerFragment);
+        fragmentTransaction.add(R.id.frame_layout_post_viewer, viewPostForMapFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

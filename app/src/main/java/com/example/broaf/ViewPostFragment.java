@@ -93,6 +93,15 @@ public class ViewPostFragment extends Fragment {
 
         TextView nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         nickname.setText(receiveNormalPost.getWriterName());
+        TextView viewer_openrange = (TextView) view.findViewById(R.id.viewer_openrange);
+        if(receiveNormalPost.getOpenRange().equals("1"))
+            viewer_openrange.setText("전체 공개");
+        else if(receiveNormalPost.getOpenRange().equals("2"))
+            viewer_openrange.setText("친구 공개");
+        else if(receiveNormalPost.getOpenRange().equals("3"))
+            viewer_openrange.setText("비공개");
+
+
         TextView context = (TextView) view.findViewById(R.id.viewer_contents);
         context.setText(receiveNormalPost.getContents());
         TextView writtenDateTime = (TextView) view.findViewById(R.id.viewer_writtenDateTime);
@@ -139,7 +148,7 @@ public class ViewPostFragment extends Fragment {
                 if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStack();
                 } else {
-                    //onBackPressed();
+                    getActivity().onBackPressed();
                 }
             }
         });

@@ -18,14 +18,11 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
-public class PostViewerFragment extends Fragment {
+public class ViewPostForMapFragment extends Fragment {
 
     String myNickname;
 
     ReceiveNormalPost normalPost;
-    boolean isLikeClicked=false;
-    int likeCount=0;
-    String likeCount_str="0";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,32 +36,20 @@ public class PostViewerFragment extends Fragment {
         }
 
 
-//        /*불러온 정보 붙여넣기*/
-//        ImageView viewer_profimg = (ImageView)view.findViewById(R.id.viewer_profimg);
-//        //계정 별 프로필 사진 설정 기능 미구현. 고로, 조건문으로 임시처리
-//        String writerName= normalPost.writerName;
-//        if(writerName=="-NkVlvAINDhIXRBZ1hHL"){
-//            viewer_profimg.setImageResource(R.drawable.img_prof_me);
-//        } else if(writerName=="-NkCD1GOweVWBk7mhJJ9"){
-//            viewer_profimg.setImageResource(R.drawable.img_prof_f1);
-//        } else if(writerName=="-Nk5C6FKxdEHbn5hxDo0"){
-//            viewer_profimg.setImageResource(R.drawable.img_prof_f2);
-//        } else if(writerName=="-NkVnLvZ0TdAMTwY0w96"){
-//            viewer_profimg.setImageResource(R.drawable.img_prof_f3);
-//        }
-
         TextView viewer_nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         viewer_nickname.setText(normalPost.getWriterName());
+
+        TextView viewer_openrange = (TextView) view.findViewById(R.id.viewer_openrange);
+        if(normalPost.getOpenRange().equals("1"))
+            viewer_openrange.setText("전체 공개");
+        else if(normalPost.getOpenRange().equals("2"))
+            viewer_openrange.setText("친구 공개");
+        else if(normalPost.getOpenRange().equals("3"))
+            viewer_openrange.setText("비공개");
 
 
         TextView viewer_contents = (TextView) view.findViewById(R.id.viewer_contents);
         viewer_contents.setText(normalPost.getContents());
-
-        ImageView viewer_postImage = (ImageView)view.findViewById(R.id.viewer_postImage);
-        //이미지 저장소 미구현으로 if문으로 대체
-        if(!Objects.equals(normalPost.getImgurl(), "")){
-            viewer_postImage.setImageResource(R.drawable.img_forpost);
-        }
 
         TextView viewer_writtenDateTime = (TextView) view.findViewById(R.id.viewer_writtenDateTime);
         //e.g. 202311300042 -> 2023.11.30. 오전 00:42
@@ -103,7 +88,7 @@ public class PostViewerFragment extends Fragment {
         viewer_btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(PostViewerFragment.this).commit();
+                getFragmentManager().beginTransaction().remove(ViewPostForMapFragment.this).commit();
             }
         });
 

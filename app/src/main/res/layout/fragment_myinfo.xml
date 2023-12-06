@@ -137,5 +137,13 @@
             />
     </androidx.appcompat.widget.Toolbar>
     <!--여기까지 상단바: 내 정보 보기-->
+
+
+    <!--게시글 뷰어 frame-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame_layout_post_viewer_myinfo"
+        />
 </FrameLayout>
 
