@@ -120,6 +120,8 @@ public class HomeFragment extends Fragment {
                 searchKeyword_input = input_text_search.getText().toString();
                 Bundle bundle = new Bundle();
                 bundle.putString("fromHomeFrag", searchKeyword_input);
+                bundle.putString("myNickname",myNickname);
+                bundle.putStringArrayList("friendNameList", friendNameList);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 SearchFragment searchFragment = new SearchFragment();
                 searchFragment.setArguments(bundle);
