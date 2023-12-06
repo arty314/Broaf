@@ -162,6 +162,7 @@ public class HomeFragment extends Fragment {
 
                         //provider: 위치 정보, latitude: 위도, longitude: 경도 (altitude: 고도)
                     }
+                    else{Toast.makeText(view.getContext(), "현재 위치를 확인할 수 없습니다", Toast.LENGTH_SHORT).show();}
 
                     // 위치정보를 원하는 시간, 거리마다 갱신해준다. <-게시글 작성 버튼에선 이부분 빼면 됨
                     lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
