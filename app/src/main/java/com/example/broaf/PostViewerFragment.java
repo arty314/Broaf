@@ -1,5 +1,8 @@
 package com.example.broaf;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -53,14 +56,6 @@ public class PostViewerFragment extends Fragment {
         TextView viewer_nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         viewer_nickname.setText(normalPost.getWriterName());
 
-        ImageButton viewer_btn_more = (ImageButton) view.findViewById(R.id.viewer_btn_more);
-        viewer_btn_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //클릭 시 사용자 닉네임 복사하기
-                Toast.makeText(getActivity(), "개발 중인 기능입니다.",Toast.LENGTH_SHORT).show();
-            }
-        });
 
         TextView viewer_contents = (TextView) view.findViewById(R.id.viewer_contents);
         viewer_contents.setText(normalPost.getContents());
@@ -92,34 +87,16 @@ public class PostViewerFragment extends Fragment {
         viewer_writtenDateTime.setText(formattedDateTime);
 
 
-        //좋아요: 미구현이므로 ui 형태만 구현. 버튼 누르면 count+1 그리고 image 변경
-        ImageButton viewer_btn_heart = (ImageButton) view.findViewById(R.id.viewer_btn_heart);
-        TextView viewer_likeCount = (TextView) view.findViewById(R.id.viewer_likeCount);
-
-        likeCount_str=String.valueOf(normalPost.likeCount);
-        likeCount=Integer.parseInt(likeCount_str);
-        viewer_likeCount.setText(likeCount_str);
-
-
-        viewer_btn_heart.setOnClickListener(new View.OnClickListener() {
+        ImageButton viewer_btn_copyNickname = (ImageButton) view.findViewById(R.id.viewer_btn_copyNickname);
+        viewer_btn_copyNickname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isLikeClicked==false){
-                    viewer_btn_heart.setImageResource(R.drawable.heart_clicked);
-                    likeCount_str=String.valueOf(likeCount+1);
-                    viewer_likeCount.setText(likeCount_str);
-                    isLikeClicked=true;
-                } else if (isLikeClicked==true) {
-                    viewer_btn_heart.setImageResource(R.drawable.heart_unclicked);
-                    likeCount_str=String.valueOf(likeCount);
-                    viewer_likeCount.setText(likeCount_str);
-                    isLikeClicked=false;
-                }
+                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("label", normalPost.getWriterName());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getActivity(), "작성자의 닉네임이 복사되었습니다.",Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
 
         //창 닫기
         Button viewer_btn_close = (Button) view.findViewById(R.id.viewer_btn_close);

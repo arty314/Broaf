@@ -107,7 +107,6 @@ public class HomeFragment extends Fragment {
         fab.setImageResource(R.drawable.re_writepost);
         //
 
-
         Log.e("Home_onCreateView", "content: line106");
 
 
@@ -186,7 +185,6 @@ public class HomeFragment extends Fragment {
         btn_fit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Home_onCreateView", "content: line182");
                 kakaoMap.moveCamera(CameraUpdateFactory.fitMapPoints(getSelectedPoints(), 20),
                         CameraAnimation.from(500, true, true));
                 Log.e("Home_onCreateView", "content: line185");
@@ -443,7 +441,7 @@ public class HomeFragment extends Fragment {
         // 중심 라벨 생성
         centerLabel = labelLayer.addLabel(LabelOptions.from("centerLabel", pos)
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng3).setAnchorPoint(0.5f, 0.5f))
-                .setRank(1));
+                .setRank(2));
         selectedList.clear();
         selectedList.add(centerLabel);
         centerLabel = labelLayer.addLabel(LabelOptions.from("str",pos));
