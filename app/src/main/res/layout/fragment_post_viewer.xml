@@ -37,10 +37,10 @@
                     android:id="@+id/viewer_icon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/posticon7"
+                    android:src="@drawable/profimg_default"
                     android:padding="10dp"
                     android:background="@drawable/postviewer_icon_back"
-                    android:backgroundTint="#CFF4FF"
+                    android:backgroundTint="@color/_save_btn_color"
                     android:scaleType="centerCrop"
                     />
 
