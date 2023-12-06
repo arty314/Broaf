@@ -139,6 +139,8 @@ public class FriendListActivity extends AppCompatActivity {
                 }
                 //
 
+
+
                 if (currentUser != null) {
                     String currentEmail = currentUser.getEmail();
 
@@ -147,55 +149,76 @@ public class FriendListActivity extends AppCompatActivity {
                     // 현재 로그인한 사용자의 email을 사용하여 해당 사용자 찾기
                     usersRef.orderByChild("email").equalTo(currentEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // B onDatachange
+
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                                 String currentUid = userSnapshot.getKey(); // 현재 로그인한 사용자의 UID (A)
 
                                 Log.d("User UID", currentUid);
-
-                                // 검색창에 입력한 닉네임을 가진 사용자의 UID 찾기
-                                usersRef.orderByChild("nickname").equalTo(FNickname).addListenerForSingleValueEvent(new ValueEventListener() {
-
+                                // 현재 로그인한 사용자의 닉네임 친구 추가 방지
+                                usersRef.child(currentUid).child("nickname").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.getChildrenCount() > 0) {
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) { // A onDatachange
+                                        String Mynickname = snapshot.getValue(String.class);
 
-                                        for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
-                                            String fUid = friendSnapshot.getKey(); // 검색창 닉네임을 가진 사용자의 UID (B)
-
-                                            Log.d("Friend UID", fUid);
-
-                                            // A의 friendlist에 B의 UID 추가
-                                            DatabaseReference currentFriendlistRef = usersRef.child(currentUid).child("friendlist").push();
-                                            currentFriendlistRef.setValue(fUid);
-
-                                            // B의 정보 가져오기
-                                            String fEmail = friendSnapshot.child("email").getValue(String.class);
-                                            String fNickname = friendSnapshot.child("nickname").getValue(String.class);
-                                            String fPw = friendSnapshot.child("pw").getValue(String.class);
-
-                                            // A의 friendlist에 B의 email, nickname, pw 값 추가
-                                            currentFriendlistRef.child("email").setValue(fEmail);
-                                            currentFriendlistRef.child("nickname").setValue(fNickname);
-                                            currentFriendlistRef.child("pw").setValue(fPw);
-
-                                            // 리스트에도 추가 후 갱신
-                                            arrayList.add(new User(fEmail, fNickname, fPw));
-                                            adapter.notifyDataSetChanged();
-
-                                            Toast.makeText(FriendListActivity.this, "친구가 추가되었습니다.", Toast.LENGTH_SHORT).show();
-                                            }
+                                        if (FNickname.equals(Mynickname)) {
+                                            Toast.makeText(FriendListActivity.this, "자신을 친구로 추가할 수는 없습니다.", Toast.LENGTH_SHORT).show(); //여기까지 현재 사용자의 닉네임 추가 방지, 아닐 경우 친구 추가 코드 실행
                                         } else {
-                                            Toast.makeText(FriendListActivity.this, "해당하는 닉네임의 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
+                                            usersRef.orderByChild("nickname").equalTo(FNickname).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    if (dataSnapshot.getChildrenCount() > 0) {
+
+                                                        for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
+                                                            String fUid = friendSnapshot.getKey(); // 검색창 닉네임을 가진 사용자의 UID (B)
+
+                                                            Log.d("Friend UID", fUid);
+
+                                                            // A의 friendlist에 B의 UID 추가
+                                                            DatabaseReference currentFriendlistRef = usersRef.child(currentUid).child("friendlist").push();
+                                                            currentFriendlistRef.setValue(fUid);
+
+                                                            // B의 정보 가져오기
+                                                            String fEmail = friendSnapshot.child("email").getValue(String.class);
+                                                            String fNickname = friendSnapshot.child("nickname").getValue(String.class);
+                                                            String fPw = friendSnapshot.child("pw").getValue(String.class);
+
+                                                            // A의 friendlist에 B의 email, nickname, pw 값 추가
+                                                            currentFriendlistRef.child("email").setValue(fEmail);
+                                                            currentFriendlistRef.child("nickname").setValue(fNickname);
+                                                            currentFriendlistRef.child("pw").setValue(fPw);
+
+                                                            // 리스트에도 추가 후 갱신
+                                                            arrayList.add(new User(fEmail, fNickname, fPw));
+                                                            adapter.notifyDataSetChanged();
+
+                                                            Toast.makeText(FriendListActivity.this, "친구가 추가되었습니다.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(FriendListActivity.this, "해당하는 닉네임의 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
+
+                                                }
+                                            });
+
                                         }
                                     }
+                                //
 
                                     @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        // 쿼리가 취소된 경우 또는 에러가 발생한 경우 처리
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
                                     }
                                 });
+
+                                // 검색창에 입력한 닉네임을 가진 사용자의 UID 찾기
+
                             }
                         }
 

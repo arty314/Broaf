@@ -227,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     // 회원가입시 작성한 데이터 realtime-database에도 작성
                                                     DBUser dao = new DBUser();
 
-                                                    User user = new User(email, Nickname, PW, null,null,null);
+                                                    User user = new User(email, Nickname, PW, null);
 
                                                     dao.add(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override

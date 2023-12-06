@@ -10,10 +10,6 @@ public class User {
 
     private List<String> friendlist;
 
-    private List<String> sendRequestList;
-
-    private List<String> receiveRequestList;
-
     public User() {
     }
 
@@ -22,13 +18,11 @@ public class User {
         Nickname = nickname;
         Pw = pw;
     }
-    public User(String email, String nickname, String pw, List<String> user_friendlist, List<String> user_sendRequestList, List<String> user_receiveRequestList) {
+    public User(String email, String nickname, String pw, List<String> user_friendlist) {
         Email = email;
         Nickname = nickname;
         Pw = pw;
         this.friendlist = user_friendlist;
-        this.sendRequestList = user_sendRequestList;
-        this.receiveRequestList = user_receiveRequestList;
     }
 
     public String getEmail() {
@@ -61,21 +55,5 @@ public class User {
 
     public void setUser_friendlist(List<String> user_friendlist) {
         this.friendlist = user_friendlist;
-    }
-
-    public List<String> getUser_sendRequestList() {
-        return sendRequestList;
-    }
-
-    public void setUser_sendRequestList(List<String> user_sendRequestList) {
-        this.sendRequestList = user_sendRequestList;
-    }
-
-    public List<String> getUser_receiveRequestList() {
-        return receiveRequestList;
-    }
-
-    public void setUser_receiveRequestList(List<String> user_receiveRequestList) {
-        this.receiveRequestList = user_receiveRequestList;
     }
 }
