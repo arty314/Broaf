@@ -53,30 +53,30 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-        //개발 중에 임시로 쓸 계정 정보 자동 입력 로그인 버튼
-
-        btnAutoInput=findViewById(R.id.btnAutoInput);
-        btnAutoInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = "goodman@good.com";
-                String pw = "asdf123";
-                firebaseAuth.signInWithEmailAndPassword(email, pw)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "아이디나 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-            }
-        });
-        //여기까지 임시 자동 로그인 버튼. 릴리즈 시 삭제.
+//
+//        //개발 중에 임시로 쓸 계정 정보 자동 입력 로그인 버튼
+//
+//        btnAutoInput=findViewById(R.id.btnAutoInput);
+//        btnAutoInput.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String email = "goodman@good.com";
+//                String pw = "asdf123";
+//                firebaseAuth.signInWithEmailAndPassword(email, pw)
+//                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<AuthResult> task) {
+//                                if(task.isSuccessful()){
+//                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//                                    startActivity(intent);
+//                                } else {
+//                                    Toast.makeText(LoginActivity.this, "아이디나 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
+//                                }
+//                            }
+//                        });
+//            }
+//        });
+//        //여기까지 임시 자동 로그인 버튼. 릴리즈 시 삭제.
 
 
         //액션바 가시성 조절 (activity버전)
