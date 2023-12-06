@@ -40,6 +40,10 @@ public class SearchFragment extends Fragment {
 
     String search_uid = "11111";    //11111이면 에러란 뜻.
     String searchKeyword = "ERROR";   //입력된 검색어를 저장하는 변수
+    String myNickname = "____"; //작성자 닉네임
+    ArrayList<String> friendNameList = new ArrayList<>();   //작성자의 친구 목록
+
+
     TextView search_uid_view;   //uid 띄울 layout 창
     ImageButton btn_back_search_to_home;    //뒤로가기 버튼 (== 홈으로 돌아가기 버튼)
 
@@ -61,7 +65,6 @@ public class SearchFragment extends Fragment {
     //검색(String), 개수
     private TextView search_input;
 
-
     //검색을 위한 변수
     private Button searchButton;//검색어 입력버튼
     private EditText editTextSearch; //검색어 입력창
@@ -79,6 +82,8 @@ public class SearchFragment extends Fragment {
         if (getArguments() != null) { //받아온 값이 빈값이 아닐 때 실행해라
             searchKeyword = getArguments().getString("fromHomeFrag");
             input_text_search_Result.setText(searchKeyword);
+            myNickname=getArguments().getString("myNickname");
+            ArrayList<String> friendNameList = getArguments().getStringArrayList("friendNameList");
         }
 
 

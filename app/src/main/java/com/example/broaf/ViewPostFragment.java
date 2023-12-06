@@ -1,17 +1,20 @@
 package com.example.broaf;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -84,14 +87,48 @@ public class ViewPostFragment extends Fragment {
         fab.setImageResource(R.drawable.btn_center_back);
         //
 
+//        아이콘 변경
+//        ImageView viewer_icon =(ImageView) view.findViewById(R.id.viewer_icon);
+//        viewer_icon.setImageDrawable(R.id.post);
+
         TextView nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         nickname.setText(receiveNormalPost.getWriterName());
         TextView context = (TextView) view.findViewById(R.id.viewer_contents);
         context.setText(receiveNormalPost.getContents());
         TextView writtenDateTime = (TextView) view.findViewById(R.id.viewer_writtenDateTime);
-        writtenDateTime.setText(receiveNormalPost.getWriteTime());
-        TextView view_post_likeCount = (TextView) view.findViewById(R.id.viewer_likeCount);
-        view_post_likeCount.setText(receiveNormalPost.getLikeCount());
+
+        //작성 시간
+        String year = receiveNormalPost.writeTime.substring(0, 4);
+        String month = receiveNormalPost.writeTime.substring(4, 6);
+        String date = receiveNormalPost.writeTime.substring(6, 8);
+        String hour = receiveNormalPost.writeTime.substring(8, 10);
+        String minute = receiveNormalPost.writeTime.substring(10, 12);
+        int hour_num=Integer.parseInt(hour);
+        String formattedDateTime = "time";
+
+        if(hour_num<12){
+            formattedDateTime = year + "." + month + "." + date + ". 오전 " + hour + ":" + minute;
+        }
+        else if (hour_num>=12){
+            hour=String.valueOf(hour_num-12);
+            formattedDateTime = year + "." + month + "." + date + ". 오후 " + hour + ":" + minute;
+        }
+        writtenDateTime.setText(formattedDateTime);
+
+        //여기까지 게시글 뷰어 작성 시간 표시법
+
+        ImageButton viewer_btn_copyNickname = (ImageButton) view.findViewById(R.id.viewer_btn_copyNickname);
+        viewer_btn_copyNickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("label", receiveNormalPost.getWriterName());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getActivity(), "작성자의 닉네임이 복사되었습니다.",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //viewer_btn_copyNickname
 
 
         //버튼 구현

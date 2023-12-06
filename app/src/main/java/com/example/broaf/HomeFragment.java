@@ -107,7 +107,6 @@ public class HomeFragment extends Fragment {
         fab.setImageResource(R.drawable.re_writepost);
         //
 
-
         Log.e("Home_onCreateView", "content: line106");
 
 
@@ -120,6 +119,8 @@ public class HomeFragment extends Fragment {
                 searchKeyword_input = input_text_search.getText().toString();
                 Bundle bundle = new Bundle();
                 bundle.putString("fromHomeFrag", searchKeyword_input);
+                bundle.putString("myNickname",myNickname);
+                bundle.putStringArrayList("friendNameList", friendNameList);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 SearchFragment searchFragment = new SearchFragment();
                 searchFragment.setArguments(bundle);
@@ -185,7 +186,6 @@ public class HomeFragment extends Fragment {
         btn_fit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Home_onCreateView", "content: line182");
                 kakaoMap.moveCamera(CameraUpdateFactory.fitMapPoints(getSelectedPoints(), 20),
                         CameraAnimation.from(500, true, true));
                 Log.e("Home_onCreateView", "content: line185");
@@ -442,7 +442,7 @@ public class HomeFragment extends Fragment {
         // 중심 라벨 생성
         centerLabel = labelLayer.addLabel(LabelOptions.from("centerLabel", pos)
                 .setStyles(LabelStyle.from(R.drawable.icon_currentpospng3).setAnchorPoint(0.5f, 0.5f))
-                .setRank(1));
+                .setRank(2));
         selectedList.clear();
         selectedList.add(centerLabel);
         centerLabel = labelLayer.addLabel(LabelOptions.from("str",pos));
@@ -475,11 +475,11 @@ public class HomeFragment extends Fragment {
             label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double, pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon1).setAnchorPoint(0.5f, 0.5f)).setRank(1));
             if (normalPost.writerName.equals(myNickname))//case1: 내 게시글
-                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f,0.9f));
+                badges = label.addBadge(BadgeOptions.with(R.drawable.badge_mine).setOffset(0.0f, 0.9f));
             else    //case2: 내 게시글 아님.
                 for (String friendNameList : friendNameList) { //case2-1: 그럼 친구게시글인가요?
                     if (normalPost.writerName.equals(friendNameList.trim()))
-                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f,0.9f));
+                        badges = label.addBadge(BadgeOptions.with(R.drawable.badge_friend).setOffset(0.0f, 0.9f));
                 }
             //뱃지 보이게
             for (Badge badge : badges) {
@@ -489,24 +489,49 @@ public class HomeFragment extends Fragment {
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
-            //여기서 필터 적용
-            switch(filterStatus){
-                case 0:
-                    label.show();   //그냥 표시.
-                    return label;
-                case 1://친구+나만 보기
-                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;} //내꺼면 show하고 리턴.
-                    for (String friendNameList : friendNameList) {
-                        if (normalPost.writerName.equals(friendNameList.trim())) {label.show(); return label;}  //친구꺼면 show하고 리턴.
-                    }
-                    label.hide();   //내것도, 친구것도 아니라면 hide
-                    return label;
-                case 2: //나만 보기
-                    if (normalPost.writerName.equals(myNickname)) {label.show(); return label;}   //내꺼면 show하고 리턴.
-                    label.hide();   //내것이 아니라면 hide
-                    return label;
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}    //작성자 닉 == 내 닉 아닐 시 hide
             }
-        }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
+
+
+                //여기서 필터 적용
+                switch (filterStatus) {
+                    case 0:
+                        label.show();   //그냥 표시.
+                        return label;
+                    case 1://친구+나만 보기
+                        if (normalPost.writerName.equals(myNickname)) {
+                            label.show();
+                            return label;
+                        } //내꺼면 show하고 리턴.
+                        for (String friendNameList : friendNameList) {
+                            if (normalPost.writerName.equals(friendNameList.trim())) {
+                                label.show();
+                                return label;
+                            }  //친구꺼면 show하고 리턴.
+                        }
+                        label.hide();   //내것도, 친구것도 아니라면 hide
+                        return label;
+                    case 2: //나만 보기
+                        if (normalPost.writerName.equals(myNickname)) {
+                            label.show();
+                            return label;
+                        }   //내꺼면 show하고 리턴.
+                        label.hide();   //내것이 아니라면 hide
+                        return label;
+                }
+            }
+
         else if (normalPost.getIcon().equals("2")){
             label = labelLayer.addLabel(LabelOptions.from(label_ID, LatLng.from(pLatitude_Double,pLongitude_Double))
                     .setStyles(LabelStyle.from(R.drawable.posticon2).setAnchorPoint(0.5f, 0.5f)).setRank(1));
@@ -525,6 +550,19 @@ public class HomeFragment extends Fragment {
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
             //여기서 필터 적용
             switch(filterStatus){
                 case 0:
@@ -560,6 +598,20 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -597,6 +649,20 @@ public class HomeFragment extends Fragment {
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
+
             //여기서 필터 적용
             switch(filterStatus){
                 case 0:
@@ -632,6 +698,20 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -669,6 +749,20 @@ public class HomeFragment extends Fragment {
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
 
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
+
             //여기서 필터 적용
             switch(filterStatus){
                 case 0:
@@ -704,6 +798,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -740,6 +847,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -776,6 +896,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -812,6 +945,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -848,6 +994,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -884,6 +1043,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -920,6 +1092,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
@@ -956,6 +1141,19 @@ public class HomeFragment extends Fragment {
             label.getLabelId();
             label.setClickable(true);
             //이제 할 작업: 클릭이벤트 달기. 클릭 시, label에 지정된 pid에 해당하는 내용을 viewer에 띄우기
+            int isMyFriend=0;
+            //게시글의 공개 범위에 따라 hide여부 판독
+            if (normalPost.getOpenRange().equals("3")) {  //비공개의 경우
+                if (!normalPost.writerName.equals(myNickname)) {label.hide(); return label;}
+            }
+            else if (normalPost.getOpenRange().equals("2")) { //구현방법 변화: 자기를 구독하는 사람만 볼 수 있음. (자기가 구독하는 인물 X)
+                if (normalPost.writerName.equals(myNickname)) {isMyFriend = 1;}
+                for (String friendNameList : friendNameList) {
+                    if (normalPost.writerName.equals(friendNameList.trim()))//만약 내가 구독하는 친구라면?
+                        isMyFriend = 1;
+                }
+                if (isMyFriend==0) {label.hide(); return label;}
+            }
 
             //여기서 필터 적용
             switch(filterStatus){
