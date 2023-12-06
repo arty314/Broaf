@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
 
     ArrayList<ReceiveNormalPost> postList; //ReceiveNormalPost형태의 ArrayList
     ArrayList<Label> labelList;             //postList를 Label 형태로 바꾼 결과를 저장하는 ArrayList
-    Label newlabel; //새로 추가할 라벨
+
 
     ArrayList<String> friendNameList; //User의 친구 Nickname을 저장하는 String arrayList
     //    RecyclerView recyclerview;
@@ -385,7 +385,6 @@ public class HomeFragment extends Fragment {
 
                 kakaoMap.getLogo().setPosition(MapGravity.BOTTOM|MapGravity.RIGHT,50, 200 );
 
-                //여기서 만약.. filterStatus를 준다면?
                 //postlabel 달기
                 createALLlabels();
 
@@ -1286,7 +1285,6 @@ public class HomeFragment extends Fragment {
         Bundle postBundle = new Bundle();
 
         //userID
-        postBundle.putString("myNickname",myNickname);
         postBundle.putSerializable("normalPost",normalPost);
 
 

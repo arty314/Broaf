@@ -3,6 +3,7 @@ package com.example.broaf;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +25,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class ViewPostFragment extends Fragment {
-
-    ImageView view_post_profile_image,view_post_Button,view_post_heart;
-    TextView view_post_Nickname,view_post_likeCount;
-    EditText view_post_text, writtenDateTime;
-    Button viewer_btn_close;
 
 
     //이거 추가하면
@@ -88,8 +84,49 @@ public class ViewPostFragment extends Fragment {
         //
 
 //        아이콘 변경
-//        ImageView viewer_icon =(ImageView) view.findViewById(R.id.viewer_icon);
-//        viewer_icon.setImageDrawable(R.id.post);
+        ImageView viewer_icon =(ImageView) view.findViewById(R.id.viewer_icon);
+        if(receiveNormalPost.getIcon().equals("1")) {
+            viewer_icon.setImageResource(R.drawable.posticon1);
+        }
+        else  if(receiveNormalPost.getIcon().equals("2")) {
+            viewer_icon.setImageResource(R.drawable.posticon2);
+        }
+        else if(receiveNormalPost.getIcon().equals("3")) {
+            viewer_icon.setImageResource(R.drawable.posticon3);
+        }
+        else if(receiveNormalPost.getIcon().equals("4")) {
+            viewer_icon.setImageResource(R.drawable.posticon4);
+        }
+        else if(receiveNormalPost.getIcon().equals("5")) {
+            viewer_icon.setImageResource(R.drawable.posticon5);
+        }
+        else if(receiveNormalPost.getIcon().equals("6")) {
+            viewer_icon.setImageResource(R.drawable.posticon6);
+        }
+        else if(receiveNormalPost.getIcon().equals("7")) {
+            viewer_icon.setImageResource(R.drawable.posticon7);
+        }
+        else if(receiveNormalPost.getIcon().equals("8")) {
+            viewer_icon.setImageResource(R.drawable.posticon8);
+        }
+        else if(receiveNormalPost.getIcon().equals("9")) {
+            viewer_icon.setImageResource(R.drawable.posticon9);
+        }
+        else if(receiveNormalPost.getIcon().equals("10")) {
+            viewer_icon.setImageResource(R.drawable.posticon10);
+        }
+        else if(receiveNormalPost.getIcon().equals("11")) {
+            viewer_icon.setImageResource(R.drawable.posticon11);
+        }
+        else if(receiveNormalPost.getIcon().equals("12")) {
+            viewer_icon.setImageResource(R.drawable.posticon12);
+        }
+        else if(receiveNormalPost.getIcon().equals("13")) {
+            viewer_icon.setImageResource(R.drawable.posticon13);
+        }
+        else if(receiveNormalPost.getIcon().equals("14")) {
+            viewer_icon.setImageResource(R.drawable.posticon14);
+        }
 
         TextView nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         nickname.setText(receiveNormalPost.getWriterName());

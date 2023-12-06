@@ -3,6 +3,7 @@ package com.example.broaf;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,6 @@ import java.util.Objects;
 
 public class ViewPostForMapFragment extends Fragment {
 
-    String myNickname;
 
     ReceiveNormalPost normalPost;
 
@@ -31,11 +31,55 @@ public class ViewPostForMapFragment extends Fragment {
 
         //홈에서 정보 끌어오기!!!
         if(getArguments() != null) {
-            myNickname = getArguments().getString("myNickname");
             normalPost = (ReceiveNormalPost) getArguments().getSerializable("normalPost");
         }
 
 
+
+//        아이콘 변경
+        ImageView viewer_icon =(ImageView) view.findViewById(R.id.viewer_icon);
+        if(normalPost.getIcon().equals("1")) {
+            viewer_icon.setImageResource(R.drawable.posticon1);
+        }
+        else  if(normalPost.getIcon().equals("2")) {
+            viewer_icon.setImageResource(R.drawable.posticon2);
+        }
+        else if(normalPost.getIcon().equals("3")) {
+            viewer_icon.setImageResource(R.drawable.posticon3);
+        }
+        else if(normalPost.getIcon().equals("4")) {
+            viewer_icon.setImageResource(R.drawable.posticon4);
+        }
+        else if(normalPost.getIcon().equals("5")) {
+            viewer_icon.setImageResource(R.drawable.posticon5);
+        }
+        else if(normalPost.getIcon().equals("6")) {
+            viewer_icon.setImageResource(R.drawable.posticon6);
+        }
+        else if(normalPost.getIcon().equals("7")) {
+            viewer_icon.setImageResource(R.drawable.posticon7);
+        }
+        else if(normalPost.getIcon().equals("8")) {
+            viewer_icon.setImageResource(R.drawable.posticon8);
+        }
+        else if(normalPost.getIcon().equals("9")) {
+            viewer_icon.setImageResource(R.drawable.posticon9);
+        }
+        else if(normalPost.getIcon().equals("10")) {
+            viewer_icon.setImageResource(R.drawable.posticon10);
+        }
+        else if(normalPost.getIcon().equals("11")) {
+            viewer_icon.setImageResource(R.drawable.posticon11);
+        }
+        else if(normalPost.getIcon().equals("12")) {
+            viewer_icon.setImageResource(R.drawable.posticon12);
+        }
+        else if(normalPost.getIcon().equals("13")) {
+            viewer_icon.setImageResource(R.drawable.posticon13);
+        }
+        else if(normalPost.getIcon().equals("14")) {
+            viewer_icon.setImageResource(R.drawable.posticon14);
+        }
         TextView viewer_nickname = (TextView) view.findViewById(R.id.viewer_nickname);
         viewer_nickname.setText(normalPost.getWriterName());
 

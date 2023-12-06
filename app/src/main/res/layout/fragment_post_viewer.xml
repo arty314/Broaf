@@ -40,7 +40,6 @@
                     android:src="@drawable/profimg_default"
                     android:padding="10dp"
                     android:background="@drawable/postviewer_icon_back"
-                    android:backgroundTint="@color/_save_btn_color"
                     android:scaleType="centerCrop"
                     />
 
