@@ -88,6 +88,11 @@ public class MyInfoNormalPostAdapter extends RecyclerView.Adapter<MyInfoNormalPo
                                                     String del_pid = ds.child("pid").getValue(String.class);
                                                     if (del_pid != null) {
                                                         db.child("Post").child("NormalPost").child(del_pid).setValue(null);
+                                                        //리스트에서도 삭제
+                                                        arrayList.remove(holder.getBindingAdapterPosition());
+
+                                                        notifyDataSetChanged();
+
                                                         Toast.makeText(view.getContext(), "게시글이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }} catch (Exception e) {Toast.makeText(view.getContext(), "존재하지않는 게시글입니다.", Toast.LENGTH_SHORT).show();}
