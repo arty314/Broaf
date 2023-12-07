@@ -29,39 +29,4 @@ public class DBUser {
     public Task<Void> add(User user) {
         return databaseReference.push().setValue(user);
     }
-
-    public void updateFriendList(String userId, List<String> friendList) {
-        DatabaseReference userReference = databaseReference.child(userId).child("user_friendlist");
-        userReference.setValue(friendList);
-    }
-
-    public void getUserFriendList(String userId, OnSuccessListener<List<String>> successListener, OnFailureListener failureListener) {
-        DatabaseReference userReference = databaseReference.child(userId).child("user_friendlist");
-
-        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    List<String> friendList = new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        String friendId = snapshot.getValue(String.class);
-                        friendList.add(friendId);
-                    }
-                    successListener.onSuccess(friendList);
-                } else {
-                    // 사용자의 친구 목록이 존재하지 않는 경우 빈 목록을 반환
-                    successListener.onSuccess(new ArrayList<>());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                failureListener.onFailure(databaseError.toException());
-            }
-        });
-    }
-    //조회
-    public Query get() {
-        return databaseReference;
-    }
 }
