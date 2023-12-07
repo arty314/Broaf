@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
     int filterStatus=0; //0:global, 1: friend, 2: me
 
     //현재 GPS 위치
-    double longitude=35.8318293, latitude=128.7544701;
+    double latitude=35.8318293, longitude=128.7544701;
     TextView txtResult; //이건 GPS 임시 뷰어
     //
 
