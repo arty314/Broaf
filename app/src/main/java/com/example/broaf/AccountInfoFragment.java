@@ -35,21 +35,6 @@ public class AccountInfoFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        //여기까지 뒤로가기
-        Button change_email_btn = view.findViewById(R.id.acInfo_email_change);
-        change_email_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "아직 개발중인 기능입니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
-        Button change_pw_btn = view.findViewById(R.id.acInfo_password_change);
-        change_pw_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "아직 개발중인 기능입니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         Button acInfo_makerEmail = view.findViewById(R.id.acInfo_makerEmail);
         acInfo_makerEmail.setOnClickListener(new View.OnClickListener() {
@@ -67,20 +52,6 @@ public class AccountInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), "Broaf, 1.0.1", Toast.LENGTH_SHORT).show();
-            }
-        });
-        Button logout_btn = view.findViewById(R.id.acInfo_logout);
-        logout_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "아직 개발중인 기능입니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
-        Button del_account_btn = view.findViewById(R.id.acInfo_deleteAccount);
-        del_account_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "아직 개발중인 기능입니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
