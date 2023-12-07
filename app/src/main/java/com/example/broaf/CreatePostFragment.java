@@ -624,7 +624,7 @@ public class CreatePostFragment extends Fragment {
             this.openRange = 1;
             this.opentilldate = new Date();
             this.openratio = 9;
-            this.icon = 0;
+            this.icon = 1;
         }
 
         public String getText(){return text;}
