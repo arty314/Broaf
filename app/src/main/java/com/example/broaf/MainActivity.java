@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
-    private Button button1;
-    private TextView txtResult;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser curuser = auth.getCurrentUser();
